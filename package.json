@@ -9,9 +9,17 @@
       "url": "https://github.com/noratarano/classbattles"
     },
 
+    "scripts": {
+        "start": "node app.js"
+    },
+
     "dependencies": {
-        "express": "3.3.x",
+        "express": "3.x",
         "express3-handlebars": "*",
         "less-middleware": "*"
+    },
+
+    "engines": {
+        "node": "0.10.x"
     }
 }
