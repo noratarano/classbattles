@@ -1,0 +1,50 @@
+@import "flat-ui/variables";
+@import "flat-ui/mixins";
+
+@race-height: 100px;
+
+.index-logo-cont {
+    width: 100%;
+    display: table;
+    
+    & > .index-logo {
+        display: table-cell;
+        vertical-align: middle;
+        
+        & > .index-logo-text {
+            background: @brand-secondary;
+            color: @inverse;
+            border-radius: 50%;
+            width: 200px;
+            margin: 0 auto;
+            text-align: center;
+            
+            .rotate(-45deg);
+            
+            & > span {
+                padding-top: 10px;
+                font-size: 40px;
+                font-weight: bold;
+            }
+        } 
+    }   
+}
+
+.index-options-cont {
+    width: 100%;
+    height: @race-height;
+    background: @inverse;
+    display: table;
+    
+    & > .index-options {
+        padding: 0;
+        margin: 0 auto;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    
+        & > a {
+           width: 75%; 
+        }
+    }
+}

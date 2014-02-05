@@ -1,0 +1,98 @@
+@import "flat-ui/flat-ui";
+
+@nav-height: @btn-line-height-lg;
+@foot-height: @btn-line-height-lg;
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.fill { 
+    min-height: 100%;
+    height: 100%;
+}
+
+.row {
+    padding: 0;
+    margin: 0;
+}
+
+.nav {
+    height: @nav-height;
+    width: 100%;
+    background: @wet-asphalt;
+    color: @inverse;
+    overflow: hidden;
+    
+    & > .btn {
+        border-radius: 0;
+        color: @inverse;
+        
+        &:first-of-type {
+            text-align: left;
+        }
+        &:last-of-type {
+            text-align: right;
+        }
+    }
+}
+
+.menu-cont {
+    height: @foot-height;
+    display: block;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    position: fixed;
+    bottom: -25px;
+    
+    & > .menu-btn {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        line-height: 20px;
+    }
+}
+
+.tooltip {
+    position: fixed;
+    //top: 0;
+    //left: 0;
+}
+
+.tooltip-inner {
+    background: @wet-asphalt;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    
+    & > .btn {
+        width: 100%;
+    }
+    
+    & > .btn-inverse {
+        border-radius: 0;
+        
+        &:first-of-type {
+            .border-top-radius(@border-radius-large);
+        }
+    }
+    
+    & > .logout-btn {
+        border-top: 1px solid @midnight-blue;
+        .border-bottom-radius(@border-radius-large);
+    }
+}
+
+.content {
+    width: 100%;
+    overflow: scroll;
+}

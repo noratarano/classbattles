@@ -1,0 +1,17 @@
+{
+    "name": "classbattles",
+    "description": "CS147 project",
+    "version": "0.0.1",
+    "private": true,
+
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/noratarano/classbattles"
+    },
+
+    "dependencies": {
+        "express": "3.3.x",
+        "express3-handlebars": "*",
+        "less-middleware": "*"
+    }
+}
