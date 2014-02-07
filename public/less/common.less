@@ -35,13 +35,18 @@ html, body {
     & > .btn {
         border-radius: 0;
         color: @inverse;
-        
-        &:first-of-type {
-            text-align: left;
-        }
-        &:last-of-type {
-            text-align: right;
-        }
+    }
+    
+    & > .nav-left {
+        text-align: left;
+    }
+    
+    & > .nav-right {
+        text-align: right;
+    }
+    
+    & > .nav-middle {
+        text-align: center;
     }
 }
 
@@ -64,8 +69,7 @@ html, body {
 
 .tooltip {
     position: fixed;
-    //top: 0;
-    //left: 0;
+    display: block;
 }
 
 .tooltip-inner {
@@ -76,23 +80,29 @@ html, body {
     
     & > .btn {
         width: 100%;
-    }
-    
-    & > .btn-inverse {
         border-radius: 0;
-        
+
         &:first-of-type {
             .border-top-radius(@border-radius-large);
         }
+
+        &:last-of-type {
+            .border-bottom-radius(@border-radius-large);
+        }
     }
-    
-    & > .logout-btn {
-        border-top: 1px solid @midnight-blue;
-        .border-bottom-radius(@border-radius-large);
-    }
+}
+
+.menu-logout-btn {
+    border-top: 1px solid @midnight-blue;
+    color: @alizarin;
+}
+
+.menu-about-btn {
+    border-top: 1px solid @midnight-blue;
 }
 
 .content {
     width: 100%;
-    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

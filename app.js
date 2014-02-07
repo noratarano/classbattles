@@ -10,6 +10,16 @@ var handlebars = require('express3-handlebars');
 var less = require('less-middleware');
 
 var index = require('./routes/index');
+var login = require('./routes/login');
+var signup = require('./routes/signup');
+var home = require('./routes/home');
+var about = require('./routes/about');
+var challenge = require('./routes/challenge');
+var clas = require('./routes/class');
+var profile = require('./routes/profile');
+var addclass = require('./routes/addclass');
+var leaders = require('./routes/leaders');
+var finalanswer = require('./routes/finalanswer');
 
 var app = express();
 
@@ -43,6 +53,16 @@ if ('development' == app.get('env')) {
 
 // Add routes here
 app.get('/', index.view);
+app.get('/login.html', login.view);
+app.get('/signup.html', signup.view);
+app.get('/home.html', home.view);
+app.get('/about.html', about.view);
+app.get('/challenge.html', challenge.view);
+app.get('/class.html', clas.view);
+app.get('/profile.html', profile.view);
+app.get('/addclass.html', addclass.view);
+app.get('/leaders.html', leaders.view);
+app.get('/finalanswer.html', finalanswer.view);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
