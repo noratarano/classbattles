@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<title>ClassBattles</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" href="images/favicon.ico">
+
+		<!-- Loading Stylesheets -->
+		<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="css/common.css" rel="stylesheet">
+		<link href="css/home.css" rel="stylesheet">
+
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+		<!--[if lt IE 9]>
+		  <script src="js/html5shiv.js"></script>
+		  <script src="js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	
+	<body>
+		<div class="container fill">
+			
+			<div class="row btn-group nav">
+				<a href="/home.html" class="btn btn-inverse nav-left">
+						<span class="fui-arrow-left"></span>
+						<span>home</span>
+				</a>
+				<div class="btn btn-inverse disabled nav-middle">
+					<span>ClassBattles</span>
+				</div>
+				<a href="#" class="btn btn-inverse nav-right hidden">
+					<span class="fui-arrow-right"></span>
+				</a>
+			</div>
+			
+			<div class="row content">
+				<h3>About</h3>
+			</div>
+			
+			<div class="row menu-cont">
+				<div class="btn btn-danger fui-list center-block menu-btn"></div>
+			</div>
+		</div>
+		<!-- /.container -->
+
+		<!-- Load JS here for greater good =============================-->
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="js/jquery.ui.touch-punch.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap-select.js"></script>
+		<script src="js/bootstrap-switch.js"></script>
+		<script src="js/flatui-checkbox.js"></script>
+		<script src="js/flatui-radio.js"></script>
+		<script src="js/jquery.tagsinput.js"></script>
+		<script src="js/jquery.placeholder.js"></script>
+		
+		<script src="js/common.js"></script>
+		<script>
+		    Menu('<div class="btn-group-vertical">\n' +
+				'<a href="/home.html" class="btn btn-sm btn-inverse btn-wide menu-home-btn">Home</a>\n' +
+				'<a href="/profile.html" class="btn btn-sm btn-inverse btn-wide menu-profile-btn">Profile</a>\n' +
+		        '<a href="/" class="btn btn-sm btn-inverse btn-wide menu-logout-btn">Log out</a>\n' +
+		    '</div>');
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,73 @@
+@import "flat-ui/variables";
+@import "flat-ui/mixins";
+
+.content {
+    padding: 10px;
+}
+
+h3 {
+    border-bottom: 1px solid @clouds;
+}
+
+.class-grid {
+    display: table;
+    border-spacing: 10px;
+    border-collapse: separate;
+    table-layout: fixed;
+    width: 100%;
+    padding:0;
+    margin: 0;
+    
+    & > .class-row {
+        display: table-row;
+        padding: 0;
+        margin: 0;
+        border: 1px solid white;
+        
+        & > .btn-cont {
+            display: table-cell;
+            vertical-align: middle; 
+            height: 120px;
+        
+            .clearfix();
+            
+            & > a {
+                color: @inverse;
+            }
+        }
+    }
+}
+
+.race {
+    width: 100%;
+    background: @clouds;
+    padding: 10px;
+    font-size: 12px;
+    border-right: 2px solid @nephritis;
+    
+    & > .race-me {
+        display: block;
+        margin-left: 50px;
+        color: @alizarin;
+    }
+    
+    & > .race-other {
+        display: block;
+        margin-left: 25px;
+        color: @amethyst;
+    }
+}
+
+.race-pts {
+    & > .race-pts-left {
+        text-align: left;
+        width: 50%;
+        float: left;
+    }
+    
+    & > .race-pts-right {
+        text-align: right;
+        width: 50%;
+        float: right;
+    }
+}
