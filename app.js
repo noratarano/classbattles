@@ -10,7 +10,7 @@ var handlebars = require('express3-handlebars');
 var less = require('less-middleware');
 
 var index = require('./routes/index');
-var login = require('./routes/login');
+var login = require('./routes/login.js');
 var signup = require('./routes/signup');
 var home = require('./routes/home');
 var about = require('./routes/about');
