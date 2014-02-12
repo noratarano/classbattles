@@ -241,6 +241,9 @@ exports.view.profile = function(req, res) {
 };
 
 exports.view.addclass = function(req, res) {
+    function sortAlpha(a,b) {
+        return a.class.name.localeCompare(b.class.name);
+    }
     var userObject = findUser(req.params.username);
     if (userObject) {
         var classes = [];
@@ -252,8 +255,9 @@ exports.view.addclass = function(req, res) {
                     break;
                 }
             }
-            classes.push({ class: { name: Classes[c].class.name, disable: disable } });
+            classes.push({ class: { name: Classes[c].class.name, description: Classes[c].class.description, disable: disable } });
         }
+        classes.sort(sortAlpha);
         res.render('addclass', { user: userObject, classes: classes });
     } else {
         res.render('login');
