@@ -44,23 +44,21 @@ if ('development' == app.get('env')) {
 // Routes
 app.get('/', index.view.index);
 app.get('/login', index.view.login);
+app.get('/logout', index.view.index);
 app.get('/signup', index.view.signup);
+app.get('/challenge', index.view.challenge);
+app.get('/answer', index.view.finalanswer);
+app.get('/about', index.view.about);
+
 app.get('/api/login', index.api.login);
+app.get('/api/:username/class/add', index.api.addclass);
 
 app.get('/:username/home', index.view.home);
-app.get('/:username/class/add', index.view.class);
+app.get('/:username/profile', index.view.profile);
+app.get('/:username/class/add', index.view.addclass);
 app.get('/:username/class/:classname/leaderboard', index.view.leaders);
 app.get('/:username/class/:classname/profile', index.view.classprofile);
 app.get('/:username/class/:classname', index.view.class);
-app.get('/:username/profile', index.view.profile);
-
-app.get('/challenge.html', index.view.challenge);
-app.get('/challenge', index.view.challenge);
-app.get('/answer', index.view.finalanswer);
-
-// app.get('/about.html', about.view);
-// app.get('/class.html', clas.view);
-// app.get('/addclass.html', addclass.view);
 
 
 http.createServer(app).listen(app.get('port'), function(){

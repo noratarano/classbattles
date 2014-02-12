@@ -60,6 +60,16 @@
 			</div>
 		</div>
 		<!-- /.container -->
+		
+		<div class="menu-guide hidden">
+			<div class="btn-group-vertical">
+				<a href="/{{user.username}}/home" class="btn btn-sm btn-inverse btn-wide menu-home-btn">Home</a>
+				<a href="/{{user.username}}/class/{{user.classname}}/leaderboard" class="btn btn-sm btn-inverse btn-wide menu-leaders-btn">Leaderboard</a>
+				<a href="/{{user.username}}/profile" class="btn btn-sm btn-inverse btn-wide menu-leaders-btn">Profile</a>
+		        <a href="/logout" class="btn btn-sm btn-inverse btn-wide menu-logout-btn">Log out</a>
+		        <a href="/about" class="btn btn-sm btn-inverse btn-wide menu-about-btn">About</a>
+		    </div>
+		</div>
 
 		<!-- Load JS here for greater good =============================-->
 		<script src="/js/lib/jquery-1.8.3.min.js"></script>
@@ -74,14 +84,6 @@
 		<script src="/js/lib/jquery.placeholder.js"></script>
 		
 		<script src="/js/common.js"></script>
-		<script>
-		    Menu('<div class="btn-group-vertical">\n' +
-				'<a href="/home.html" class="btn btn-sm btn-inverse btn-wide menu-home-btn">Home</a>\n' +
-				'<a href="/leaders.html" class="btn btn-sm btn-inverse btn-wide menu-leaders-btn">Leaderboard</a>\n' +
-		        '<a href="/" class="btn btn-sm btn-inverse btn-wide menu-logout-btn">Log out</a>\n' +
-		        '<a href="/about.html" class="btn btn-sm btn-inverse btn-wide menu-about-btn">About</a>\n' +
-		    '</div>');
-		</script>
 	</body>
 
 </html>

@@ -12,13 +12,12 @@ $(function() {
     $('.nav-middle').css({'width': (window_w - 2*max_w) + 'px'});
     $('.nav-left').css({'width': max_w + 'px'});
     $('.nav-right').css({'width': max_w + 'px'});    
-});
-
-function Menu(menuHTML) {
+    
+    // Menu
     $(".menu-btn").tooltip({
-        title: menuHTML,
+        title: $('.menu-guide').html(),
         placement : 'top',
         trigger: 'click',
         html: true
     });
-}
+});

@@ -91,6 +91,8 @@ var Classes = [
 exports.view = {};
 exports.api = {};
 
+// View
+
 exports.view.index = function(req, res) {
     req.session.username = null;
     res.render('index', {});
@@ -101,17 +103,6 @@ exports.view.login = function(req, res) {
     res.render('login', {});
 };
 
-exports.api.login = function(req, res) {
-    var username = req.query.username;
-    var userObject = findUser(username);
-    if (userObject) {
-        req.session.username = userObject.username;
-        res.redirect('/'+username+'/home');
-    } else {
-        res.redirect('/login');
-    }
-};
-
 exports.view.logout = function(req, res) {
     req.session.username = null;
     res.render('index', {});
@@ -119,6 +110,11 @@ exports.view.logout = function(req, res) {
 
 exports.view.signup = function(req, res) {
     res.render('signup', {});
+};
+
+exports.view.about = function(req, res) {
+    var userObject = findUser(req.session.username);
+    res.render('about', {user: userObject});
 };
 
 exports.view.home = function(req, res) {
@@ -179,7 +175,6 @@ exports.view.finalanswer = function(req, res) {
         correctAnswer: question.correctAnswer,
         tags: question.tags
     };
-    //console.log(data.selected);
     res.render('finalanswer', data);
 };
 
@@ -197,7 +192,6 @@ exports.view.leaders = function(req, res) {
 }
 
 exports.view.classprofile = function(req, res) {
-    console.log('PROFILE');
     var username = req.params.username;
     if (!req.session.username) {
         res.redirect('/login');
@@ -246,6 +240,77 @@ exports.view.profile = function(req, res) {
     }
 };
 
+exports.view.addclass = function(req, res) {
+    var userObject = findUser(req.params.username);
+    if (userObject) {
+        var classes = [];
+        for (c in Classes) {
+            var disable = false;
+            for (uc in userObject.classes) {
+                if (userObject.classes[uc].class.name == Classes[c].class.name) {
+                    disable = true;
+                    break;
+                }
+            }
+            classes.push({ class: { name: Classes[c].class.name, disable: disable } });
+        }
+        res.render('addclass', { user: userObject, classes: classes });
+    } else {
+        res.render('login');
+    }
+}
+
+// API
+
+exports.api.login = function(req, res) {
+    var username = req.query.username;
+    var userObject = findUser(username);
+    if (userObject) {
+        req.session.username = userObject.username;
+        res.redirect('/'+username+'/home');
+    } else {
+        res.redirect('/login');
+    }
+};
+
+exports.api.addclass = function(req, res) {
+    var username = req.params.username;
+    var u = findUserIndex(username);
+    var classesToAdd = req.query.classes;
+    var userClasses = Users[u].user.classes;
+    var count = req.query.count;
+    req.params.username = username;
+    if (count == 1) {
+        var dontAdd = false;
+        var classToAdd = classesToAdd;
+        console.log(classesToAdd);
+        for (uc in userClasses) {
+            if (classToAdd == userClasses[uc].class.name) {
+                dontAdd = true;
+            }
+        }
+        if (!dontAdd) {
+            Users[u].user.classes.push(UserClass(classToAdd));
+            req.params.classname = classToAdd;
+            exports.view.class(req, res);
+            return;
+        }
+    } else {
+        for (var c = 0; c < count; c++) {
+            var dontAdd = false;
+            var classToAdd = classesToAdd[c];
+            for (uc in userClasses) {
+                if (classToAdd == userClasses[uc].class.name) {
+                    dontAdd = true;
+                }
+            }
+            if (!dontAdd) {
+                Users[u].user.classes.push(UserClass(classToAdd));
+            }
+        }
+    }
+     exports.view.home(req, res);
+};
 
 // Controller Helpers /////////////////////////////////////////////////////////
 
@@ -263,6 +328,16 @@ function findUser(username) {
         var userObject = Users[user].user;
         if (userObject.username == username) {
             return userObject;
+        }
+    }
+    return null;
+}
+
+function findUserIndex(username) {
+    for (user in Users) {
+        var userObject = Users[user].user;
+        if (userObject.username == username) {
+            return user;
         }
     }
     return null;
@@ -320,6 +395,15 @@ function HistoricalEntry(timestamp, question, correct) {
         timestamp: timestamp,
         question: question,
         correct: correct
+    }};
+}
+
+function UserClass(classname) {
+    return { class: {
+        name: classname,
+        classname: classname,
+        totalPoints: 0,
+        history: []
     }};
 }
 
