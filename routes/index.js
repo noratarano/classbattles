@@ -119,7 +119,9 @@ exports.view.about = function(req, res) {
 
 exports.view.home = function(req, res) {
     var username = req.params.username;
-    if (username != req.session.username) {
+    if (!username && req.params.username) {
+        res.redirect('/'+req.params.username+'/home');
+    } else if (username != req.session.username) {
     // not logged in or wrong user
         res.redirect('/login');
     } else {

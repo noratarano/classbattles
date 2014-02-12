@@ -54,6 +54,8 @@ app.get('/api/login', index.api.login);
 app.get('/api/signup', index.api.signup);
 app.get('/api/:username/class/add', index.api.addclass);
 
+app.get('/home', index.view.home);
+
 app.get('/:username/home', index.view.home);
 app.get('/:username/profile', index.view.profile);
 app.get('/:username/class/add', index.view.addclass);
