@@ -51,6 +51,7 @@ app.get('/answer', index.view.finalanswer);
 app.get('/about', index.view.about);
 
 app.get('/api/login', index.api.login);
+app.get('/api/signup', index.api.signup);
 app.get('/api/:username/class/add', index.api.addclass);
 
 app.get('/:username/home', index.view.home);

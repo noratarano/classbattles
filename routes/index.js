@@ -273,13 +273,24 @@ exports.api.login = function(req, res) {
     }
 };
 
+exports.api.signup = function(req, res) {
+    var username = req.query.username;
+    var email = req.query.email;
+    var userObject = findUser(username);
+    if (!userObject) {
+        userObject = User(username, email);
+        Users.push(userObject);
+    }
+    req.session.username = username;
+    res.redirect('/'+username+'/home');
+};
+
 exports.api.addclass = function(req, res) {
     var username = req.params.username;
     var u = findUserIndex(username);
     var classesToAdd = req.query.classes;
     var userClasses = Users[u].user.classes;
     var count = req.query.count;
-    req.params.username = username;
     if (count == 1) {
         var dontAdd = false;
         var classToAdd = classesToAdd;
@@ -291,8 +302,7 @@ exports.api.addclass = function(req, res) {
         }
         if (!dontAdd) {
             Users[u].user.classes.push(UserClass(classToAdd));
-            req.params.classname = classToAdd;
-            exports.view.class(req, res);
+            res.redirect('/'+[username, 'class', classToAdd].join('/'));
             return;
         }
     } else {
@@ -309,7 +319,7 @@ exports.api.addclass = function(req, res) {
             }
         }
     }
-     exports.view.home(req, res);
+    res.redirect('/' + username + '/home');
 };
 
 // Controller Helpers /////////////////////////////////////////////////////////
@@ -404,6 +414,15 @@ function UserClass(classname) {
         classname: classname,
         totalPoints: 0,
         history: []
+    }};
+}
+
+function User(username, email) {
+    return { user: {
+        username: username, 
+        email: email,
+        about: '',
+        classes: []
     }};
 }
 
