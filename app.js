@@ -10,16 +10,6 @@ var handlebars = require('express3-handlebars');
 var less = require('less-middleware');
 
 var index = require('./routes/index');
-var login = require('./routes/login');
-var signup = require('./routes/signup');
-var home = require('./routes/home');
-var about = require('./routes/about');
-var challenge = require('./routes/challenge');
-var clas = require('./routes/class');
-var profile = require('./routes/profile');
-var addclass = require('./routes/addclass');
-var leaders = require('./routes/leaders');
-var finalanswer = require('./routes/finalanswer');
 
 var app = express();
 
@@ -51,18 +41,27 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-// Add routes here
-app.get('/', index.view);
-app.get('/login.html', login.view);
-app.get('/signup.html', signup.view);
-app.get('/home.html', home.view);
-app.get('/about.html', about.view);
-app.get('/challenge.html', challenge.view);
-app.get('/class.html', clas.view);
-app.get('/profile.html', profile.view);
-app.get('/addclass.html', addclass.view);
-app.get('/leaders.html', leaders.view);
-app.get('/finalanswer.html', finalanswer.view);
+// Routes
+app.get('/', index.view.index);
+app.get('/login', index.view.login);
+app.get('/signup', index.view.signup);
+app.get('/api/login', index.api.login);
+
+app.get('/:username/home', index.view.home);
+app.get('/:username/class/add', index.view.class);
+app.get('/:username/class/:classname/leaderboard', index.view.leaders);
+app.get('/:username/class/:classname/profile', index.view.classprofile);
+app.get('/:username/class/:classname', index.view.class);
+app.get('/:username/profile', index.view.profile);
+
+app.get('/challenge.html', index.view.challenge);
+app.get('/challenge', index.view.challenge);
+app.get('/answer', index.view.finalanswer);
+
+// app.get('/about.html', about.view);
+// app.get('/class.html', clas.view);
+// app.get('/addclass.html', addclass.view);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

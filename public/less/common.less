@@ -1,7 +1,7 @@
 @import "flat-ui/flat-ui";
 
-@nav-height: @btn-line-height-lg;
-@foot-height: @btn-line-height-lg;
+@nav-height: ceil(@btn-line-height-lg * @btn-font-size-lg) + 10px;
+@foot-height: ceil(@btn-line-height-lg * @btn-font-size-lg) + 10px;
 
 html, body {
     height: 100%;
@@ -9,10 +9,10 @@ html, body {
 }
 
 .container {
-    height: 100%;
     padding: 0;
     margin: 0;
-    width: 100%;
+    
+    .square(100%);
 }
 
 .fill { 
@@ -25,12 +25,24 @@ html, body {
     margin: 0;
 }
 
+.btn {
+    cursor: pointer;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+// Nav ////////////////////////////////////////////////////////////////////////
+
 .nav {
     height: @nav-height;
-    width: 100%;
     background: @wet-asphalt;
     color: @inverse;
     overflow: hidden;
+    position: fixed;
+    width: 100%;
+    top: 0;
     
     & > .btn {
         border-radius: 0;
@@ -50,14 +62,16 @@ html, body {
     }
 }
 
+// Menu ///////////////////////////////////////////////////////////////////////
+
 .menu-cont {
     height: @foot-height;
     display: block;
     width: 100%;
     text-align: center;
     overflow: hidden;
-    position: fixed;
-    bottom: -25px;
+    position: relative;
+    bottom: 0;
     
     & > .menu-btn {
         height: 60px;
@@ -101,8 +115,51 @@ html, body {
     border-top: 1px solid @midnight-blue;
 }
 
+// Content ////////////////////////////////////////////////////////////////////
+
 .content {
     width: 100%;
+    height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
+    position: relative;
+    top: @nav-height;
 }
+
+// Leader /////////////////////////////////////////////////////////////////////
+
+.leader-tr {
+    cursor: pointer;
+}
+
+.leader-td {
+    vertical-align: middle;
+}
+    
+.leader-points {
+    width: 50px;
+    text-align: right;
+}
+
+.leader-name {
+    width: 100%;
+}
+
+.leader-place {
+    text-align: right;
+}
+
+// Class Profile
+
+.classprofile-btn-cont {
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+

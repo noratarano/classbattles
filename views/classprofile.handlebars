@@ -23,23 +23,36 @@
 		<div class="container fill">
 			
 			<div class="row btn-group nav">
-				<a href="/{{user.username}}/home" class="btn btn-inverse nav-left">
-					<span class="fui-arrow-left"></span>
-					<span>home</span>
+				<a href="/{{user.username}}/class/{{user.classname}}/leaderboard" class="btn btn-inverse nav-left">
+						<span class="fui-arrow-left"></span>
+						<span>leaders</span>
 				</a>
 				<div class="btn btn-inverse disabled nav-middle">
 					<span>ClassBattles</span>
 				</div>
-				<a href="#" class="btn btn-inverse nav-right invisible">
-					<span class="fui-arrow-right"></span>
+				{{#if self}}
+				<a href="#" class="btn btn-inverse nav-right">
+					<span>edit</span>
+					<span class="fui-new"></span>
 				</a>
+				{{else}}
+				<a href="#" class="btn btn-inverse nav-right invisible">
+				</a>
+				{{/if}}
 			</div>
 			
 			<div class="row content">
-				<h3>{{class.name}}</h3>
-				<a href="/challenge.html" class="center-block">Challenge</a>
-				<a href="/{{user.username}}/class/{{class.name}}/leaderboard" class="center-block">Leaderboard</a>
-				<a href="/{{user.username}}/class/{{class.name}}/profile" class="center-block">Class Profile</a>
+				<h3>{{profile.username}}'s Profile</h3>
+				{{#if self}}{{else}}
+				<div class="classprofile-btn-cont">
+					<a href="/challenge.html" class="btn btn-primary">Challenge</a>
+				</div>
+				{{/if}}
+				<div class="chart">
+					<!-- TODO: chart -->
+				</div>
+				<h6>About Me:</h6>
+				<blockquote>{{profile.about}}</blockquote>
 			</div>
 			
 			<div class="row menu-cont">
@@ -64,9 +77,7 @@
 		<script>
 		    Menu('<div class="btn-group-vertical">\n' +
 				'<a href="/home.html" class="btn btn-sm btn-inverse btn-wide menu-home-btn">Home</a>\n' +
-				'<a href="/challenge.html" class="btn btn-sm btn-inverse btn-wide menu-challenge-btn">Challenge</a>\n' +
 				'<a href="/leaders.html" class="btn btn-sm btn-inverse btn-wide menu-leaders-btn">Leaderboard</a>\n' +
-				'<a href="/profile.html" class="btn btn-sm btn-inverse btn-wide menu-profile-btn">Profile</a>\n' +
 		        '<a href="/" class="btn btn-sm btn-inverse btn-wide menu-logout-btn">Log out</a>\n' +
 		        '<a href="/about.html" class="btn btn-sm btn-inverse btn-wide menu-about-btn">About</a>\n' +
 		    '</div>');

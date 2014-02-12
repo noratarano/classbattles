@@ -1,25 +1,31 @@
-@import "flat-ui/variables";
-@import "flat-ui/mixins";
+// Index //////////////////////////////////////////////////////////////////////
+
+@import 'flat-ui/mixins';
+@import 'flat-ui/variables';
 
 @race-height: 100px;
+@logo-height: 320px;
+@logo-ratio: 1/1.5;
 
 .index-logo-cont {
-    width: 100%;
     display: table;
+    
+    .square(@logo-height);
     
     & > .index-logo {
         display: table-cell;
         vertical-align: middle;
+        height: @logo-height * @logo-ratio;
         
         & > .index-logo-text {
             background: @brand-secondary;
             color: @inverse;
             border-radius: 50%;
-            width: 200px;
             margin: 0 auto;
             text-align: center;
             display: block;
             
+            .square(@logo-height * @logo-ratio);
             .rotate(-45deg);
             
             & > span {

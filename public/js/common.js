@@ -1,4 +1,6 @@
 $(function() {
+    var username = null;
+    
     // Content
     var nav_h = $('.nav').height();
     var window_h = $(window).height();
@@ -9,7 +11,7 @@ $(function() {
     var window_w = $(window).width();
     $('.nav-middle').css({'width': (window_w - 2*max_w) + 'px'});
     $('.nav-left').css({'width': max_w + 'px'});
-    $('.nav-right').css({'width': max_w + 'px'});
+    $('.nav-right').css({'width': max_w + 'px'});    
 });
 
 function Menu(menuHTML) {

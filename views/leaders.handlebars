@@ -5,17 +5,17 @@
 		<title>ClassBattles</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="shortcut icon" href="images/favicon.ico">
+		<link rel="shortcut icon" href="/images/favicon.ico">
 
 		<!-- Loading Stylesheets -->
-		<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
-		<link href="css/common.css" rel="stylesheet">
-		<link href="css/home.css" rel="stylesheet">
+		<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="/css/common.css" rel="stylesheet">
+		<link href="/css/home.css" rel="stylesheet">
 
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
 		<!--[if lt IE 9]>
-		  <script src="js/html5shiv.js"></script>
-		  <script src="js/respond.min.js"></script>
+		  <script src="/js/lib/html5shiv.js"></script>
+		  <script src="/js/lib/respond.min.js"></script>
 		<![endif]-->
 	</head>
 	
@@ -23,21 +23,42 @@
 		<div class="container fill">
 			
 			<div class="row btn-group nav">
-				<a href="/class.html" class="btn btn-inverse nav-left">
+				<a href="/{{username}}/class/{{classname}}" class="btn btn-inverse nav-left">
 						<span class="fui-arrow-left"></span>
-						<span>class</span>
+						<span>{{classname}}</span>
 				</a>
 				<div class="btn btn-inverse disabled nav-middle">
 					<span>ClassBattles</span>
 				</div>
-				<a href="#" class="btn btn-inverse nav-right hidden">
+				<a href="#" class="btn btn-inverse nav-right invisible">
 					<span class="fui-arrow-right"></span>
 				</a>
 			</div>
 			
 			<div class="row content">
-				<h3>Leaderboard</h3>
-				<a href="/challenge.html" class="center-block">Challenge</a>
+				<h3>{{classname}} Leaderboard</h3>
+				<table class="table leader-table">
+					<thead>
+						<tr>
+							<th class="leader-td leader-place"><small></small></th>
+							<th class="leader-td leader-name"><small>Name</small></th>
+							<th class="leader-td leader-points"><small>Points</small></th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each leaderboard}}
+						{{#if leader.highlight}}
+						<tr id="leader-hl" class="leader-tr">
+						{{else}}
+						<tr class="leader-tr">
+						{{/if}}
+							<td class="leader-td leader-place"><small>{{place @index}}</small></td>
+							<td class="leader-td leader-name"><small>{{leader.username}}</small></td>
+							<td class="leader-td leader-points"><small>{{leader.totalPoints}}</small></td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
 			</div>
 			
 			<div class="row menu-cont">
@@ -47,18 +68,18 @@
 		<!-- /.container -->
 
 		<!-- Load JS here for greater good =============================-->
-		<script src="js/jquery-1.8.3.min.js"></script>
-		<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-		<script src="js/jquery.ui.touch-punch.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/bootstrap-select.js"></script>
-		<script src="js/bootstrap-switch.js"></script>
-		<script src="js/flatui-checkbox.js"></script>
-		<script src="js/flatui-radio.js"></script>
-		<script src="js/jquery.tagsinput.js"></script>
-		<script src="js/jquery.placeholder.js"></script>
+		<script src="/js/lib/jquery-1.8.3.min.js"></script>
+		<script src="/js/lib/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="/js/lib/jquery.ui.touch-punch.min.js"></script>
+		<script src="/js/lib/bootstrap.min.js"></script>
+		<script src="/js/lib/bootstrap-select.js"></script>
+		<script src="/js/lib/bootstrap-switch.js"></script>
+		<script src="/js/lib/flatui-checkbox.js"></script>
+		<script src="/js/lib/flatui-radio.js"></script>
+		<script src="/js/lib/jquery.tagsinput.js"></script>
+		<script src="/js/lib/jquery.placeholder.js"></script>
 		
-		<script src="js/common.js"></script>
+		<script src="/js/common.js"></script>
 		<script>
 		    Menu('<div class="btn-group-vertical">\n' +
 				'<a href="/home.html" class="btn btn-sm btn-inverse btn-wide menu-home-btn">Home</a>\n' +
@@ -67,6 +88,21 @@
 		        '<a href="/" class="btn btn-sm btn-inverse btn-wide menu-logout-btn">Log out</a>\n' +
 		        '<a href="/about.html" class="btn btn-sm btn-inverse btn-wide menu-about-btn">About</a>\n' +
 		    '</div>');
+			
+			$(function() {
+				$('tr').click(function(e) {
+					var username = $(this).find('.leader-name').text();
+					var classname = $($('.nav-left').find('span')[1]).text();
+					window.location = [window.location.origin, username, 'class', classname, 'profile'].join('/');
+				});
+				setTimeout(function() {
+					$('#leader-hl').animate({ backgroundColor: '#2ECC71' }, 200, function() {
+						setTimeout(function() {
+							$('#leader-hl').animate({ backgroundColor: 'transparent' }, 500) }, 100);
+						}
+					);
+				}, 0);
+			});
 		</script>
 	</body>
 
