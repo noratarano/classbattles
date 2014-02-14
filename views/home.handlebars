@@ -4,7 +4,7 @@
 	<head>
 		<title>ClassBattles</title>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 		<link rel="shortcut icon" href="/images/favicon.ico">
 
 		<!-- Loading Stylesheets -->
@@ -36,7 +36,7 @@
 			</div>
 			
 			<div class="row content">
-				<h3>{{user.username}}'s Classes</h3>
+			<h4>{{user.username}}'s Classes</h4>
 				<div class="row class-grid">
 					{{#if user.classes}}
 					{{#foreach user.classes}}
@@ -83,7 +83,7 @@
 		
 		<div class="menu-guide hidden">
 			<div class="btn-group-vertical">
-				<a href="/{{user.username}}/class/add" class="btn btn-sm btn-inverse btn-wide menu-profile-btn">Add a class</a>
+				<a href="/{{user.username}}/class/add" class="btn btn-sm btn-inverse btn-wide menu-addclass-btn">Add a class</a>
 				<a href="/{{user.username}}/profile" class="btn btn-sm btn-inverse btn-wide menu-profile-btn">Profile</a>
 		        <a href="/logout" class="btn btn-sm btn-inverse btn-wide menu-logout-btn">Log out</a>
 		        <a href="/about" class="btn btn-sm btn-inverse btn-wide menu-about-btn">About</a>

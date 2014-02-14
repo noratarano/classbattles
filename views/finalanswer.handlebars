@@ -4,7 +4,7 @@
 	<head>
 		<title>ClassBattles</title>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 		<link rel="shortcut icon" href="/images/favicon.ico">
 
 		<!-- Loading Stylesheets -->
@@ -37,7 +37,7 @@
 			</div>
 			
 			<div class="row content">
-				<h3>{{#if correct}}Correct!
+			<h4>{{#if correct}}Correct!
 					<span class="fui-check" style="color: #27AE60"></span>
 					{{else}}
 						{{#if timedOut}}
@@ -47,7 +47,7 @@
 						{{/if}}
 					<span class="fui-cross" style="color: #E74C3C"></span>
 					{{/if}}
-				</h3>
+				</h4>
 				{{#if correct}}
 				<h4>You responded:</h4>
 				<blockquote>

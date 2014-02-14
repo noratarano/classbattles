@@ -1,95 +1,18 @@
 // Controller /////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-// Data ///////////////////////////////////////////////////////////////////////
 
-var Users = [
-    { user: {
-        username: 'Nora',
-        email: 'ntarano@stanford.edu',
-        about: 'EE Masters student at Stanford University.',
-        classes: [{ class: { name: 'CS 147', classname: 'CS 147', totalPoints: 10 } }]
-    }},
-    { user: {
-        username: 'Diana', 
-        email: 'bdiana@stanford.edu',
-        about: 'Awesome possum. Loves walks on the beach and being awesome, in general.',
-        classes: [
-            { class: {
-                name: 'CS 147',
-                classname: 'CS 147',
-                totalPoints: 15,
-                history: []
-            }}
-        ]
-    }},
-    { user: {
-        username: 'Ish', 
-        email: 'menjivar@stanford.edu',
-        about: 'CS Junior at Stanford University.',
-        classes: [{ class: { name: 'CS 147', classname: 'CS 147', totalPoints: 8 } }]
-    }}
-];
-var Classes = [
-    { class: {
-        name: 'CS 147',
-        description: 'Introduction to Human Computer Interaction',
-        tags: ['js', 'html', 'css', 'servers'],
-        questions: [{
-            id: '#0',
-            question: 'What does CSS stand for?',
-            correctAnswer: 'Cascading Style Sheets',
-            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
-            tags: [{tag: 'css'},{tag: 'servers'}]
-        },{
-            id: '#1',
-            question: 'What does HTML stand for?',
-            correctAnswer: 'Hypertext Markup Language',
-            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
-            tags: ['html']
-        }]
-    }}, { class: {
-        name: 'CS 154',
-        description: 'CS Theory',
-        tags: ['js', 'html', 'css', 'servers'],
-        questions: [{
-            id: '#0',
-            question: 'What does CSS stand for?',
-            correctAnswer: 'Cascading Style Sheets',
-            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
-            tags: [{tag: 'css'},{tag: 'servers'}]
-        },{
-            id: '#1',
-            question: 'What does HTML stand for?',
-            correctAnswer: 'Hypertext Markup Language',
-            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
-            tags: ['html']
-        }]
-    }}, { class: {
-        name: 'CS 309A',
-        description: 'Cloud Computing',
-        tags: ['marketing', 'tech', 'servers'],
-        questions: [{
-            id: '#0',
-            question: 'What does CSS stand for?',
-            correctAnswer: 'Cascading Style Sheets',
-            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
-            tags: [{tag: 'css'},{tag: 'servers'}]
-        },{
-            id: '#1',
-            question: 'What does HTML stand for?',
-            correctAnswer: 'Hypertext Markup Language',
-            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
-            tags: ['html']
-        }]
-    }}
-];
+var Data = require('./data');
+var Users = Data.Users;
+var Colors = Data.Colors;
+var Classes = Data.Classes;
 
 
 // Routing Functions //////////////////////////////////////////////////////////
 
 exports.view = {};
 exports.api = {};
+
 
 // View
 
@@ -137,15 +60,13 @@ exports.view.home = function(req, res) {
 };
 
 exports.view.class = function(req, res) {
-    var username = req.params.username;
-    var classname = req.params.classname;
-    var userObject = findUser(username);
+    var username        = req.params.username;
+    var classname       = req.params.classname;
+    var userObject      = findUser(username);
     var userClassObject = findUserClass(userObject, classname);
-    var classObject = findClass(classname);
-    userClassObject.tags = classObject.tags;
     var data = {
         user: userObject,
-        class: userClassObject
+        'class': userClassObject
     }
     
     res.render('class', data);
@@ -153,13 +74,16 @@ exports.view.class = function(req, res) {
 
 exports.view.challenge = function(req, res) {
     var questionObject = Classes[0].class.questions[0];   // TODO
+	var options = questionObject.options;
+	var shuffledOptions = shuffle(options);
     var question = {
         id: questionObject.id,
         question: questionObject.question,
-        optionA: questionObject.incorrectAnswers[0],    // TODO make random
-        optionB: questionObject.incorrectAnswers[2],
-        optionC: questionObject.correctAnswer,
-        optionD: questionObject.incorrectAnswers[1],
+        optionA: shuffledOptions[0],
+        optionB: shuffledOptions[1],
+        optionC: shuffledOptions[2],
+        optionD: shuffledOptions[3],
+		correctAnswer: questionObject.answer,
         tags: questionObject.tags
     }
     res.render('challenge', question);
@@ -188,35 +112,27 @@ exports.view.leaders = function(req, res) {
         classname: classname,
         username: username,
         leaderboard: leaderboard,
-        helpers: { place: leaderPlace }
+        helpers: { place: leaderPlace, totalPoints: totalPoints }
     }
     res.render('leaders', data);
 }
 
 exports.view.classprofile = function(req, res) {
-    var username = req.params.username;
     if (!req.session.username) {
         res.redirect('/login');
     } else {
         var classname = req.params.classname;
         
         var userObject = findUser(req.session.username);
-        var profileObject = findUser(username);
-        
-        var userClassObject = findUserClass(userObject, classname);
-        var profileClassObject = findUserClass(profileObject, classname);
-        
-        if (profileClassObject) {
-            userClassObject.username = userObject.username;
-            profileClassObject.username = profileObject.username;
-            profileClassObject.about = profileObject.about;
+        var profileObject = findUser(req.params.username);
+        if (profileObject) {
             var data = { 
-                user: userClassObject, 
-                profile: profileClassObject,
-                self: userClassObject.username == profileClassObject.username,
+                user: userObject, 
+                profile: profileObject,
+                self: userObject.username == profileObject.username,
                 helpers: { foreach: foreach }
             };
-            res.render('classprofile', data);
+            res.render('profile', data);
         } else {
             res.redirect('/login');
         }
@@ -224,13 +140,14 @@ exports.view.classprofile = function(req, res) {
 };
 
 exports.view.profile = function(req, res) {
-    var username = req.params.username;
-    if (username == req.session.username) {
+	var username = req.session.username;
+    if (username) {
         var userObject = findUser(username);
         if (userObject) {
             var data = { 
                 user: userObject,
                 profile: userObject,
+				self: true,
                 helpers: { foreach: foreach } 
             };
             res.render('profile', data);
@@ -257,14 +174,15 @@ exports.view.addclass = function(req, res) {
                     break;
                 }
             }
-            classes.push({ class: { name: Classes[c].class.name, description: Classes[c].class.description, disable: disable } });
+            classes.push({ 'class': { name: Classes[c].class.name, description: Classes[c].class.description, disable: disable } });
         }
         classes.sort(sortAlpha);
         res.render('addclass', { user: userObject, classes: classes });
     } else {
         res.render('login');
     }
-}
+};
+
 
 // API
 
@@ -300,7 +218,6 @@ exports.api.addclass = function(req, res) {
     if (count == 1) {
         var dontAdd = false;
         var classToAdd = classesToAdd;
-        console.log(classesToAdd);
         for (uc in userClasses) {
             if (classToAdd == userClasses[uc].class.name) {
                 dontAdd = true;
@@ -327,6 +244,22 @@ exports.api.addclass = function(req, res) {
     }
     res.redirect('/' + username + '/home');
 };
+
+exports.api.classes = function(req, res) {
+    var username = req.params.username;
+    var data = {
+        classes: null,
+        colors: null
+    };
+    if (req.session.username) {
+        data.classes = findUser(username).classes;
+        data.colors = Colors;
+    } else {
+        res.redirect('/login');
+    }
+    res.send(data);
+};
+
 
 // Controller Helpers /////////////////////////////////////////////////////////
 
@@ -383,7 +316,7 @@ function findClass(classname) {
 
 function Leaderboard(classname, size, username) {
     function sortDescending(a,b) {
-        return b.leader.totalPoints-a.leader.totalPoints;
+        return totalPoints(b.leader)-totalPoints(a.leader);
     }
     
     var students = [];
@@ -415,12 +348,22 @@ function HistoricalEntry(timestamp, question, correct) {
 }
 
 function UserClass(classname) {
-    return { class: {
-        name: classname,
-        classname: classname,
-        totalPoints: 0,
-        history: []
-    }};
+    var classObject = findClass(classname);
+    var userClassObject = null;
+    if (classObject) {
+        // setup user class object
+        userClassObject = { 'class': {
+            name: classObject.name,
+            classname: classObject.classname,
+            tags: classObject.tags,
+            history: []
+        }};
+        // add and init points properties to tags
+        for (t in userClassObject.class.tags) {
+            userClassObject.class.tags[t].points = 0;
+        }
+    }
+    return userClassObject;
 }
 
 function User(username, email) {
@@ -428,9 +371,17 @@ function User(username, email) {
         username: username, 
         email: email,
         about: '',
+        online: true,
         classes: []
     }};
 }
+
+//+ Jonas Raoni Soares Silva
+//@ http://jsfromhell.com/array/shuffle [v1.0]
+function shuffle(o){ //v1.0
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
 
 // Handlebars Helpers /////////////////////////////////////////////////////////
 
@@ -443,12 +394,21 @@ function foreach(arr, options) {
         item.$last  = index === arr.length-1;
 		item.$even  = index % 2 === 0;
 		item.$odd   = index % 2 === 1;
+        item.$total = arr.length;
         return options.fn(item);
     }).join('');
 }
 
 function leaderPlace(index) {
     return index+1;
+}
+
+function totalPoints(leader) {
+    var pts = 0;
+    for (var i = 0; i < leader.tags.length; i++) {
+        pts += leader.tags[i].points;
+    }
+    return pts;
 }
 
 

@@ -4,7 +4,7 @@
 	<head>
 		<title>ClassBattles</title>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 		<link rel="shortcut icon" href="/images/favicon.ico">
 
 		<!-- Loading Stylesheets -->
@@ -36,7 +36,7 @@
 			</div>
 			
 			<div class="row content">
-				<h3>{{classname}} Leaderboard</h3>
+			<h4>{{classname}} Leaderboard</h4>
 				<table class="table leader-table">
 					<thead>
 						<tr>
@@ -54,7 +54,7 @@
 						{{/if}}
 							<td class="leader-td leader-place"><small>{{place @index}}</small></td>
 							<td class="leader-td leader-name"><small>{{leader.username}}</small></td>
-							<td class="leader-td leader-points"><small>{{leader.totalPoints}}</small></td>
+							<td class="leader-td leader-points"><small>{{totalPoints leader}}</small></td>
 						</tr>
 						{{/each}}
 					</tbody>

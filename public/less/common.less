@@ -4,8 +4,6 @@
 @foot-height: ceil(@btn-line-height-lg * @btn-font-size-lg) + 10px;
 
 html, body {
-    height: 100%;
-    overflow: hidden;
 }
 
 .container {
@@ -43,6 +41,7 @@ html, body {
     position: fixed;
     width: 100%;
     top: 0;
+    z-index: 1000;
     
     & > .btn {
         border-radius: 0;
@@ -124,6 +123,7 @@ html, body {
     overflow-x: hidden;
     position: relative;
     top: @nav-height;
+    padding: 10px;
 }
 
 // Leader /////////////////////////////////////////////////////////////////////

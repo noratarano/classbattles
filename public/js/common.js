@@ -4,6 +4,7 @@ $(function() {
     // Content
     var nav_h = $('.nav').height();
     var window_h = $(window).height();
+	var body_h = $('body').height();
     $('.content').css({'height': (window_h - nav_h) + 'px'});
     
     // Nav

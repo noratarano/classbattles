@@ -1,0 +1,78 @@
+// Profile ////////////////////////////////////////////////////////////////////
+@import "flat-ui/variables";
+@import "flat-ui/mixins";
+
+@class-bg-color: mix(@brand-primary, @inverse, 9%);
+
+canvas {
+    margin-top: -20px;
+    .square(250px);
+}
+
+td {
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.fui-cross {
+    color: @alizarin;
+}
+
+.fui-check {
+    color: @nephritis;
+}
+
+.fui-mail, .fui-chat {
+    color: @wet-asphalt;
+}
+
+.profile-info-cont {
+    color: @asbestos;
+    font-size: 16px;
+}
+
+.profile-class-tags {
+    text-align: center;
+    
+    & > .profile-class-tag {
+        cursor: default;
+    
+        &:hover {
+            cursor: default;
+        }
+    }
+}
+
+.offline {
+    color: @alizarin;
+}
+
+.online {
+    color: @emerald;
+}
+
+.mail-link {
+    color: @asbestos;
+}
+
+.profile-classes-pager {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.profile-classes-page {
+    text-align: center;
+}
+
+.profile-classes-prev, .profile-classes-next {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.profile-classes-prev {
+    text-align: left;
+}
+
+.profile-classes-next {
+    text-align: right;
+}

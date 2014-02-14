@@ -4,13 +4,14 @@
 	<head>
 		<title>ClassBattles</title>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 		<link rel="shortcut icon" href="/images/favicon.ico">
 
 		<!-- Loading Stylesheets -->
 		<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 		<link href="/css/common.css" rel="stylesheet">
 		<link href="/css/home.css" rel="stylesheet">
+		<link href="/css/profile.css" rel="stylesheet">
 
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
 		<!--[if lt IE 9]>
@@ -19,7 +20,7 @@
 		<![endif]-->
 	</head>
 	
-	<body>
+	<body >
 		<div class="container fill">
 			
 			<div class="row btn-group nav">
@@ -31,14 +32,99 @@
 				<div class="btn btn-inverse disabled nav-middle">
 					<span>ClassBattles</span>
 				</div>
+				{{#if self}}
 				<a href="#" class="btn btn-inverse nav-right">
 					<span>edit</span>
 					<span class="fui-new"></span>
 				</a>
+				{{else}}
+				<a href="/challenge" class="btn btn-danger nav-right">
+					<span>challenge</span>
+				</a>
+				{{/if}}
 			</div>
 			
 			<div class="row content">
-				<h3>{{profile.username}}'s Profile</h3>
+				<h4>{{profile.username}}'s Profile</h4>
+				<form>
+					<!-- .profile-info -->
+					<div class="row profile-info-cont">
+						<div class="col-xs-1"><small class="fui-mail"></small></div>
+						<div class="col-xs-10"><small><a href="mailto:{{profile.email}}" class="mail-link">{{profile.email}}</a></small></div>
+					</div>
+					<div class="row profile-info-cont">
+						{{#if profile.online}}
+						<div class="col-xs-1"><small class="fui-user online"></small></div>
+						<div class="col-xs-10"><small>online</small></div>
+						{{else}}
+						<div class="col-xs-1"><small class="fui-user offline"></small></div>
+						<div class="col-xs-10"><small>offline</small></div>
+						{{/if}}
+					</div>
+					<!-- /.profile-info -->
+					<!-- .profile-classes -->
+					<div class="row profile-classes">
+						<table class="table profile-classes-pager">
+							<thead>
+								<tr>
+									{{#if self}}
+									<th class="col-xs-4 profile-classes-page profile-classes-prev"></th>
+									<th class="col-xs-4 profile-classes-page profile-classes-curr"></th>
+									<th class="col-xs-4 profile-classes-page profile-classes-next"></th>
+									{{else}}
+									<th class="col-xs-12 profile-classes-page profile-classes-curr"></th>
+									{{/if}}
+								</tr>
+							</thead>
+						</table>
+						{{#foreach profile.classes}}
+						<div class="profile-class-cont hidden">
+							<div class="profile-class-chart-cont" style="text-align: center">
+								<canvas class="chart" width="250px" height="250px"></canvas>
+							</div>
+							<div class="profile-class-tags">
+								{{#foreach class.tags}}
+								<a class="btn btn-xs btn-primary profile-class-tag">{{tag}}<span class="btn-tip">{{points}}</span></a>
+								{{/foreach}}
+							</div>
+							<br/>
+							{{#if self}}
+							<div class="profile-class-history">
+								<table class="table history-table">
+									<thead>
+										<tr>
+											<th class="history-td history-event col-xs-11"><small>Challenge History</small></th>
+											<th class="history-td history-icon col-xs-1"><small>Result</small></th>
+										</tr>
+									</thead>
+									<tbody>
+										{{#foreach class.history}}
+										<tr class="history-tr">
+											<td class="history-td col-xs-11">
+												<small>{{question}}</small>
+											</td>
+											<td class="history-td col-xs-1">
+												<small>
+													{{#if correct}}
+													<span class="fui-check"></span>
+													{{else}}
+													<span class="fui-cross"></span>
+													{{/if}}
+												</small>
+											</td>
+										</tr>
+										{{/foreach}}
+									</tbody>
+								</table>
+							</div>
+							{{else}}
+							<br/>
+							{{/if}}
+						</div>
+						{{/foreach}}
+					</div>
+					<!-- /.profile-classes -->
+				</form>
 			</div>
 			
 			<div class="row menu-cont">
@@ -66,8 +152,10 @@
 		<script src="/js/lib/flatui-radio.js"></script>
 		<script src="/js/lib/jquery.tagsinput.js"></script>
 		<script src="/js/lib/jquery.placeholder.js"></script>
+		<script src="/js/lib/Chart.min.js"></script>
 		
 		<script src="/js/common.js"></script>
+		<script src="/js/profile.js"></script>
 	</body>
 
 </html>
