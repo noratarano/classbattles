@@ -36,8 +36,6 @@ $(function() {
 		} else {
 			displayClass(classIndex);
 		}
-		
-		console.log(classes);
 	}
 	
 	function navClickEvent(e) {
