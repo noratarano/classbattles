@@ -37,10 +37,12 @@
 			</div>
 			
 			<div class="row content">
-			<h4>{{class.name}}</h4>
-				<a href="/{{user.username}}/class/{{class.name}}/challenge" class="center-block">Challenge</a>
-				<a href="/{{user.username}}/class/{{class.name}}/leaderboard" class="center-block">Leaderboard</a>
-				<a href="/{{user.username}}/class/{{class.name}}/profile" class="center-block">Class Profile</a>
+				<h4>{{class.name}}</h4>
+				<center style="margin: 40px 0">
+					<a href="/{{user.username}}/class/{{class.name}}/challenge" class="btn btn-block btn-danger">Challenge</a>
+					<a href="/{{user.username}}/class/{{class.name}}/leaderboard" class="btn btn-block btn-primary">Leaderboard</a>
+					<a href="/{{user.username}}/class/{{class.name}}/profile" class="btn btn-block btn-primary">Class Profile</a>
+				</center>
 			</div>
 			
 			<div class="row menu-cont">

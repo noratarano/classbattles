@@ -36,6 +36,8 @@ $(function() {
 		} else {
 			displayClass(classIndex);
 		}
+		
+		console.log(classes);
 	}
 	
 	function navClickEvent(e) {
@@ -89,7 +91,8 @@ $(function() {
 			//Number - The centre starting value
 			scaleStartValue : 0
         };
-		for (c in data.classes) {
+		var $chart = $('.chart');
+		for (var c = 0; c < $chart.length; c++) {
 			var chartData = getChartData(data.classes[c].class);
 			charts.push(new Chart($('.chart')[i].getContext("2d")).Radar(chartData, options));
 			i+=1;

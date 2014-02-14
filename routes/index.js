@@ -60,12 +60,18 @@ exports.view.home = function(req, res) {
 
 exports.view.class = function(req, res) {
     var username        = req.params.username;
+	if (username != req.session.username) {
+		res.redirect('/login');
+		return;
+	}
     var classname       = req.params.classname;
     var userObject      = findUser(username);
     var userClassObject = findUserClass(userObject, classname);
     var data = {
         user: userObject,
-        'class': userClassObject
+        'class': userClassObject,
+		classes: [{class: userClassObject}],
+		helpers: {foreach: foreach}
     }
     
     res.render('class', data);
