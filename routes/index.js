@@ -1,7 +1,6 @@
 // Controller /////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-
 var Data = require('./data');
 var Users = Data.Users;
 var Colors = Data.Colors;
@@ -72,36 +71,110 @@ exports.view.class = function(req, res) {
     res.render('class', data);
 };
 
+exports.view.start = function(req, res) {
+	if (req.session.username) {
+		var classname = req.params.classname;
+		var user = findUser(req.session.username);
+		
+		initCurrentChallenge(classname);
+    	
+		res.render('startchallenge', {
+			user: user,
+			classname: classname 
+		});
+	} else {
+		res.redirect('/login');
+	}
+};
+
 exports.view.challenge = function(req, res) {
-    var questionObject = Classes[0].class.questions[0];   // TODO
-	var options = questionObject.options;
-	var shuffledOptions = shuffle(options);
-    var question = {
-        id: questionObject.id,
-        question: questionObject.question,
-        optionA: shuffledOptions[0],
-        optionB: shuffledOptions[1],
-        optionC: shuffledOptions[2],
-        optionD: shuffledOptions[3],
-		correctAnswer: questionObject.answer,
-        tags: questionObject.tags
-    }
-    res.render('challenge', question);
+	var classname = req.params.classname;
+	var username = req.session.username;
+	if (username) {
+		// objects
+		var classObject = findClass(classname);
+		var userObject = findUser(username);
+		var userClassObject = findUserClass(userObject, classname);
+		var challengers = [];
+		var question = null;
+		if (username == req.params.username) {
+			question = nextQuestion(userClassObject, classObject);
+			challengers = findChallengers(userObject, classname);
+		} else {
+			var challengerClassObject = findUserClass(req.params.username);
+			challengers.push(challengerClassObject);
+			question = nextQuestion(userClassObject, classObject); // TODO: coordinate
+		}
+    	res.render('challenge', {
+			user: userObject,
+			userChallenger: userClassObject,
+			challengers: challengers, 
+			classname: classname,
+			question: question,
+			helpers: { pixels: pixels }
+		});
+	} else {
+		res.redirect('/login');
+	}
 };
 
 exports.view.finalanswer = function(req, res) {
     var qid = req.query.qid;
     var timedOut = req.query.timedOut == 'true';
     var selected = req.query.selected;
-    var question = findQuestion(Classes[0].class, qid); // TODO
-    var data = {
-        correct: selected == question.correctAnswer,
-        selected: selected,
-        timedOut: timedOut,
-        correctAnswer: question.correctAnswer,
-        tags: question.tags
-    };
-    res.render('finalanswer', data);
+	var classname = req.params.classname;
+	var username = req.session.username;
+	
+	if (username) {
+		// objects
+		var classObject = findClass(classname);
+		var userObject = findUser(username);
+		var userClassObject = findUserClass(userObject, classname);
+		var question = findQuestion(classObject, qid);
+		var challengers = [];
+		if (username == req.params.username) {
+			challengers = findChallengers(userObject, classname);
+		} else { // TODO...
+			var challengerClassObject = findUserClass(req.params.username);
+			challengers.push(challengerClassObject);
+		}
+		// update points
+		var correct = selected == question.answer;
+		var userI = findUserIndex(username);
+		var userClassI = findUserClassIndex(Users[userI].user, classname);
+		if (correct) {
+			for (t in question.tags) {
+				Users[userI].user
+				.classes[userClassI].class
+				.currentChallenge.points += question.tags[t].points;
+			}
+		}
+		Users[userI].user.classes[userClassI].class.history.splice(0, 0,{
+			question: question.question,
+			correct: correct
+		});
+		var done = !nextQuestion(
+			Users[userI].user.classes[userClassI].class, 
+			classObject
+		);
+		console.log("DONE = " + done);
+		var data = {
+	        correct: correct,
+	        selected: selected,
+	        timedOut: timedOut,
+	        correctAnswer: question.answer,
+	        tags: question.tags,
+			classname: classname,
+			user: Users[userI].user,
+			userChallenger: Users[userI].user.classes[userClassI].class,
+			challengers: challengers,
+			done: done,
+			helpers: { pixels: pixels }
+	    };
+	    res.render('finalanswer', data);
+	} else {
+		res.redirect('/login');
+	}
 };
 
 exports.view.leaders = function(req, res) {
@@ -130,6 +203,7 @@ exports.view.classprofile = function(req, res) {
                 user: userObject, 
                 profile: profileObject,
                 self: userObject.username == profileObject.username,
+				classname: classname,
                 helpers: { foreach: foreach }
             };
             res.render('profile', data);
@@ -212,6 +286,10 @@ exports.api.signup = function(req, res) {
 exports.api.addclass = function(req, res) {
     var username = req.params.username;
     var u = findUserIndex(username);
+	if (u < 0) {
+		res.redirect('/login');
+		return;
+	}
     var classesToAdd = req.query.classes;
     var userClasses = Users[u].user.classes;
     var count = req.query.count;
@@ -289,7 +367,7 @@ function findUserIndex(username) {
             return user;
         }
     }
-    return null;
+    return -1;
 }
 
 function findUserClass(userObject, classname) {
@@ -302,6 +380,18 @@ function findUserClass(userObject, classname) {
         }
     }
     return null;
+}
+
+function findUserClassIndex(userObject, classname) {
+    if (userObject) {
+        for (i in userObject.classes) {
+            var classObject = userObject.classes[i].class;
+            if (classObject.name == classname) {
+                return i;
+            }
+        }
+    }
+    return -1;
 }
 
 function findClass(classname) {
@@ -356,7 +446,8 @@ function UserClass(classname) {
             name: classObject.name,
             classname: classObject.classname,
             tags: classObject.tags,
-            history: []
+            history: [],
+			currentChallenge: {points: 0, possible: 1}
         }};
         // add and init points properties to tags
         for (t in userClassObject.class.tags) {
@@ -382,6 +473,64 @@ function shuffle(o){ //v1.0
     for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     return o;
 };
+
+function nextQuestion(userClassObject, classObject) {
+	for (q in classObject.questions) {
+		var questionObject = classObject.questions[q];
+		var different = true;
+		for (h in userClassObject.history) {
+			var entry = userClassObject.history[h];
+			different &= (entry.question != questionObject.question);
+		}
+		if (!different) {
+			continue;
+		}
+		var options = questionObject.options;
+		var shuffledOptions = shuffle(options);
+	    var question = {
+	        id: questionObject.id,
+	        question: questionObject.question,
+	        optionA: shuffledOptions[0],
+	        optionB: shuffledOptions[1],
+	        optionC: shuffledOptions[2],
+	        optionD: shuffledOptions[3],
+			correctAnswer: questionObject.answer,
+	        tags: questionObject.tags
+	    }
+		return question;
+	}
+	return null;
+}
+
+function findChallengers(userObject, classname) {
+	var challengers = [];
+	for (u in Users) {
+		var candidateObject = Users[u].user;
+		var candidateClassObject = findUserClass(candidateObject, classname);
+		if (candidateObject.username == userObject.username || !candidateClassObject) {
+			continue;
+		} else {
+			challengers.push(candidateClassObject);
+		}
+	}
+	return challengers;
+}
+
+function initCurrentChallenge(classname) {
+	for (u in Users) {
+		var userObject = Users[u].user;
+	    if (userObject) {
+	        for (i in userObject.classes) {
+	            var classObject = userObject.classes[i].class;
+	            if (classObject.name == classname) {
+					var I = Math.floor(Math.random() + 0.5);
+	                Users[u].user.classes[i].class.currentChallenge = {points: 30*I + 20*(1-I), possible: 100}; // TODO
+	            }
+	        }
+	    }
+	}
+}
+
 
 // Handlebars Helpers /////////////////////////////////////////////////////////
 
@@ -411,6 +560,12 @@ function totalPoints(leader) {
     return pts;
 }
 
+function pixels(pointstr) {
+	var points = parseInt(pointstr);
+	var PX = 298;
+	console.log('pts: ' + points + 'px: ' + Math.floor(points * PX / 100));
+	return Math.floor(points * PX / 100);
+}
 
 
 

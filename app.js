@@ -46,8 +46,6 @@ app.get('/', index.view.index);
 app.get('/login', index.view.login);
 app.get('/logout', index.view.index);
 app.get('/signup', index.view.signup);
-app.get('/challenge', index.view.challenge);
-app.get('/answer', index.view.finalanswer);
 app.get('/about', index.view.about);
 
 app.get('/api/login', index.api.login);
@@ -62,6 +60,11 @@ app.get('/:username/profile', index.view.profile);
 app.get('/:username/class/add', index.view.addclass);
 app.get('/:username/class/:classname/leaderboard', index.view.leaders);
 app.get('/:username/class/:classname/profile', index.view.classprofile);
+
+app.get('/:username/class/:classname/challenge', index.view.start);
+app.get('/:username/class/:classname/challenge/question', index.view.challenge);
+app.get('/:username/class/:classname/challenge/answer', index.view.finalanswer);
+
 app.get('/:username/class/:classname', index.view.class);
 
 

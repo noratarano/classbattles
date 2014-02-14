@@ -19,9 +19,10 @@ this.Users = [
 					{tag: 'prototyping', 	points: 10},
                 ],
                 history: [
-                    { question: 'You are a researcher interested in finding out what times of the day people are the sleepiest. Which technique would allow you to collect the most data with the greatest accuracy?', correct: true },
-                    { question: 'Which technique is most appropriate for testing multiple interfaces to identify sources of confusion or inefficiency?', correct: true }
-                ]
+                    { question: 'What does CSS stand for?', correct: true },
+                    { question: 'What does HTML stand for?', correct: false }
+                ],
+				currentChallenge: { points: 30, possible:  100}
             }},
             { 'class': {
                 name: 'CS 106',
@@ -43,7 +44,7 @@ this.Users = [
         username: 'Diana',
         email: 'bdiana@stanford.edu',
         about: 'Awesome possum. Loves walks on the beach and being awesome, in general.',
-		online: true,
+		online: false,
         classes: [
 	        { 'class': {
 	            name: 'CS 147',
@@ -56,10 +57,11 @@ this.Users = [
 					{tag: 'needfinding', 	points: 9},
 					{tag: 'prototyping', 	points: 10},
 	            ],
-	            history: [
-	                { question: 'What does CSS stand for?', correct: true },
-	                { question: 'What does HTML stand for?', correct: false }
-	            ]
+                history: [
+                    { question: 'What does CSS stand for?', correct: true },
+                    { question: 'What does HTML stand for?', correct: false }
+                ],
+				currentChallenge: { points: 30, possible:  100}
 	        }}
         ]
     }},
@@ -83,7 +85,8 @@ this.Users = [
                 history: [
                     { question: 'What does CSS stand for?', correct: true },
                     { question: 'What does HTML stand for?', correct: false }
-                ]
+                ],
+				currentChallenge: { points: 30, possible:  100}
             }}
         ]
     }}
@@ -110,7 +113,7 @@ this.Classes = [
 				'Participant Observation',
 				'Survey',
 				'Interview',],
-            tags: [{tag: 'needfinding', points: 5}]
+            tags: [{tag: 'needfinding', points: 10}]
         },{
             id: '2',
             question: 'What is the single biggest problem with asking the previous question (“Which quarter would you prefer CS 147 to be offered?”) to students in this year’s class?',
@@ -121,7 +124,7 @@ this.Classes = [
 				'Question is too hypothetical.',
 				'Insufficient usage of #octothorpe.'
 			],
-            tags: [{tag: 'needfinding', points: 5}]
+            tags: [{tag: 'needfinding', points: 10}]
         },{
             id: '3',
             question: 'Which technique is most appropriate for testing multiple interfaces to identify sources of confusion or inefficiency?',
@@ -132,7 +135,7 @@ this.Classes = [
 				'Wizard of Oz Prototype',
 				'Real Product'
 			],
-            tags: [{tag: 'prototyping', points: 5}]
+            tags: [{tag: 'prototyping', points: 10}]
         },{
             id: '4',
             question: 'Which technique is most appropriate for Capturing the task context and physical setting where your product will be used?',
@@ -143,7 +146,7 @@ this.Classes = [
 				'Wizard of Oz Prototype',
 				'Real Product'
 			],
-            tags: [{tag: 'prototyping', points: 5}]
+            tags: [{tag: 'prototyping', points: 10}]
         },{
             id: '5',
             question: 'Adding class=”quiz” to an HTML element...',
@@ -154,7 +157,7 @@ this.Classes = [
 				'Only works on <div>, <a>, and header elements.',
 				'All of the above'
 			],
-            tags: [{tag: 'html', points: 3}, {tag:'css', points: 2}]
+            tags: [{tag: 'html', points: 5}, {tag:'css', points: 5}]
         },{
             id: '6',
             question: 'Which Javascript code does the following? Find the element with ID "submitBtn" and listen for clicks on the button. When a user clicks on the button, it should call the function called "updateAccounts".',

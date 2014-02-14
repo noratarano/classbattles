@@ -37,19 +37,18 @@
 .race {
     width: 100%;
     background: @clouds;
-    padding: 10px;
+    padding: 10px 0;
     font-size: 12px;
+    line-height: 12px;
     border-right: 2px solid @nephritis;
     
     & > .race-me {
         display: block;
-        margin-left: 50px;
         color: @alizarin;
     }
     
     & > .race-other {
         display: block;
-        margin-left: 25px;
         color: @amethyst;
     }
 }
@@ -76,6 +75,15 @@
     cursor: default;
 }
 
+.exclamation {
+    color: @inverse;
+    background: @alizarin;
+    display: block;
+    .square(80px);
+    line-height: 80px;
+    border-radius: 50%;
+    margin: 30px 0;
+}
 
 
 

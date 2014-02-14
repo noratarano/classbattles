@@ -32,47 +32,49 @@
 					<span>ClassBattles</span>
 				</div>
 				<div class="btn btn-danger nav-right">
-					<span class="timeleft">11</span>s
+					<span class="timeleft">21</span>s
 					<span class="fui-time"></span>
 				</div>
 			</div>
 			
 			<div class="row content">
 			<h4>Challenge</h4>
-				<h4>{{question}}</h4>
+				<p>{{question.question}}</p>
 				<div>
-					{{#each tags}}
+					{{#each question.tags}}
 					<span class="btn btn-xs btn-info">{{tag}}</span>
 					{{/each}}
 				</div>
-				<form class="form" role="form" method="get" action="/answer">
+				<form class="form" role="form" method="get" action="/{{user.username}}/class/{{classname}}/challenge/answer">
 					<label class="radio">
-					  <input type="radio" name="selected" value="{{optionA}}" data-toggle="radio">
-					  {{optionA}}
+					  <input type="radio" name="selected" value="{{question.optionA}}" data-toggle="radio">
+					  {{question.optionA}}
 					</label>
 					<label class="radio">
-					  <input type="radio" name="selected" value="{{optionB}}" data-toggle="radio">
-					  {{optionB}}
+					  <input type="radio" name="selected" value="{{question.optionB}}" data-toggle="radio">
+					  {{question.optionB}}
 					</label>
 					<label class="radio">
-					  <input type="radio" name="selected" value="{{optionC}}" data-toggle="radio">
-					  {{optionC}}
+					  <input type="radio" name="selected" value="{{question.optionC}}" data-toggle="radio">
+					  {{question.optionC}}
 					</label>
 					<label class="radio">
-					  <input type="radio" name="selected" value="{{optionD}}" data-toggle="radio">
-					  {{optionD}}
+					  <input type="radio" name="selected" value="{{question.optionD}}" data-toggle="radio">
+					  {{question.optionD}}
 					</label>
 	              	<center>
 						<input type="submit" class="submitBtn btn btn-primary btn-lg btn-wide disabled" value="Submit"></input>
 					</center>
 					<!-- Communication -->
-					<input type="text" class="hidden" value="{{id}}" name="qid">
+					<input type="text" class="hidden" value="{{question.id}}" name="qid">
 					<input type="text" class="hidden" value="false" name="timedOut">
 				</form>
 				<br/>
 				<div class="race">
-					<div class="race-me"><span class="fui-radio-checked"></span></div>
-					<div class="race-other"><span class="fui-radio-unchecked"></span></div>
+					<div class="race-me" style="margin-left:{{pixels userChallenger.currentChallenge.points}}px"><span class="fui-radio-checked"></span></div>
+					{{#each challengers}}
+					<div class="race-other" style="margin-left:{{pixels this.currentChallenge.points}}px"><span class="fui-radio-unchecked"></span></div>
+					{{/each}}
 				</div>
 				<div class="race-pts">
 					<div class="race-pts-left"><small>0%</small></div>

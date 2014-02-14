@@ -25,19 +25,26 @@
 			
 			<div class="row btn-group nav">
 				<a href="#" class="btn btn-inverse nav-left invisible">
-						<span class="fui-arrow-left"></span>
+					<span class="fui-arrow-left"></span>
 				</a>
 				<div class="btn btn-inverse disabled nav-middle">
 					<span>ClassBattles</span>
 				</div>
-				<a href="/challenge" class="btn btn-inverse nav-right invisible">
+				{{#if done}}
+				<a href="/{{user.username}}/class/{{classname}}" class="btn btn-inverse nav-right">
+					<span>{{classname}}</span>
+					<span class="fui-arrow-right"></span>
+				</a>
+				{{else}}
+				<a href="#" class="btn btn-inverse nav-right invisible">
 					<span>next</span>
 					<span class="fui-arrow-right"></span>
 				</a>
+				{{/if}}
 			</div>
 			
 			<div class="row content">
-			<h4>{{#if correct}}Correct!
+				<h4>{{#if correct}}Correct!
 					<span class="fui-check" style="color: #27AE60"></span>
 					{{else}}
 						{{#if timedOut}}
@@ -49,7 +56,7 @@
 					{{/if}}
 				</h4>
 				{{#if correct}}
-				<h4>You responded:</h4>
+				<p>You responded:</p>
 				<blockquote>
 					<p>
 						{{correctAnswer}}
@@ -62,14 +69,14 @@
 				{{else}}
 					{{#if timedOut}}
 					{{else}}
-					<h4>You responded:</h4>
+					<p>You responded:</p>
 					<blockquote>
 						<p>
 							{{selected}}
 						</p>
 					</blockquote>
 					{{/if}}
-				<h4>The correct answer was:</h4>
+				<p>The correct answer was:</p>
 				<blockquote>
 					<p>
 						{{correctAnswer}}
@@ -77,17 +84,25 @@
 				</blockquote>
 				{{/if}}
               	<center>
-					<a class="btn btn-primary btn-lg btn-wide" href="/challenge">
+					{{#if done}}
+					<a class="btn btn-danger btn-block btn-lg btn-wide" href="/{{user.username}}/class/{{classname}}">
+						You're done! Close.
+					</a>
+					{{else}}
+					<a class="btn btn-primary btn-lg btn-wide" href="/{{user.username}}/class/{{classname}}/challenge/question">
 						Next question
 					</a>
-					<a class="btn btn-danger btn-lg btn" href="/home"> <!--TODO -->
+					<a class="btn btn-danger btn-lg btn" href="/{{user.username}}/class/{{classname}}">
 						Abandon
 					</a>
+					{{/if}}
 				</center>
 				<br/>
 				<div class="race">
-					<div class="race-me" style="margin-left:100px"><span class="fui-radio-checked"></span></div>
-					<div class="race-other"><span class="fui-radio-unchecked"></span></div>
+					<div class="race-me" style="margin-left:{{pixels userChallenger.currentChallenge.points}}px"><span class="fui-radio-checked"></span></div>
+					{{#each challengers}}
+					<div class="race-other" style="margin-left:{{pixels this.currentChallenge.points}}px"><span class="fui-radio-unchecked"></span></div>
+					{{/each}}
 				</div>
 				<div class="race-pts">
 					<div class="race-pts-left"><small>0%</small></div>

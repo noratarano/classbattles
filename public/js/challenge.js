@@ -9,7 +9,7 @@ $(function() {
     $('.radio').click(function(e) {
         $('.submitBtn').removeClass('disabled');
     });
-    
+	    
     function timer() {
         var $timeleft = $('.timeleft');
         if ($timeleft.length > 0) {

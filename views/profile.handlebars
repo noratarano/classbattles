@@ -38,9 +38,13 @@
 					<span class="fui-new"></span>
 				</a>
 				{{else}}
-				<a href="/challenge" class="btn btn-danger nav-right">
+				{{#if ../profile.online}}
+				<a href="/{{../../profile.username}}/class/{{../../classname}}/challenge" class="btn btn-danger nav-right">
 					<span>challenge</span>
 				</a>
+				{{else}}
+				<a href="" class="btn btn-danger nav-right invisible"></a>
+				{{/if}}
 				{{/if}}
 			</div>
 			
