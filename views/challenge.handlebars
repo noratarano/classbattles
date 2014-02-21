@@ -31,21 +31,47 @@
 				<div class="btn btn-inverse disabled nav-middle">
 					<span>ClassBattles</span>
 				</div>
+				{{#if studentBattle}}
 				<div class="btn btn-danger nav-right">
 					<span class="timeleft">21</span>s
 					<span class="fui-time"></span>
 				</div>
+				{{else}}
+				<div class="btn btn-inverse nav-right invisible">
+					<span class="fui-time"></span>
+				</div>
+				{{/if}}
 			</div>
 			
 			<div class="row content">
-			<h4>Challenge</h4>
+				<h4>{{#if studentBattle}}Student{{else}}Class{{/if}} Challenge</h4>
+			
+				<!-- .race -->
+				<div class="race">
+					<div class="race-me" style="margin-left:{{pixels userChallenger.currentChallenge.points}}px"><span class="fui-radio-checked"></span></div>
+					{{#each challengers}}
+					<div class="race-other" style="margin-left:{{pixels this.currentChallenge.points}}px"><span class="fui-radio-unchecked"></span></div>
+					{{/each}}
+				</div>
+				<div class="race-pts">
+					<div class="race-pts-left"><small>0%</small></div>
+					<div class="race-pts-right"><small>100%</small></div>
+				</div>
+				<!-- /.race -->
+				
+				<br>
 				<p>{{question.question}}</p>
 				<div>
 					{{#each question.tags}}
 					<span class="btn btn-xs btn-info">{{tag}}</span>
 					{{/each}}
 				</div>
-				<form class="form" role="form" method="get" action="/{{user.username}}/class/{{classname}}/challenge/answer">
+				<form class="form" role="form" method="get"
+				{{#if studentBattle}}
+					action="/{{challengers.0.username}}/class/{{classname}}/challenge/answer">
+				{{else}}
+					action="/{{user.username}}/class/{{classname}}/challenge/answer">
+				{{/if}}
 					<label class="radio">
 					  <input type="radio" name="selected" value="{{question.optionA}}" data-toggle="radio">
 					  {{question.optionA}}
@@ -69,17 +95,6 @@
 					<input type="text" class="hidden" value="{{question.id}}" name="qid">
 					<input type="text" class="hidden" value="false" name="timedOut">
 				</form>
-				<br/>
-				<div class="race">
-					<div class="race-me" style="margin-left:{{pixels userChallenger.currentChallenge.points}}px"><span class="fui-radio-checked"></span></div>
-					{{#each challengers}}
-					<div class="race-other" style="margin-left:{{pixels this.currentChallenge.points}}px"><span class="fui-radio-unchecked"></span></div>
-					{{/each}}
-				</div>
-				<div class="race-pts">
-					<div class="race-pts-left"><small>0%</small></div>
-					<div class="race-pts-right"><small>100%</small></div>
-				</div>
 			</div>
 		</div>
 		<!-- /.container -->

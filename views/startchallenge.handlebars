@@ -31,18 +31,36 @@
 				<div class="btn btn-inverse disabled nav-middle">
 					<span>ClassBattles</span>
 				</div>
-				<a  href="/{{user.username}}/class/{{classname}}/challenge/question" class="btn btn-primary nav-right">
+				<a 
+				{{#if studentBattle}}
+				href="/{{challenger.username}}/class/{{classname}}/challenge/question" 
+				{{else}}
+				href="/{{user.username}}/class/{{classname}}/challenge/question" 
+				{{/if}}
+				class="btn btn-primary nav-right">
 					begin
 					<span class="fui-arrow-right"></span>
 				</a>
 			</div>
 			
 			<div class="row content">
-				<h4>Challenge</h4>
-				<center><h1 class="exclamation">!</h1></center>
-				<center><h6>You are about to start a challenge...</h6></center>
+				<h4>{{#if studentBattle}}Student{{else}}Class{{/if}} Challenge</h4>
+				{{#if studentBattle}}
+				<br/>
+				<center class="loading-img"><img src="/images/loading.gif"></center>
+				<br/>
+				<center><h6 class="loading-message">Waiting for {{challenger.username}} to connect.</h6></center>
+				{{else}}
+				<center><h2 class="exclamation">!</h2></center>
+				<center><h6>Ready. Set. Go!</h6></center>
+				{{/if}}
+				
 				<br />
-				<a href="/{{user.username}}/class/{{classname}}/challenge/question" class="btn btn-block btn-primary">Begin.</a>
+				<a {{#if studentBattle}}
+					href="/{{challenger.username}}/class/{{classname}}/challenge/question" 
+				{{else}}
+					href="/{{user.username}}/class/{{classname}}/challenge/question" 
+				{{/if}} class="btn btn-block btn-primary btn-begin">Begin.</a>
 				<br/>
 				<a href="/{{user.username}}/class/{{classname}}" class="btn btn-block btn-default">Nevermind. Take me back!</a>
 			</div>
@@ -62,6 +80,21 @@
 		<script src="/js/lib/jquery.placeholder.js"></script>
 		
 		<script src="/js/common.js"></script>
+		<script>
+			// simulation
+			$(function() {
+				if ($('h4').text().indexOf("Student") != -1) {
+					$('.btn-begin').attr('disabled', 'disabled');
+				}
+				setTimeout(function() {
+					if ($('h4').text().indexOf("Student") != -1) {
+						$('.btn-begin').removeAttr('disabled');
+						$('.loading-message').text('All set!');
+						$('.loading-img').html('<h2 class="exclamation" style="padding: 0; margin: 0;">!</h2>');
+					}
+				}, 2000);
+			});
+		</script>
 	</body>
 
 </html>

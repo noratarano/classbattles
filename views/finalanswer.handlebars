@@ -55,6 +55,19 @@
 					<span class="fui-cross" style="color: #E74C3C"></span>
 					{{/if}}
 				</h4>
+				<!-- .race -->
+				<div class="race">
+					<div class="race-me" style="margin-left:{{pixels userChallenger.currentChallenge.points}}px"><span class="fui-radio-checked"></span></div>
+					{{#each challengers}}
+					<div class="race-other" style="margin-left:{{pixels this.currentChallenge.points}}px"><span class="fui-radio-unchecked"></span></div>
+					{{/each}}
+				</div>
+				<div class="race-pts">
+					<div class="race-pts-left"><small>0%</small></div>
+					<div class="race-pts-right"><small>100%</small></div>
+				</div>
+				<!-- /.race -->
+
 				{{#if correct}}
 				<p>You responded:</p>
 				<blockquote>
@@ -85,29 +98,27 @@
 				{{/if}}
               	<center>
 					{{#if done}}
+					<p>
+						You're done! You won <b>{{userChallenger.currentChallenge.points}}</b> points
+						<br />in this challenge.
+					</p>
 					<a class="btn btn-danger btn-block btn-lg btn-wide" href="/{{user.username}}/class/{{classname}}">
-						You're done! Close.
+						Close.
 					</a>
 					{{else}}
-					<a class="btn btn-primary btn-lg btn-wide" href="/{{user.username}}/class/{{classname}}/challenge/question">
+					<a class="btn btn-primary btn-lg btn-wide" 
+					{{#if studentBattle}}
+						href="/{{challengers.0.username}}/class/{{classname}}/challenge/question">
+					{{else}}
+						href="/{{user.username}}/class/{{classname}}/challenge/question">
+					{{/if}}
 						Next question
 					</a>
-					<a class="btn btn-danger btn-lg btn" href="/{{user.username}}/class/{{classname}}">
+					<a class="btn btn-danger btn-lg btn abandon-btn" href="/{{user.username}}/class/{{classname}}">
 						Abandon
 					</a>
 					{{/if}}
 				</center>
-				<br/>
-				<div class="race">
-					<div class="race-me" style="margin-left:{{pixels userChallenger.currentChallenge.points}}px"><span class="fui-radio-checked"></span></div>
-					{{#each challengers}}
-					<div class="race-other" style="margin-left:{{pixels this.currentChallenge.points}}px"><span class="fui-radio-unchecked"></span></div>
-					{{/each}}
-				</div>
-				<div class="race-pts">
-					<div class="race-pts-left"><small>0%</small></div>
-					<div class="race-pts-right"><small>100%</small></div>
-				</div>
 			</div>
 		</div>
 		<!-- /.container -->

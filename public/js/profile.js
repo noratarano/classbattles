@@ -11,7 +11,7 @@ $(function() {
 	function makeProfile(data, status) {
 		makeClasses(data);
 		makeCharts(data);
-		colorLabels(data);
+		makeLabels(data);
 	}
 	
 	function makeClasses(data) {
@@ -76,67 +76,22 @@ $(function() {
 	// TODO: get maximum possible points
 	function makeCharts(data) {
 		var i = 0;
-		var options = {
-            scaleShowLabels: false,
-            pointLabelFontSize: 10,
-			//Boolean - If we want to override with a hard coded scale
-			scaleOverride : true,
-			//** Required if scaleOverride is true **
-			//Number - The number of steps in a hard coded scale
-			scaleSteps : 5,
-			//Number - The value jump in the hard coded scale
-			scaleStepWidth : 3,
-			//Number - The centre starting value
-			scaleStartValue : 0
-        };
 		var $chart = $('.chart');
 		for (var c = 0; c < $chart.length; c++) {
-			var chartData = getChartData(data.classes[c].class);
-			charts.push(new Chart($('.chart')[i].getContext("2d")).Radar(chartData, options));
+			makeChart($($chart[i]), data.classes[c].class, MAX_LABEL_CHARS);
 			i+=1;
 		}
 	}
 	
-	function colorLabels(data) {
-		function rgbaColor(rgb, a) {
-			return 'rgba(' + rgb.join(',') + ',' + a + ')';
-		}
-		
+	function makeLabels(data) {
 		var colors = data.colors;
 		var classes = data.classes;
-		var $labels = $('.profile-class-tag');
 		var i = 0;
 		for (c in classes) {
 			var classObject = classes[c].class;
-			for (t in classObject.tags) {
-				$($labels[i]).css({backgroundColor: rgbaColor(colors[t % colors.length].rgb, 1.0)});
-				i++;
-			}
-		}
-		
-		$('.profile-class-tag').click(function(e) { e.preventDefault(); });
+			var $labels = $($('.profile-class-tags')[i]).find('.profile-class-tag');
+			colorLabels($labels, colors);
+			i++
+		}		
 	}
-	
-	function getChartData(classObject) {
-		var labels = [];
-		var points = [];
-		for (t in classObject.tags) {
-			labels.push(classObject.tags[t].tag.substring(0, MAX_LABEL_CHARS));
-			points.push(classObject.tags[t].points);
-		}
-		
-		return { 
-			labels : labels,
-			datasets : [
-				{
-					fillColor : "rgba(52, 73, 94, 0.5)",
-					strokeColor : "rgba(52, 73, 94, 1.0)",
-					pointColor : "rgba(52, 73, 94, 1.0)",
-					pointStrokeColor : "rgba(52, 73, 94, 1.0)",
-					data : points
-				}
-			],
-		};
-	}
-	
 });

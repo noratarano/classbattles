@@ -22,7 +22,7 @@ this.Users = [
                     { question: 'What does CSS stand for?', correct: true },
                     { question: 'What does HTML stand for?', correct: false }
                 ],
-				currentChallenge: { points: 30, possible:  100}
+				currentChallenge: null
             }},
             { 'class': {
                 name: 'CS 106',
@@ -36,7 +36,8 @@ this.Users = [
                 history: [
                     { question: 'What does CSS stand for?', correct: true },
                     { question: 'What does HTML stand for?', correct: false }
-                ]
+                ],
+				currentChallenge: null
             }}
         ]
     }},
@@ -61,7 +62,7 @@ this.Users = [
                     { question: 'What does CSS stand for?', correct: true },
                     { question: 'What does HTML stand for?', correct: false }
                 ],
-				currentChallenge: { points: 30, possible:  100}
+				currentChallenge: null
 	        }}
         ]
     }},
@@ -86,7 +87,7 @@ this.Users = [
                     { question: 'What does CSS stand for?', correct: true },
                     { question: 'What does HTML stand for?', correct: false }
                 ],
-				currentChallenge: { points: 30, possible:  100}
+				currentChallenge: null
             }}
         ]
     }}

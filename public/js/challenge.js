@@ -1,5 +1,8 @@
 $(function() {
+	var timeleft = 20;
     timer();
+	
+	var abandon = false;
     
     $('.submitBtn').click(function(e) {
         e.preventDefault();
@@ -9,13 +12,23 @@ $(function() {
     $('.radio').click(function(e) {
         $('.submitBtn').removeClass('disabled');
     });
+	
+	$('.abandon-btn').click(function(e) {
+		abandon = true;
+	});
+	
+	window.onbeforeunload = function() {
+		if (abandon) {
+			abandon = false;
+			return "If you leave this page, you will abandon this challenge and lose all the points you have won so far.";
+		}
+	};
 	    
     function timer() {
         var $timeleft = $('.timeleft');
         if ($timeleft.length > 0) {
-            var timeleft = parseInt($timeleft.text());
-            $timeleft.text(timeleft - 1);
-            if (timeleft > 1) {
+            $timeleft.text(timeleft--);
+            if (timeleft > -1) {
                 setTimeout(timer, 1000);
             } else {
                 var $options = $('input:radio[name=selected]');

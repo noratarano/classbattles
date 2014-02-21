@@ -10,6 +10,7 @@
 
 		<!-- Loading Stylesheets -->
 		<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="/css/index.css" rel="stylesheet">
 		<link href="/css/common.css" rel="stylesheet">
 
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
@@ -38,8 +39,11 @@
 			<h4>Log in</h4>
 				<!-- .login-form -->
 				<form class="login-form form" role="form" method="get" action="/api/login">
+					{{#if error}}
+					<div class="error">{{../error}}</div>
+					{{/if}}
 					<div class="form-group"> <!-- formData.username -->
-						<input type="text" class="form-control login-field" value="" name="username" placeholder="username" id="login-name" />
+						<input type="text" class="form-control login-field" value="{{#if error}}{{../username}}{{/if}}" name="username" placeholder="username" id="login-name" />
 						<label class="login-field-icon fui-user" for="login-name"></label>
 					</div>
 					<div class="form-group"> <!-- formData.password -->
