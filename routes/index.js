@@ -269,6 +269,24 @@ exports.view.profile = function(req, res) {
     }
 };
 
+exports.view.editprofile = function(req, res) {
+	var username = req.session.username;
+    if (username) {
+        var userObject = findUser(username);
+        if (userObject) {
+            var data = { 
+                user: userObject,
+                helpers: { foreach: foreach } 
+            };
+            res.render('editprofile', data);
+        } else {
+            res.redirect('/login');
+        }
+    } else {
+        res.redirect('/login');
+    }
+};
+
 exports.view.addclass = function(req, res) {
     function sortAlpha(a,b) {
         return a.class.name.localeCompare(b.class.name);
@@ -392,6 +410,58 @@ exports.api.classes = function(req, res) {
         res.redirect('/login');
     }
     res.send(data);
+};
+
+exports.api.editprofile = function(req, res) {
+	var username = req.session.username;
+	if (username == req.params.username) {
+		var user = findUser(username);
+		var newUsername = req.query.username;
+		var newPassword = req.query.password;
+		var newEmail = req.query.email;
+		var data = null;
+		if (newUsername && newUsername != user.username) {
+			if (findUser(newUsername)) {
+				data = { 
+					error: 'Error: That username is already taken. No changes were made to your account.',
+	                user: user,
+	                helpers: { foreach: foreach } 
+	            };
+			} else {
+				var i = findUserIndex(username);
+				Users[i].user.username = newUsername;
+				data = { 
+					success: 'Successfully changed your profile information.',
+	                user: Users[i].user,
+	                helpers: { foreach: foreach } 
+	            };
+			}
+			res.render('editprofile', data);
+			return;
+		}
+		if (newPassword && newPassword != user.password) {
+			var i = findUserIndex(username);
+			Users[i].user.password = newPassword;
+			data = { 
+				success: 'Successfully changed your profile information.',
+                user: Users[i].user,
+                helpers: { foreach: foreach } 
+            };
+			res.render('editprofile', data);
+			return;
+		}
+		if (newEmail && newEmail != user.email) {
+			var i = findUserIndex(username);
+			Users[i].user.email = newEmail;
+			data = { 
+				success: 'Successfully changed your profile information.',
+                user: Users[i].user,
+                helpers: { foreach: foreach } 
+            };
+			res.render('editprofile', data);
+			return;
+		}
+	}
 };
 
 

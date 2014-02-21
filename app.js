@@ -48,14 +48,18 @@ app.get('/logout', index.view.index);
 app.get('/signup', index.view.signup);
 app.get('/about', index.view.about);
 app.get('/home', index.view.home);
+
 // api
 app.get('/api/login', index.api.login);
 app.get('/api/signup', index.api.signup);
 app.get('/api/:username/class/add', index.api.addclass);
 app.get('/api/:username/class/all', index.api.classes);
+app.get('/api/:username/profile/edit', index.api.editprofile);
+
 // user, class, challenge
 app.get('/:username/home', index.view.home);
 app.get('/:username/profile', index.view.profile);
+app.get('/:username/profile/edit', index.view.editprofile);
 app.get('/:username/class/add', index.view.addclass);
 app.get('/:username/class/:classname/leaderboard', index.view.leaders);
 app.get('/:username/class/:classname/profile', index.view.classprofile);
