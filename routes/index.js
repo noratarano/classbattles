@@ -419,48 +419,34 @@ exports.api.editprofile = function(req, res) {
 		var newUsername = req.query.username;
 		var newPassword = req.query.password;
 		var newEmail = req.query.email;
-		var data = null;
+		var data = { 
+			error: null,
+			success: null,
+            user: user,
+            helpers: { foreach: foreach }
+        };
 		if (newUsername && newUsername != user.username) {
 			if (findUser(newUsername)) {
-				data = { 
-					error: 'Error: That username is already taken. No changes were made to your account.',
-	                user: user,
-	                helpers: { foreach: foreach } 
-	            };
-			} else {
-				var i = findUserIndex(username);
-				Users[i].user.username = newUsername;
-				data = { 
-					success: 'Successfully changed your profile information.',
-	                user: Users[i].user,
-	                helpers: { foreach: foreach } 
-	            };
+				data.error = 'Error: That username is already taken.';
+				newUsername = username;
 			}
-			res.render('editprofile', data);
-			return;
+		} else {
+			newUsername = username;
 		}
-		if (newPassword && newPassword != user.password) {
+		if (!(newPassword && newPassword != user.password)) {
+			newPassword = user.password;
+		}
+		if (!(newEmail && newEmail != user.email)) {
+			newEmail = user.email;
+		}
+		if (!data.error) {
 			var i = findUserIndex(username);
+			Users[i].user.username = newUsername;
 			Users[i].user.password = newPassword;
-			data = { 
-				success: 'Successfully changed your profile information.',
-                user: Users[i].user,
-                helpers: { foreach: foreach } 
-            };
-			res.render('editprofile', data);
-			return;
-		}
-		if (newEmail && newEmail != user.email) {
-			var i = findUserIndex(username);
 			Users[i].user.email = newEmail;
-			data = { 
-				success: 'Successfully changed your profile information.',
-                user: Users[i].user,
-                helpers: { foreach: foreach } 
-            };
-			res.render('editprofile', data);
-			return;
+			data.success = 'Success: Your profile was changed.';
 		}
+		res.render('editprofile', data);
 	}
 };
 
