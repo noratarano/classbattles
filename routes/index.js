@@ -95,7 +95,7 @@ exports.view.class = function(req, res) {
 		    }
 		    res.render('class', data);
 			function ifChallengerIsNotMe(username, challengername, classname) {
-				var html = '<a href="/'+challengername+'/class/'+classname+'/challenge" class="btn btn-block btn-info">StudentBattle</a>';
+				var html = '<a href="/'+challengername+'/class/'+classname+'/challenge" class="btn btn-block btn-info">Challenge</a>';
 				console.log("u %s c %s cl %s", username, challengername, classname);
 				return username != challengername ? html : null;
 			}
