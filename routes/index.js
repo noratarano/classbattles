@@ -52,6 +52,33 @@ exports.view.home = function(req, res) {
         if (userObject) {
             var data = { user: userObject, helpers: { foreach: foreach } };
             res.render('home', data);
+
+/*MAY NOT WORK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+            $('.fui-plus').liveClickHold = function(selector, fn) {
+
+                $(selector).live("mousedown", function(evt) {
+
+                    var $this = $(this).data("mousedown", true);
+
+                    setTimeout(function() {
+                        if ($this.data("mousedown") === true) {
+                            fn(evt);
+                        }
+                    }, 500);
+
+                });
+
+    $(selector).live("mouseup", function(evt) {
+        $(this).data("mousedown", false);
+    });
+
+}
+
+
+
+
+
+
         } else {
             res.redirect('/login');
         }
