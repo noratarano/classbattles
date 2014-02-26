@@ -55,15 +55,6 @@ app.get('/about', index.view.about);
 app.get('/home', index.view.home);
 
 var models = require('./models');
-app.get('/questions', function(req, res) {
-	models.User.find()
-	.exec(function(err, data) {
-		if (err) {
-			console.log(err);
-		}
-		res.send(data);
-	});
-});
 
 // api
 app.get('/api/login', index.api.login);
