@@ -192,13 +192,73 @@ this.Classes = [
             question: 'What does CSS stand for?',
             correctAnswer: 'Cascading Style Sheets',
             incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
-            tags: [{tag: 'css'}]
+            tags: [{tag: 'css', points: 5}]
         },{
             id: '#1',
             question: 'What does HTML stand for?',
             correctAnswer: 'Hypertext Markup Language',
             incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
-            tags: [{tag: 'html'}]
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
         }]
     }},
 	{ 'class': {
@@ -238,6 +298,30 @@ this.Classes = [
 				'Vladimir Lenin'
 			],
             tags: [{tag: 'history', points: 5}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
+        },{
+            id: '#1',
+            question: 'What does HTML stand for?',
+            correctAnswer: 'Hypertext Markup Language',
+            incorrectAnswers: ['Chef Stephanie Santander', 'Channeling System Sustenance', 'Clear Skies and Slumber'],
+            tags: [{tag: 'html', points: 7}]
         }]
     }},
 ];
