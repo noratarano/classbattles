@@ -10,16 +10,14 @@
 // Home ///////////////////////////////////////////////////////////////////////
 
 .index-logo-cont {
-    display: table;
-    
-    .square(@logo-height);
+    display: block;
+    width: 100%;
     
     & > .index-logo {
-        display: table-cell;
-        vertical-align: middle;
-        height: @logo-height * @logo-ratio;
+        display: block;
+        margin: 0 auto 20px auto;
         
-        & > .index-logo-text {
+       /* & > .index-logo-text {
             background: @brand-secondary;
             color: @inverse;
             border-radius: 50%;
@@ -35,8 +33,14 @@
                 font-size: 40px;
                 font-weight: bold;
             }
-        } 
+        } */
+           
+           & > img {
+               width: 75%;
+           }
     }   
+    
+    
 }
 
 .index-options-cont {
@@ -49,8 +53,7 @@
     & > .index-options {
         padding: 0;
         margin: 0 auto;
-        display: table-cell;
-        vertical-align: middle;
+        display: block;
         text-align: center;
     
         & > a {

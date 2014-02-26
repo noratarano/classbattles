@@ -48,9 +48,13 @@
 			
 				<!-- .race -->
 				<div class="race">
-					<div class="race-me" style="margin-left:{{pixels userChallenger.currentChallenge.points}}px"><span class="fui-radio-checked"></span></div>
+					<div class="race-me" style="margin-left:{{pixelsTotalPoints userChallenger}}px">
+						<span class="fui-radio-checked"></span>
+					</div>
 					{{#each challengers}}
-					<div class="race-other" style="margin-left:{{pixels this.currentChallenge.points}}px"><span class="fui-radio-unchecked"></span></div>
+					<div class="race-other" style="margin-left:{{pixelsTotalPoints this}}px">
+						<span class="fui-radio-unchecked"></span>
+					</div>
 					{{/each}}
 				</div>
 				<div class="race-pts">
@@ -61,9 +65,9 @@
 				
 				<br>
 				<p>{{question.question}}</p>
-				<div>
+				<div><small style="font-size: 14px; margin-right: 10px">points: </small>
 					{{#each question.tags}}
-					<span class="btn btn-xs btn-info">{{tag}}</span>
+					<span class="btn btn-xs btn-info">{{name}}<span class="btn-tip">{{points}}</span></span>
 					{{/each}}
 				</div>
 				<form class="form" role="form" method="get"

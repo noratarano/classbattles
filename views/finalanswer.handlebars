@@ -57,9 +57,13 @@
 				</h4>
 				<!-- .race -->
 				<div class="race">
-					<div class="race-me" style="margin-left:{{pixels userChallenger.currentChallenge.points}}px"><span class="fui-radio-checked"></span></div>
+					<div class="race-me" style="margin-left:{{pixelsTotalPoints userChallenger}}px">
+						<span class="fui-radio-checked"></span>
+					</div>
 					{{#each challengers}}
-					<div class="race-other" style="margin-left:{{pixels this.currentChallenge.points}}px"><span class="fui-radio-unchecked"></span></div>
+					<div class="race-other" style="margin-left:{{pixelsTotalPoints this}}px">
+						<span class="fui-radio-unchecked"></span>
+					</div>
 					{{/each}}
 				</div>
 				<div class="race-pts">
@@ -75,7 +79,7 @@
 						{{correctAnswer}}
 						<small>Points will contribute toward:</small>
 						{{#each tags}}
-						<span class="btn btn-xs btn-info">{{tag}}</span>
+						<span class="btn btn-xs btn-info">{{name}}<span class="btn-tip">{{points}}</span></span>
 						{{/each}}
 					</p>
 				</blockquote>
@@ -99,7 +103,7 @@
               	<center>
 					{{#if done}}
 					<p>
-						You're done! You won <b>{{userChallenger.currentChallenge.points}}</b> points
+						You're done! You won <b>{{totalPoints userChallenger}}</b> points
 						<br />in this challenge.
 					</p>
 					<a class="btn btn-danger btn-block btn-lg btn-wide" href="/{{user.username}}/class/{{classname}}">

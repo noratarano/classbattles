@@ -86,8 +86,8 @@
 								<canvas class="chart" width="250px" height="250px"></canvas>
 							</div>
 							<div class="profile-class-tags">
-								{{#foreach class.tags}}
-								<a class="btn btn-xs btn-primary profile-class-tag">{{tag}}<span class="btn-tip">{{points}}</span></a>
+								{{#foreach tags}}
+								<a class="btn btn-xs btn-primary profile-class-tag">{{name}}<span class="btn-tip">{{points}}</span></a>
 								{{/foreach}}
 							</div>
 							<br/>
@@ -101,7 +101,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										{{#foreach class.history}}
+										{{#foreach history}}
 										<tr class="history-tr">
 											<td class="history-td col-xs-11">
 												<small>{{question}}</small>

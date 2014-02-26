@@ -1,5 +1,14 @@
-// TODO: get maximum possible points
+Array.max = function( array ){
+    return Math.max.apply( Math, array );
+};
+ 
+Array.min = function( array ){
+    return Math.min.apply( Math, array );
+};
+
 function makeChart($chart, classObject, MAX_LABEL_CHARS) {
+	var chartData = getChartData(classObject, MAX_LABEL_CHARS);
+	var scaleSteps = 5;
 	var options = {
         scaleShowLabels: false,
         pointLabelFontSize: 10,
@@ -7,13 +16,12 @@ function makeChart($chart, classObject, MAX_LABEL_CHARS) {
 		scaleOverride : true,
 		//** Required if scaleOverride is true **
 		//Number - The number of steps in a hard coded scale
-		scaleSteps : 5,
+		scaleSteps : scaleSteps,
 		//Number - The value jump in the hard coded scale
-		scaleStepWidth : 3,
+		scaleStepWidth : Array.max(chartData.datasets[0].data) / scaleSteps,
 		//Number - The centre starting value
 		scaleStartValue : 0
     };
-	var chartData = getChartData(classObject, MAX_LABEL_CHARS);
 	new Chart($chart[0].getContext("2d")).Radar(chartData, options);
 }
 
@@ -32,7 +40,7 @@ function getChartData(classObject, MAX_LABEL_CHARS) {
 	var labels = [];
 	var points = [];
 	for (t in classObject.tags) {
-		labels.push(classObject.tags[t].tag.substring(0, MAX_LABEL_CHARS));
+		labels.push(classObject.tags[t].name.substring(0, MAX_LABEL_CHARS));
 		points.push(classObject.tags[t].points);
 	}
 	

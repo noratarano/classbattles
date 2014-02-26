@@ -1,0 +1,1043 @@
+{ "questions": [
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": "needfinding", "points": 5}],
+			"question": "You are an researcher interested in finding out what times of the day people are the sleepiest. Which technique would allow you to collect the most data with the greatest accuracy?",
+			"choices": [
+				"Experience Sampling / Pager Study",
+				"Participant Observation",
+				"Survey",
+				"Interview"
+			],
+			"answer": "Experience Sampling / Pager Study"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": "needfinding", "points": 5}],
+			"question": "What is the single biggest problem with asking the previous question ('Which quarter would you prefer CS 147 to be offered?') to students in this year's class?",
+			"choices": [
+				"We are asking a biased sample of target users.",
+				"Current students do not generalize to future students.",
+				"Question is too hypothetical.",
+				"Insufficient usage of #octothorpe."
+			],
+			"answer": "We are asking a biased sample of target users."
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": "prototyping", "points": 5}],
+			"question": "Which technique is most appropriate for  Testing multiple interfaces to identify sources of confusion or inefficiency?",
+			"choices": [
+				"Paper Prototype",
+				"Storyboard",
+				"Wizard of Oz Prototype",
+				"Real Product"
+			],
+			"answer": "Paper Prototype"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": "prototyping", "points": 5}],
+			"question": "Which technique is most appropriate for Capturing the task context and physical setting where your product will be used?",
+			"choices": [
+				"Paper Prototype",
+				"Storyboard",
+				"Wizard of Oz Prototype",
+				"Real Product"
+			],
+			"answer": "Storyboard"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": "prototyping", "points": 5}],
+			"question": "Which technique is most appropriate for Communicating interface details to other team members.",
+			"choices": [
+				"Paper Prototype",
+				"Storyboard",
+				"Wizard of Oz Prototype",
+				"Real Product"
+			],
+			"answer": "Paper Prototype"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": "prototyping", "points": 5}],
+			"question": "Which technique is most appropriate for Getting user feedback on an interactive, working system.",
+			"choices": [
+				"Paper Prototype",
+				"Storyboard",
+				"Wizard of Oz Prototype",
+				"Real Product"
+			],
+			"answer": "Wizard of Oz Prototype"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": "prototyping", "points": 5}],
+			"question": "Which technique is most appropriate for Capturing user motivations and emotions around the use of your product.",
+			"choices": [
+				"Paper Prototype",
+				"Storyboard",
+				"Wizard of Oz Prototype",
+				"Real Product"
+			],
+			"answer": "Storyboard"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": "git", "points": 5}],
+			"question": "Forking a Github repository...",
+			"choices": [
+				"Clones it into your online account",
+				"Copies it onto your computer",
+				"Prevents you from making your own changes without affecting the master",
+				"Automatically updates the master with your changes"
+			],
+			"answer": "Clones it into your online account"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": ".html", "points": 5}],
+			"question": "Adding class='quiz' to an HTML element...",
+			"choices": [
+				"Applies any styling with the selector '.quiz' in your linked CSS files.",
+				"Removes all non-quiz styling the element may have.",
+				"Only works on <div>, <a>, and header elements.",
+				"All of the above"
+			],
+			"answer": "Applies any styling with the selector '.quiz' in your linked CSS files."
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": ".js", "points": 5}],
+			"question": "Which Javascript code does the following? Find the element with ID 'submitBtn' and listen for clicks on the button. When a user clicks on the button, it should call the function called 'updateAccounts'.",
+			"choices": [
+				"$.click('#submitBtn', updateAccounts)",
+				"$('#submitBtn', updateAccounts).click()",
+				"$('#submitBtn').click(updateAccounts)",
+				"$('#submitBtn'.click).updateAccounts()"
+			],
+			"answer": "$('#submitBtn').click(updateAccounts)"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": ".html", "points": 5}],
+			"question": "Adding id='id' to an HTML element...",
+			"choices": [
+				"Applies any styling with the selector 'id' in your linked CSS files.",
+				"Allows you to listen to the element in javascript by id",
+				"Can only be done in the body of the html file",
+				"None of the above"
+			],
+			"answer": "Applies any styling with the selector 'id' in your linked CSS files."
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": ".html", "points": 5}],
+			"question": "What does an 'href' add to a webpage?",
+			"choices": [
+				"An image",
+				"A hyperlink",
+				"A box with links",
+				"A time warp"
+			],
+			"answer": "A hyperlink"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": ".html", "points": 5}],
+			"question": "How do you add a source for an image in html?",
+			"choices": [
+				"src=",
+				"source=",
+				"ref=",
+				"location="
+			],
+			"answer": "src="
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": ".html", "points": 5}],
+			"question": "Where is the html located?",
+			"choices": [
+				"routes",
+				"views",
+				"public",
+				"/"
+			],
+			"answer": "views"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": ".html", "points": 5}],
+			"question": "What is a div?",
+			"choices": [
+				"A divider between containers",
+				"An invisible container",
+				"A dividend left over by an object",
+				"None of the above"
+			],
+			"answer": "An invisible container"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": ".js", "points": 5}],
+			"question": "What does js stand for?",
+			"choices": [
+				"juicescription",
+				"javasubmission",
+				"javascript",
+				"javaseed"
+			],
+			"answer": "javascript"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": ".js", "points": 5}],
+			"question": "How do you import javascript?",
+			"choices": [
+				"<script>",
+				"<link>",
+				"<import>",
+				"<pull javascript>"
+			],
+			"answer": "<script>"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": ".js", "points": 5}],
+			"question": "How would you access a class named 'class' in javascript?",
+			"choices": [
+				".class",
+				"access.class",
+				"$(class)",
+				"class()"
+			],
+			"answer": ".class"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": "jQuery", "points": 5}],
+			"question": "What is the shortcut symbol for jQuery?",
+			"choices": [
+				"&",
+				"#",
+				"%",
+				"$"
+			],
+			"answer": "$"
+		},
+		{
+			"lecture": false,
+			"classs": "CS147",
+			"tags": [{"name": "jQuery", "points": 5}],
+			"question": "Which of the following can you not do with jQuery?",
+			"choices": [
+				".expand",
+				".append",
+				".text",
+				".click"
+			],
+			"answer": ".expand"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "Which of the following is least helpful in designing an invitation?",
+			"choices": [
+				"Whitespace",
+				"Blackspace",
+				"Weight",
+				"Scale"
+			],
+			"answer": "Blackspace"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "Which is not a goal for visual design?",
+			"choices": [
+				"Guide",
+				"Pace",
+				"Space",
+				"Message"
+			],
+			"answer": "Space"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "Which should be most recognizable during a blur test?",
+			"choices": [
+				"Ads",
+				"Logo",
+				"Headlines",
+				"It depends on the goal"
+			],
+			"answer": "It depends on the goal"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "Where does point size come from?",
+			"choices": [
+				"How large the point of a pen used to be",
+				"How large letter blocks were in printing",
+				"How many points it took to write a letter",
+				"None of the above"
+			],
+			"answer": "How large letter blocks were in printing"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "What is leading?",
+			"choices": [
+				"The space between the bottom of the letter and end of a block",
+				"The space between the top of the letter and the start of a block",
+				"The space between two letters",
+				"The space between two letter blocks"
+			],
+			"answer": "The space between two letter blocks"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "What does x-height measure?",
+			"choices": [
+				"The height of the letter 'x'",
+				"The height of a var",
+				"The height of any small letter",
+				"The height of an arbitrary letter"
+			],
+			"answer": "The height of the letter 'x'"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "Which of the following does not describe a feature of typography?",
+			"choices": [
+				"Ascenders",
+				"Hangers",
+				"Descenders",
+				"Weight"
+			],
+			"answer": "Hangers"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "Which of the following is the font of the title screen for each lecture?",
+			"choices": [
+				"Heavy Gill Sans",
+				"Bold Calibri",
+				"Bold Gill Sans",
+				"Regular Calibri"
+			],
+			"answer": "Bold Gill Sans"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "How have people 'proven' the Serif Hypothesis?",
+			"choices": [
+				"Stanford did an experiment with middle schoolers and math word problems",
+				"Professor Eric Gill studied brain responses in 1931",
+				"Alex Poole tracked the movement of a person's eye in 1972",
+				"They haven't"
+			],
+			"answer": "They haven't"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "The idea that conflicting signals take longer to process is called",
+			"choices": [
+				"The Stroop Effect",
+				"The Parse Difference",
+				"Signalus Temparum",
+				"The Neuro Lag"
+			],
+			"answer": "The Stroop Effect"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "Baskerville was a reputation building font is whose campaign?",
+			"choices": [
+				"Obama's",
+				"Hillary Clinton's",
+				"McCain's",
+				"Ron Paul's"
+			],
+			"answer": "Hillary Clinton's"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "What is information scent?",
+			"choices": [
+				"The scheme of an interface",
+				"The ease of figuring out what's on an interface",
+				"The layout of an interface",
+				"The smell of the interface"
+			],
+			"answer": "The ease of figuring out what's on an interface"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "What makes it difficult to navigate certain icons?",
+			"choices": [
+				"New, vague menus appearing when hovered over",
+				"The logo above the icons",
+				"An appropriate font",
+				"All of the above"
+			],
+			"answer": "New, vague menus appearing when hovered over"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "Which of the following would be the least helpful icon?",
+			"choices": [
+				"Assignment 1",
+				"Terms & Agreements",
+				"FAQ",
+				"Forms"
+			],
+			"answer": "Forms"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "Which would be the worst spot to place important information on Google search results?",
+			"choices": [
+				"Above the fold",
+				"Below the adspace",
+				"Right aligned",
+				"Left aligned"
+			],
+			"answer": "Right aligned"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "Which of the following does not help someone read a paragraph of text?",
+			"choices": [
+				"Using the same text in a layout that promotes scanning",
+				"Using less words",
+				"Change the order of the sentences",
+				"Combining A & B"
+			],
+			"answer": "Combining A & B"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "What is the main fascination about grids?",
+			"choices": [
+				"Easier to center information",
+				"Alignment",
+				"Transferable",
+				"Minimalism"
+			],
+			"answer": "Alignment"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "What's most wrong with centering a table of contents without alignment?",
+			"choices": [
+				"It looks too middle-schooly",
+				"Textbooks don't do it",
+				"Harder to scan",
+				"Relevant information is lost"
+			],
+			"answer": "Harder to scan"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "What is the best reason to use top-alignment for sign-ins?",
+			"choices": [
+				"People are used to these fields",
+				"It's not a table of contents",
+				"Easier to implement",
+				"Bottom-alignment is messy"
+			],
+			"answer": "People are used to these fields"
+		},
+		{
+			"lecture": true,
+			"classs": "CS147",
+			"tags": [{"name": "visual design", "points": 5}],
+			"question": "Why should you design in grayscale first?",
+			"choices": [
+				"It's hard to find colors you like",
+				"Colors require more work",
+				"Nice to think about colors after seeing luminance",
+				"You shouldn't"
+			],
+			"answer": "Nice to think about colors after seeing luminance"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5}],
+			"question": "What does 5++ equal?",
+			"choices": [
+				"7",
+				"6",
+				"Pointer to 5",
+				"5, you didn't add anything"
+			],
+			"answer": "6"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5},{"name": "types", "points": 5}],
+			"question": "Which of the following cannot store a numeric value?",
+			"choices": [
+				"int",
+				"long",
+				"unsigned",
+				"char"
+			],
+			"answer": "char"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5}],
+			"question": "When your applet is first loaded, it calls a method named?",
+			"choices": [
+				"load()",
+				"begin()",
+				"initialize()",
+				"init()"
+			],
+			"answer": "init()"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5},{"name": "strings", "points": 5}],
+			"question": "The length of the string, 'length' is...",
+			"choices": [
+				"5",
+				"6",
+				"8",
+				"1"
+			],
+			"answer": "6"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5},{"name": "strings", "points": 5}],
+			"question": "How do you print strings in java?",
+			"choices": [
+				"cout",
+				"printf",
+				"println",
+				"console.log()"
+			],
+			"answer": "println"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5},{"name": "classes", "points": 5}],
+			"question": "How many fields does the Rectangle class contain?",
+			"choices": [
+				"2",
+				"3",
+				"4",
+				"8"
+			],
+			"answer": "4"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5},{"name": "classes", "points": 5}],
+			"question": "To change the color in a GLabel object, use:",
+			"choices": [
+				"changeColor",
+				"setColor",
+				"color",
+				"fillColor"
+			],
+			"answer": "setColor"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5}],
+			"question": "________ is a construct that defines objects of the same type.",
+			"choices": [
+				"A class",
+				"A method",
+				"An object",
+				"A data field"
+			],
+			"answer": "A class"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5}],
+			"question": "________ is invoked to create an object.",
+			"choices": [
+				"A constructor",
+				"A method with the void return type",
+				"A method with a return type",
+				"The main method"
+			],
+			"answer": "A constructor"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "data structures", "points": 5}],
+			"question": "How does a stack behave?",
+			"choices": [
+				"FIFO",
+				"LIFO",
+				"LILO",
+				"KILO"
+			],
+			"answer": "LIFO"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "data structures", "points": 5}],
+			"question": "How does a queue behave?",
+			"choices": [
+				"FIFO",
+				"LIFO",
+				"FILO",
+				"MIKO"
+			],
+			"answer": "FIFO"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "types", "points": 5}],
+			"question": "The default value for data field of a boolean type, numeric type, object type is ________, respectively.",
+			"choices": [
+				"true, 1, null",
+				"false, 1, null",
+				"false, 0, null",
+				"true, 1, Null"
+			],
+			"answer": "false, 0, null"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "control statements", "points": 5}],
+			"question": "If chr is a character variable, which of the following if statements is written correctly?",
+			"choices": [
+				"if (chr = 'a') System.out.print('true');",
+				"if (chr == 'a') System.out.print('true');",
+				"if (chr = 'a') System.out.print('true');",
+				"if (chr == 'a') System.out.print('true');"
+			],
+			"answer": "if (chr == 'a') System.out.print('true');"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "control statements", "points": 5}],
+			"question": "Which of the following is the correct boolean expression to test for: int x being a value between, but not",
+			"choices": [
+				"((x >= 500 && x <= 650) && (y != 1000))",
+				"((x > 500 && x < 650) || !(y.equal(1000)))",
+				"((x > 500 && x < 650) || (y != 1000))",
+				"((x < 500 && x > 650) || !(y == 1000))"
+			],
+			"answer": "((x > 500 && x < 650) || (y != 1000))"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5}],
+			"question": "What is the result of the following expression? 10 + 5 * 3 - 20",
+			"choices": [
+				"-5",
+				"5",
+				"25",
+				"-50"
+			],
+			"answer": "5"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5}],
+			"question": "What is the result of the following expression? 25 / 4 + 4 * 10 % 3",
+			"choices": [
+				"19",
+				"7.25",
+				"3",
+				"7"
+			],
+			"answer": "7"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5}],
+			"question": "What is the result of the following expression? 25.0 / 4 + 4 * 10 % 3",
+			"choices": [
+				"19",
+				"7.25",
+				"3",
+				"7"
+			],
+			"answer": "7.25"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "java", "points": 5}],
+			"question": "What is the value of z after the following statements are executed? double x = 2.5, y = 4.0; int z = (int) x + y;",
+			"choices": [
+				"6",
+				"6.5",
+				"6.0",
+				"7"
+			],
+			"answer": "6"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "control statements", "points": 5}],
+			"question": "In a while loop, the Boolean expression is tested",
+			"choices": [
+				"before the loop is executed",
+				"after the loop is executed",
+				"both before and after the loop is executed",
+				"never"
+			],
+			"answer": "before the loop is executed"
+		},
+		{
+			"lecture": false,
+			"classs": "CS106A",
+			"tags": [{"name": "control statements", "points": 5}],
+			"question": "In a do-while loop, the Boolean expression is tested",
+			"choices": [
+				"before the loop is executed",
+				"after the loop is executed",
+				"both before and after the loop is executed",
+				"continuously"
+			],
+			"answer": "after the loop is executed"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "history", "points": 5}],
+			"question": "What famous document begins: 'When in the course of human events...'?",
+			"choices": [
+				"The Declaration of Independence.",
+				"The Constitution",
+				"The Bill of Rights",
+				"The Emancipation Proclamation"
+			],
+			"answer": "The Declaration of Independence."
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "history", "points": 5}],
+			"question": "What so-called 'war' spawned the dueling slogans 'Better Dead Than RED' and 'Better Red Than Dead' in the 1950's?",
+			"choices": [
+				"The Cold War.",
+				"The Vietnam War",
+				"World War I",
+				"The Soccer War"
+			],
+			"answer": "The Cold War."
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "history", "points": 5}],
+			"question": "What future Soviet dictator was training to be a priest when he got turned on to Marxism?",
+			"choices": [
+				"Joseph Stalin.",
+				"Georgy Malenkov",
+				"Nikita Khrushchev",
+				"Vladimir Lenin"
+			],
+			"answer": "Joseph Stalin."
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "history", "points": 5}],
+			"question": "In a 1863 Proclamation, U.S. President declared what day to be a national holiday?",
+			"choices": [
+				"President's Day",
+				"Labor Day",
+				"Thanksgiving",
+				"Groundhog Day"
+			],
+			"answer": "Thanksgiving"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "history", "points": 5}],
+			"question": "Which military conquest in 1588 firmly established Britain as the world's leading naval power?",
+			"choices": [
+				"The Battle of Yorktown",
+				"Defeat of Spanish armada",
+				"Sea battle at Grevelingen",
+				"Catholic League under duke Henri de Guise occupies Paris"
+			],
+			"answer": "Defeat of Spanish armada"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "math", "points": 5}],
+			"question": "You begin writing down the letters of the alphabet in this pattern:You write A one time, B two times, C three times, D four times, and so on. What letter is 100th on the list?",
+			"choices": [
+				"G",
+				"D",
+				"N",
+				"O"
+			],
+			"answer": "N"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "math", "points": 5}],
+			"question": "The number you get when you divide one number by another is a called a...",
+			"choices": [
+				"Product",
+				"Dividend",
+				"Quotient",
+				"Numerator"
+			],
+			"answer": "Quotient"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "math", "points": 5},{"name": "history", "points": 5}],
+			"question": "In 1557, a Welsh mathematician named Robert Recorde invented...",
+			"choices": [
+				"Integrals",
+				"Equal Sign",
+				"Calculators",
+				"Physics"
+			],
+			"answer": "Equal Sign"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "math", "points": 5},{"name": "science", "points": 5}],
+			"question": "This molecular structure is said to resemble chicken wire because of it's _____ shape",
+			"choices": [
+				"Diamond",
+				"Hexagonal",
+				"Octogonal",
+				"Metallic"
+			],
+			"answer": "Hexagonal"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "math", "points": 5},{"name": "science", "points": 5}],
+			"question": "What unit does metric barometer measure atmospheric pressure in?",
+			"choices": [
+				"Inches",
+				"Kelvin",
+				"Nanocoolens",
+				"Kilopascals"
+			],
+			"answer": "Kilopascals"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "science", "points": 5}],
+			"question": "Which of the following scientists studies animals?",
+			"choices": [
+				"Botanist",
+				"Zoologist",
+				"Geologist",
+				"Professor Oak"
+			],
+			"answer": "Zoologist"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "science", "points": 5},{"name": "history", "points": 5}],
+			"question": "Albert Einstein was a scientist famous for his work on physics. Where was he born?",
+			"choices": [
+				"Germany",
+				"United States",
+				"France",
+				"Switzerland"
+			],
+			"answer": "Germany"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "science", "points": 5},{"name": "literature", "points": 5}],
+			"question": "In 1984, Mark Twain stepped into the lab of",
+			"choices": [
+				"Nikola Tesla",
+				"Albert Einstein",
+				"Thomas Edison",
+				"None of the above"
+			],
+			"answer": "Nikola Tesla"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "science", "points": 5},{"name": "history", "points": 5}],
+			"question": "Which of these machines did Johannes Gutenberg invent?",
+			"choices": [
+				"Ball point pen",
+				"Printing press",
+				"Cotton Gin",
+				"None of the Above"
+			],
+			"answer": "Printing press"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "science", "points": 5}],
+			"question": "When unstable nuclei undergo radioactive decay, they emit three types of radioactivity. Which of the following is not one of them?",
+			"choices": [
+				"alpha",
+				"beta",
+				"gamma",
+				"delta"
+			],
+			"answer": "delta"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "literature", "points": 5}],
+			"question": "The original title of Fahrenheit 451 was...",
+			"choices": [
+				"Fahrenheit 452",
+				"The Fireman",
+				"Burning book",
+				"World on Fire"
+			],
+			"answer": "The Fireman"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "literature", "points": 5},{"name": "history", "points": 5}],
+			"question": "The most best-selling novel of all time is...",
+			"choices": [
+				"Don Quixote",
+				"Harry Potter and the Sorcerer's Stone",
+				"Lord of the Rings:Fellowship of the Ring",
+				"None of the above"
+			],
+			"answer": "Don Quixote"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "math", "points": 5}],
+			"question": "Which is not a basic arithmetic operation?",
+			"choices": [
+				"addition",
+				"multiplication",
+				"factoring",
+				"All of the above"
+			],
+			"answer": "factoring"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "literature", "points": 5}],
+			"question": "The main character in The Catcher in the Rye is...",
+			"choices": [
+				"Colby",
+				"Holden",
+				"Norman",
+				"Corvin"
+			],
+			"answer": "Holden"
+		},
+		{
+			"lecture": false,
+			"classs": "Triv101",
+			"tags": [{"name": "literature", "points": 5}],
+			"question": "The name of the monster in Frankenstein is...",
+			"choices": [
+				"Frankenstein",
+				"Gabe",
+				"Experiment 13",
+				"None of the above"
+			],
+			"answer": "None of the above"
+		}
+	]
+}

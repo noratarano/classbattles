@@ -42,8 +42,8 @@
 					{{#foreach user.classes}}
 					{{#if $even}}
 					<div class="class-row">
-						<a class="btn-cont btn btn-primary btn-hg class-btn" href="/{{../../user.username}}/class/{{class.name}}">
-							<div>{{class.name}}</div>
+						<a class="btn-cont btn btn-primary btn-hg class-btn" href="/{{../../user.username}}/class/{{classname}}">
+							<div>{{classname}}</div>
 						</a>
 					{{#if $last}}
 						<a class="btn-cont btn btn-default btn-hg add-btn" href="/{{../../../user.username}}/class/add">
@@ -52,8 +52,8 @@
 					</div>
 					{{/if}}
 					{{else}}
-						<a class="btn-cont btn btn-primary btn-hg class-btn" href="/{{../../user.username}}/class/{{class.name}}">
-							<div>{{class.name}}</div>
+						<a class="btn-cont btn btn-primary btn-hg class-btn" href="/{{../../user.username}}/class/{{classname}}">
+							<div>{{classname}}</div>
 						</a>
 					</div>
 					{{#if $last}}

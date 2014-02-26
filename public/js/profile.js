@@ -17,7 +17,7 @@ $(function() {
 	function makeClasses(data) {
 		var classIndex = 0;
 		for (c in data.classes) {
-			var classObject = data.classes[c].class;
+			var classObject = data.classes[c];
 			classes.push(classObject);
 			classNames.push(classObject.name);
 		}
@@ -78,7 +78,7 @@ $(function() {
 		var i = 0;
 		var $chart = $('.chart');
 		for (var c = 0; c < $chart.length; c++) {
-			makeChart($($chart[i]), data.classes[c].class, MAX_LABEL_CHARS);
+			makeChart($($chart[i]), data.classes[c], MAX_LABEL_CHARS);
 			i+=1;
 		}
 	}
@@ -88,7 +88,7 @@ $(function() {
 		var classes = data.classes;
 		var i = 0;
 		for (c in classes) {
-			var classObject = classes[c].class;
+			var classObject = classes[c];
 			var $labels = $($('.profile-class-tags')[i]).find('.profile-class-tag');
 			colorLabels($labels, colors);
 			i++
