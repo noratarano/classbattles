@@ -132,7 +132,7 @@ exports.view.start = function(req, res) {
 				if (err) console.log(err);
 				models.Question.find({ lecture: false, classname: classname }).exec(function(err, questions) {
 					if (err) console.log(err);
-					var randomQuestions = shuffle(questions).slice(0,15);
+					var randomQuestions = shuffle(questions).slice(0,5);
 					user.addRecord(classname, new models.Challenge({
 						lecture: false,
 						active: true,
@@ -310,6 +310,10 @@ exports.view.finalanswer = function(req, res) {
 	var studentBattle = (username != req.params.username);
 	if (!username) {
 		res.redirect('/login');
+		return;
+	}
+	if (!qid) {
+		res.redirect('/'+username+'/class/'+classname);
 		return;
 	}
 	// get the user

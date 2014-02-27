@@ -52,11 +52,6 @@
 					{{#if ../active}}
 					<a href="/{{../../../user.username}}/class/{{../../../class.name}}/challenge" class="btn btn-block btn-danger">Live Lecture</a>
 					{{/if}}
-					{{else}}
-					{{#if ../active}}
-					{{#ifChallengerIsNotMe ../../../user.username ../../challenger ../../../class.name}}
-					{{/ifChallengerIsNotMe}}
-					{{/if}}
 					{{/if}}
 					{{/foreach}}
 				</center>

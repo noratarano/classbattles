@@ -9,13 +9,13 @@ Array.min = function( array ){
 function makeChart($chart, classObject, MAX_LABEL_CHARS) {
 	var chartData = getChartData(classObject, MAX_LABEL_CHARS);
 	var scaleSteps = 5;
-	var max = chartData.datasets[0].data;
+	var max = Array.max(chartData.datasets[0].data);
 	if (classObject.name == 'CS106A') {
-		max = 65;
+		max = Array.max([65, max]);
 	} else if (classObject.name == 'Triv101') {
-		max = 45;
+		max = Array.max([45, max]);
 	} else if (classObject.name == 'CS147') {
-		max = 100;
+		max = Array.max([100, max]);
 	}
 	var options = {
         scaleShowLabels: false,
