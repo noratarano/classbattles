@@ -55,6 +55,11 @@ app.get('/about', index.view.about);
 app.get('/home', index.view.home);
 
 var models = require('./models');
+app.get('/questions', function(req, res) {
+	models.Class.find().exec(function(err, data) {
+		res.send(data);
+	});
+});
 
 // api
 app.get('/api/login', index.api.login);

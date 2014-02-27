@@ -9,6 +9,14 @@ Array.min = function( array ){
 function makeChart($chart, classObject, MAX_LABEL_CHARS) {
 	var chartData = getChartData(classObject, MAX_LABEL_CHARS);
 	var scaleSteps = 5;
+	var max = chartData.datasets[0].data;
+	if (classObject.name == 'CS106A') {
+		max = 65;
+	} else if (classObject.name == 'Triv101') {
+		max = 45;
+	} else if (classObject.name == 'CS147') {
+		max = 100;
+	}
 	var options = {
         scaleShowLabels: false,
         pointLabelFontSize: 10,
@@ -18,7 +26,7 @@ function makeChart($chart, classObject, MAX_LABEL_CHARS) {
 		//Number - The number of steps in a hard coded scale
 		scaleSteps : scaleSteps,
 		//Number - The value jump in the hard coded scale
-		scaleStepWidth : Array.max(chartData.datasets[0].data) / scaleSteps,
+		scaleStepWidth : max / scaleSteps,
 		//Number - The centre starting value
 		scaleStartValue : 0
     };
