@@ -16,7 +16,7 @@ $(function() {
     
     // Menu
 	var menu_open = false;
-	if (!b_test) {
+	if (window.location.pathname != '/b') {
 	    $(".menu-btn").tooltip({
 	        title: $('.menu-guide').html(),
 	        placement : 'top',
