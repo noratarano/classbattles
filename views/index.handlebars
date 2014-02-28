@@ -59,18 +59,27 @@
 			<!-- .menu-cont -->
 			<div class="row menu-cont">
 				<div class="btn btn-danger fui-list center-block menu-btn"></div>
+				<div class="menu-guide hidden">
+					<div class="btn-group-vertical">
+						<a href="/login" class="btn btn-sm btn-inverse btn-wide menu-login-btn">Log In</a>
+						<a href="/signup" class="btn btn-sm btn-inverse btn-wide menu-signup-btn">Sign up</a>
+				        <a href="/about" class="btn btn-sm btn-inverse btn-wide menu-about-btn">About</a>
+				    </div>
+				</div>
 			</div>
 			<!-- /.menu-cont -->
 		</div>
 		<!-- /.container -->
 		
-		<div class="menu-guide hidden">
-			<div class="btn-group-vertical">
-				<a href="/login" class="btn btn-sm btn-inverse btn-wide menu-login-btn">Log In</a>
-				<a href="/signup" class="btn btn-sm btn-inverse btn-wide menu-signup-btn">Sign up</a>
-		        <a href="/about" class="btn btn-sm btn-inverse btn-wide menu-about-btn">About</a>
-		    </div>
-		</div>
+		{{#if b_test}}
+		<script>
+			var b_test = true;
+		</script>
+		{{else}}
+		<script>
+			var b_test = false;
+		</script>
+		{{/if}}
 
 		<!-- Load JS here for greater good =============================-->
 		<script src="/js/lib/jquery-1.8.3.min.js"></script>

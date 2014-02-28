@@ -53,6 +53,7 @@ app.get('/logout', index.view.index);
 app.get('/signup', index.view.signup);
 app.get('/about', index.view.about);
 app.get('/home', index.view.home);
+app.get('/b', index.view.index_b);
 
 var models = require('./models');
 app.get('/questions', function(req, res) {

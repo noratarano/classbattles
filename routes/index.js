@@ -20,6 +20,10 @@ exports.view.index = function(req, res) {
     res.render('index', {});
 };
 
+exports.view.index_b = function(req, res) {
+    res.render('index', { b_test: true });
+};
+
 exports.view.login = function(req, res) {
     res.render('login', {});
 };
