@@ -50,8 +50,8 @@ app.get('/users', function(req, res) {
 		var b_testers = [];
 		var a_testers = [];
 		for (u in users) {
-			if (users[u].b_test) b_testers.push(users.username);
-			else a_testers.push(users.username);
+			if (users[u].b_test) b_testers.push(users[u].username);
+			else a_testers.push(users[u].username);
 		}
 		res.send({ a: a_testers, b: b_testers });
 	});
