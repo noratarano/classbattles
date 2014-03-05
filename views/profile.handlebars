@@ -38,7 +38,7 @@
 				</a>
 				{{else}}
 				{{#if ../profile.online}}
-				<a href="/{{../../profile.username}}/class/{{../../classname}}/challenge" class="btn btn-danger nav-right">
+				<a href="/{{../../profile.username}}/class/{{../../classname}}/challenge" class="btn btn-danger nav-right challenge-btn">
 					<span>challenge</span>
 				</a>
 				{{else}}
@@ -160,6 +160,14 @@
 		<script src="/js/common.js"></script>
 		<script src="/js/chart.js"></script>
 		<script src="/js/profile.js"></script>
+		<script>
+			$(function() {
+				$('.challenge-btn').click(function(e) {
+					console.log('Clicked challenge!');
+					ga('send', 'event', 'challenge', 'click');
+				});
+			});
+		</script>
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
