@@ -41,7 +41,7 @@
 				<h7>Tools:</h7>
 				<br />
 				<center>
-					<a href="/{{user.username}}/class/{{class.name}}/leaderboard" class="btn btn-block btn-primary">Leaderboard</a>
+					<a href="/{{user.username}}/class/{{class.name}}/leaderboard{{#if user.b_test}}?b=true{{/if}}" class="btn btn-block btn-primary">Leaderboard</a>
 					<a href="/{{user.username}}/class/{{class.name}}/profile" class="btn btn-block btn-primary">Profile</a>
 				</center>
 				<br />
@@ -66,7 +66,7 @@
 		<div class="menu-guide hidden">
 			<div class="btn-group-vertical">
 				<a href="/{{user.username}}/home" class="btn btn-sm btn-inverse btn-wide menu-home-btn">Home</a>
-				<a href="/{{user.username}}/class/{{class.name}}/leaderboard" class="btn btn-sm btn-inverse btn-wide menu-leaders-btn">Leaderboard</a>
+				<a href="/{{user.username}}/class/{{class.name}}/leaderboard{{#if user.b_test}}?b=true{{/if}}" class="btn btn-sm btn-inverse btn-wide menu-leaders-btn">Leaderboard</a>
 				<a href="/{{user.username}}/class/{{class.name}}/profile" class="btn btn-sm btn-inverse btn-wide menu-profile-btn">Profile</a>
 		        <a href="/logout" class="btn btn-sm btn-inverse btn-wide menu-logout-btn">Log out</a>
 		        <a href="/about" class="btn btn-sm btn-inverse btn-wide menu-about-btn">About</a>
@@ -86,6 +86,14 @@
 		<script src="/js/lib/jquery.placeholder.js"></script>
 		
 		<script src="/js/common.js"></script>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		  ga('create', 'UA-48539713-2', { 'cookieDomain': 'none' });
+		  ga('send', 'pageview');
+		</script>
 	</body>
 
 </html>

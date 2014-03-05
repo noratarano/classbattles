@@ -17,11 +17,11 @@ exports.api = {};
 // View
 
 exports.view.index = function(req, res) {
-    res.render('index', {});
+    res.render('index');
 };
 
 exports.view.index_b = function(req, res) {
-    res.render('index', { b_test: true });
+	res.render('index', { b_test: true });
 };
 
 exports.view.login = function(req, res) {
@@ -52,8 +52,6 @@ exports.view.about = function(req, res) {
 		if (err) console.log(err);
 		res.render('about', { user: user });
 	});
-    //var userObject = findUser(req.session.username);
-	//res.render('about', {user: userObject});
 };
 
 exports.view.home = function(req, res) {
@@ -85,11 +83,11 @@ exports.view.class = function(req, res) {
 		res.redirect('/login');
 		return;
 	}
-	models.User.findOne({ username: username }).lean().exec(function(err, user) {
+	models.User.findOne({ username: username }).exec(function(err, user) {
 		if (err) console.log(err);
 		if (user) {
 			var classname = req.params.classname;
-			var userClassObject = findUserClass(user, classname);
+			var userClassObject = user.userClass(classname);
 		    var data = {
 		        user: user,
 		        'class': userClassObject,
@@ -107,17 +105,6 @@ exports.view.class = function(req, res) {
 			res.redirect('/login');
 		}
 	});
-	//     var classname       = req.params.classname;
-	//     var userObject      = findUser(username);
-	//     var userClassObject = findUserClass(userObject, classname);
-	//     var data = {
-	//         user: userObject,
-	//         'class': userClassObject,
-	// classes: [{class: userClassObject}],
-	// helpers: {foreach: foreach}
-	//     }
-	//     
-	//     res.render('class', data);
 };
 
 exports.view.start = function(req, res) {
@@ -271,38 +258,6 @@ exports.view.challenge = function(req, res) {
 			}
 		});
 	});
-	
-	/*if (username) {
-		// objects
-		var classObject = findClass(classname);
-		var userObject = findUser(username);
-		var userClassObject = findUserClass(userObject, classname);
-		var challengers = [];
-		var question = null;
-		var studentBattle = false;
-		if (username == req.params.username) {
-			question = nextQuestion(userClassObject, classObject);
-			challengers = findChallengers(userObject, classname);
-		} else {
-			var challengerUserObject = findUser(req.params.username);
-			var challengerClassObject = findUserClass(challengerUserObject, classname);
-			challengerClassObject.username = req.params.username;
-			challengers.push(challengerClassObject);
-			question = nextQuestion(userClassObject, classObject);
-			studentBattle = true;
-		}
-    	res.render('challenge', {
-			user: userObject,
-			userChallenger: userClassObject,
-			challengers: challengers, 
-			classname: classname,
-			question: question,
-			studentBattle: studentBattle,
-			helpers: { pixels: pixels }
-		});
-	} else {
-		res.redirect('/login');
-	}*/
 };
 
 exports.view.finalanswer = function(req, res) {
@@ -405,75 +360,12 @@ exports.view.finalanswer = function(req, res) {
 			}
 		});
 	});
-
-	/*if (username) {
-		// objects
-		var classObject = findClass(classname);
-		var userObject = findUser(username);
-		var userClassObject = findUserClass(userObject, classname);
-		var question = findQuestion(classObject, qid);
-		var challengers = [];
-		
-		if (!studentBattle) {
-			challengers = findChallengers(userObject, classname);
-		} else { // TODO...
-			var challengerUserObect = findUser(req.params.username);
-			var challengerClassObject = findUserClass(challengerUserObect, classname);
-			challengerClassObject.username = req.params.username;
-			challengers.push(challengerClassObject);
-		}
-		
-		// update points
-		var correct = selected == question.answer;
-		var userI = findUserIndex(username);
-		var userClassI = findUserClassIndex(Users[userI].user, classname);
-		if (correct) {
-			for (t in question.tags) {
-				// current challenge points
-				Users[userI].user
-				.classes[userClassI].class
-				.currentChallenge.points += question.tags[t].points;
-				// current challenge tags
-				Users[userI].user
-				.classes[userClassI].class
-				.currentChallenge.tags.push(question.tags[t]);
-			}
-		}
-		// update history
-		Users[userI].user.classes[userClassI].class.history.splice(0, 0,{
-			question: question.question,
-			correct: correct
-		});
-		var done = !nextQuestion(
-			Users[userI].user.classes[userClassI].class, 
-			classObject
-		);
-		if (done) {
-			endCurrentChallenge(username, classname, studentBattle);
-		}
-		var data = {
-	        correct: correct,
-	        selected: selected,
-	        timedOut: timedOut,
-	        correctAnswer: question.answer,
-	        tags: question.tags,
-			classname: classname,
-			user: Users[userI].user,
-			userChallenger: Users[userI].user.classes[userClassI].class,
-			challengers: challengers,
-			done: done,
-			studentBattle: studentBattle,
-			helpers: { pixels: pixels }
-	    };
-	    res.render('finalanswer', data);
-	} else {
-		res.redirect('/login');
-	}*/
 };
 
 exports.view.leaders = function(req, res) {
 	var username = req.session.username;
     var classname = req.params.classname;
+	var b_test = req.params.b;
 	if (!username) {
 		res.redirect('/login');
 		return;
@@ -482,25 +374,21 @@ exports.view.leaders = function(req, res) {
 		res.redirect('/' + username + '/home');
 		return;
 	}
-	models.User.find({ "classes.name": classname }).exec(function(err, users) {
+	models.User.findOne({ username: username }).exec(function(err, user) {
 		if (err) console.log(err);
-		var leaderboard = Leaderboard(classname, 10, username, users);
-	    var data = {
-	        classname: classname,
-	        username: username,
-	        leaderboard: leaderboard,
-	        helpers: { place: leaderPlace, totalPoints: totalPoints }
-	    }
-	    res.render('leaders', data);
+		models.User.find({ "classes.name": classname }).exec(function(err, users) {
+			if (err) console.log(err);
+			var leaderboard = Leaderboard(classname, 10, username, users);
+		    var data = {
+		        classname: classname,
+		        username: username,
+		        leaderboard: leaderboard,
+				b_test: user.b_test,
+		        helpers: { place: leaderPlace, totalPoints: totalPoints }
+		    }
+		    res.render('leaders', data);
+		});
 	});
-    /*var leaderboard = Leaderboard(classname, 10, username);
-    var data = {
-        classname: classname,
-        username: username,
-        leaderboard: leaderboard,
-        helpers: { place: leaderPlace, totalPoints: totalPoints }
-    }
-    res.render('leaders', data);*/
 }
 
 exports.view.classprofile = function(req, res) {
@@ -527,25 +415,6 @@ exports.view.classprofile = function(req, res) {
 	        }
 		});
 	});
-    /*if (!req.session.username) {
-        res.redirect('/login');
-    } else {
-        var classname = req.params.classname;
-        var userObject = findUser(req.session.username);
-        var profileObject = findUser(req.params.username);
-        if (profileObject) {
-            var data = { 
-                user: userObject, 
-                profile: profileObject,
-                self: userObject.username == profileObject.username,
-				classname: classname,
-                helpers: { foreach: foreach }
-            };
-            res.render('profile', data);
-        } else {
-            res.redirect('/login');
-        }
-    }*/
 };
 
 exports.view.profile = function(req, res) {
@@ -568,22 +437,6 @@ exports.view.profile = function(req, res) {
 			res.redirect('/login');
 		}
 	});
-    /*if (username) {
-        var userObject = findUser(username);
-        if (userObject) {
-            var data = { 
-                user: userObject,
-                profile: userObject,
-				self: true,
-                helpers: { foreach: foreach } 
-            };
-            res.render('profile', data);
-        } else {
-            res.redirect('/login');
-        }
-    } else {
-        res.redirect('/login');
-    }*/
 };
 
 exports.view.editprofile = function(req, res) {
@@ -637,25 +490,6 @@ exports.view.addclass = function(req, res) {
 	        res.render('login');
 	    }
     });
-	
-	/*var userObject = findUser(req.params.username);
-    if (userObject) {
-        var classes = [];
-        for (c in Classes) {
-            var disable = false;
-            for (uc in userObject.classes) {
-                if (userObject.classes[uc].class.name == Classes[c].class.name) {
-                    disable = true;
-                    break;
-                }
-            }
-            classes.push({ 'class': { name: Classes[c].class.name, description: Classes[c].class.description, disable: disable } });
-        }
-        classes.sort(sortAlpha);
-        res.render('addclass', { user: userObject, classes: classes });
-    } else {
-        res.render('login');
-    }*/
 };
 
 // API
@@ -680,16 +514,6 @@ exports.api.login = function(req, res) {
 			});
 		}
 	});
-    /*var userObject = findUser(username);
-    if (userObject) {
-        req.session.username = userObject.username;
-        res.redirect('/'+username+'/home');
-    } else {
-        res.render('login', { 
-			error: 'Error: incorrect username & password.',
-			username: username
-		});
-    }*/
 };
 
 exports.api.signup = function(req, res) {
@@ -711,7 +535,8 @@ exports.api.signup = function(req, res) {
 				username: username,
 				email: email,
 				online: true,
-				classes: []
+				classes: [],
+				b_test: Math.random() < 0.5
 			});
 			newUser.set('password', password);
 			newUser.save(function(err) {
@@ -728,21 +553,6 @@ exports.api.signup = function(req, res) {
 	    	});
 		}
 	});
-    /*var userObject = findUser(username);
-    if (!userObject) {
-        userObject = User(username, email);
-        Users.push(userObject);
-    } else {
-    	res.render('signup', {
-    		error: 'Error: username ' + username + ' already exists. Choose another one.',
-			username: '',
-			email: email,
-			password: password
-    	});
-		return;
-    }
-    req.session.username = username;
-    res.redirect('/'+username+'/home');*/
 };
 
 exports.api.addclass = function(req, res) {
@@ -783,45 +593,6 @@ exports.api.addclass = function(req, res) {
 			res.redirect('/login');
 		}
 	});
-	
-	{
-    /* var u = findUserIndex(username);
-	if (u < 0) {
-		res.redirect('/login');
-		return;
-	}
-    var classesToAdd = req.query.classes;
-    var userClasses = Users[u].user.classes;
-    var count = req.query.count;
-    if (count == 1) {
-        var dontAdd = false;
-        var classToAdd = classesToAdd;
-        for (uc in userClasses) {
-            if (classToAdd == userClasses[uc].class.name) {
-                dontAdd = true;
-            }
-        }
-        if (!dontAdd) {
-            Users[u].user.classes.push(UserClass(classToAdd));
-            res.redirect('/'+[username, 'class', classToAdd].join('/'));
-            return;
-        }
-    } else {
-        for (var c = 0; c < count; c++) {
-            var dontAdd = false;
-            var classToAdd = classesToAdd[c];
-            for (uc in userClasses) {
-                if (classToAdd == userClasses[uc].class.name) {
-                    dontAdd = true;
-                }
-            }
-            if (!dontAdd) {
-                Users[u].user.classes.push(UserClass(classToAdd));
-            }
-        }
-    }
-    res.redirect('/' + username + '/home');*/
-	}
 };
 
 exports.api.classes = function(req, res) {
@@ -837,18 +608,6 @@ exports.api.classes = function(req, res) {
 			res.redirect('/login');
 		}
 	});
-	
-    /*var data = {
-        classes: null,
-        colors: null
-    };
-    if (req.session.username) {
-        data.classes = findUser(username).classes;
-        data.colors = Colors;
-    } else {
-        res.redirect('/login');
-    }
-    res.send(data);*/
 };
 
 exports.api.editprofile = function(req, res) {
@@ -920,105 +679,10 @@ exports.api.editprofile = function(req, res) {
 			});
 		});
 	});
-	/*var user = findUser(username);
-	var newUsername = req.query.username;
-	var newPassword = req.query.password;
-	var newEmail = req.query.email;
-	var data = { 
-		error: null,
-		success: null,
-        user: user,
-        helpers: { foreach: foreach }
-    };
-	if (newUsername && newUsername != user.username) {
-		if (findUser(newUsername)) {
-			data.error = 'Error: That username is already taken.';
-			newUsername = username;
-		}
-	} else {
-		newUsername = username;
-	}
-	if (!(newPassword && newPassword != user.password)) {
-		newPassword = user.password;
-	}
-	if (!(newEmail && newEmail != user.email)) {
-		newEmail = user.email;
-	}
-	if (!data.error) {
-		var i = findUserIndex(username);
-		Users[i].user.username = newUsername;
-		Users[i].user.password = newPassword;
-		Users[i].user.email = newEmail;
-		data.success = 'Success: Your profile was changed.';
-	}
-	res.render('editprofile', data);*/
 };
 
 
 // Controller Helpers /////////////////////////////////////////////////////////
-
-function findQuestion(classObject, qid) {
-    for (var i = 0; i < classObject.questions.length; i++) {
-        if (classObject.questions[i].id == qid) {
-            return classObject.questions[i];
-        }
-    }
-    return null;
-}
-
-function findUser(username) {
-    for (user in Users) {
-        var userObject = Users[user].user;
-        if (userObject.username == username) {
-            return userObject;
-        }
-    }
-    return null;
-}
-
-function findUserIndex(username) {
-    for (user in Users) {
-        var userObject = Users[user].user;
-        if (userObject.username == username) {
-            return user;
-        }
-    }
-    return -1;
-}
-
-function findUserClass(userObject, classname) {
-    if (userObject) {
-        for (i in userObject.classes) {
-            var classObject = userObject.classes[i];
-            if (classObject.name == classname) {
-                return classObject;
-            }
-        }
-    }
-    return null;
-}
-
-function findUserClassIndex(userObject, classname) {
-    if (userObject) {
-        for (i in userObject.classes) {
-            var classObject = userObject.classes[i];
-            if (classObject.name == classname) {
-                return i;
-            }
-        }
-    }
-    return -1;
-}
-
-function findClass(classname) {
-    for (var i = 0; i < Classes.length; i++) {
-        var classObject = Classes[i].class;
-        if (classObject.name == classname) {
-            return classObject;
-        }
-    }
-    return null;
-}
 
 function Leaderboard(classname, size, username, users) {
     function sortDescending(a,b) {
@@ -1031,7 +695,7 @@ function Leaderboard(classname, size, username, users) {
         var leader = user.userClass(classname);
         if (leader) {
             leader.username = user.username;
-            if (leader.username == username) {
+			if (leader.username == username) {
                 leader.highlight = true;
             } else {
                 leader.highlight = false;
@@ -1043,34 +707,6 @@ function Leaderboard(classname, size, username, users) {
     students.sort(sortDescending);
 
     return students.slice(0, size);
-}
-
-function HistoricalEntry(timestamp, question, correct) {
-    return { entry: {
-        timestamp: timestamp,
-        question: question,
-        correct: correct
-    }};
-}
-
-function UserClass(classname) {
-    var classObject = findClass(classname);
-    var userClassObject = null;
-    if (classObject) {
-        // setup user class object
-        userClassObject = { 'class': {
-            name: classObject.name,
-            classname: classObject.classname,
-            tags: classObject.tags,
-            history: [],
-			currentChallenge: {points: 0, possible: 1}
-        }};
-        // add and init points properties to tags
-        for (t in userClassObject.class.tags) {
-            userClassObject.class.tags[t].points = 0;
-        }
-    }
-    return userClassObject;
 }
 
 function UserClassData(classObject) {
@@ -1107,16 +743,6 @@ function UserClassData(classObject) {
 	return userClassData;
 }
 
-function User(username, email) {
-    return { user: {
-        username: username, 
-        email: email,
-        about: '',
-        online: true,
-        classes: []
-    }};
-}
-
 function Question(questionObject) {
 	var question = null;
 	if (questionObject) {
@@ -1143,117 +769,6 @@ function shuffle(o){ //v1.0
     for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     return o;
 };
-
-function nextQuestion(userClassObject, questions) {
-	for (q in questions) {
-		var questionObject = questions[q];
-		var different = true;
-		for (h in userClassObject.history) {
-			var entry = userClassObject.history[h];
-			different &= (entry.question != questionObject.question);
-		}
-		if (!different) {
-			continue;
-		}
-		var options = questionObject.choices;
-		var shuffledOptions = shuffle(options);
-	    var question = {
-	        id: questionObject._id,
-	        question: questionObject.question,
-	        optionA: shuffledOptions[0],
-	        optionB: shuffledOptions[1],
-	        optionC: shuffledOptions[2],
-	        optionD: shuffledOptions[3],
-			correctAnswer: questionObject.answer,
-	        tags: questionObject.tags
-	    }
-		return question;
-	}
-	return null;
-}
-
-function findChallengers(userObject, users, classname) {
-	var challengers = [];
-	for (u in users) {
-		var candidateObject = users[u];
-		var candidateClassObject = findUserClass(candidateObject, classname);
-		var challenge = findClassChallenge(candidateClassObject.records);
-		if (candidateObject.username == userObject.username || !candidateClassObject) {
-			continue;
-		} else if (challenge) {
-			candidateClassObject.currentChallenge = challenge;
-			challengers.push(candidateClassObject);
-		}
-	}
-	return challengers;
-}
-
-function initCurrentChallenge(username, classname, studentBattle) {
-	for (u in Users) {
-		var userObject = Users[u].user;
-	    if (userObject && userObject.username == username) {
-	        for (i in userObject.classes) {
-	            var userClassObject = userObject.classes[i].class;
-	            if (userClassObject && userClassObject.name == classname) {
-	                Users[u].user.classes[i].class.currentChallenge = {
-						points: 0,
-						possible: possiblePoints(classname), 
-						lecture: !studentBattle,
-						active: true,
-						tags: []
-					};
-	            }
-	        }
-	    }
-	}
-}
-
-function endCurrentChallenge(username, classname, studentBattle) {
-	var u = findUserIndex(username);
-	var i = findUserClassIndex(Users[u].user, classname);
-	
-	var userObject = Users[u].user;
-	var userClassObject = userObject.classes[i].class;
-	var currentChallenge = userClassObject.currentChallenge;
-	
-	for (ct in currentChallenge.tags) {
-		for (ut in userClassObject.tags) {
-			if (userClassObject.tags[ut].tag == currentChallenge.tags[ct].tag) {
-				Users[u].user.classes[i].class.tags[ut].points += currentChallenge.tags[ct].points;
-				break;
-			}
-		}
-	}
-	Users[u].user.classes[i].class.currentChallenge.active = false;
-}
-
-function possiblePoints(classname) {
-	var classObject = findClass(classname);
-	var total = 0;
-	for (q in classObject.questions) {
-		for (t in classObject.questions[q].tags) {
-			total += classObject.questions[q].tags[t].points;
-		}
-	}
-}
-
-function findClassChallenge(challenges) {
-	for (c in challenges) {
-		if (challenges[c].lecture && challenges[c].active) {
-			return challenges[c];
-		}
-	}
-	return null;
-}
-
-function findClassChallengeIndex(challenges) {
-	for (c in challenges) {
-		if (challenges[c].lecture && challenges[c].active) {
-			return c;
-		}
-	}
-	return null;
-}
 
 // Handlebars Helpers /////////////////////////////////////////////////////////
 

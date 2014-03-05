@@ -3,10 +3,6 @@ var Schema = Mongoose.Schema;
 var SHA2 = new (require('jshashes').SHA512)();
 var salt = "StanfordClassBattles";
 
-exports.encodePassword = function(pass) {
-	return SHA2.b64_hmac(pass, salt);
-}
-
 // Schemas ////////////////////////////////////////////////////////////////////
 
 var TagSchema = new Mongoose.Schema({
@@ -81,6 +77,10 @@ ChallengeSchema.methods.correct = function(question) {
 };
 exports.Challenge = Mongoose.model('Challenge', ChallengeSchema);
 
+exports.encodePassword = function(pass) {
+	return SHA2.b64_hmac(pass, salt);
+};
+
 // User ///////////////////////////////
 
 // only live within user
@@ -146,7 +146,7 @@ UserClassSchema.methods.classChallengeIncrPoints = function(question, username) 
 	}
 };
 UserClassSchema.methods.classChallengeRandomPoints = function(question, username) {
-	if (question && Math.random() < 0.75) {
+	if (question && Math.random() < 0.25) {
 		this.classChallengeIncrPoints(question, username);
 		return true;
 	}
@@ -232,6 +232,7 @@ var UserSchema = new Mongoose.Schema({
 	password: 		{ type: String, set: exports.encodePassword, required: true },
 	email: 			{ type: String, unique: true, trim: true, lowercase: true, required: true },
 	online: 		{ type: Boolean, default: false },
+	b_test: 		{ type: Boolean, required: true }, 
 	
 	classes: 		[UserClassSchema],	// multiple
 });
@@ -265,7 +266,6 @@ UserSchema.methods.addRecord = function(classname, challenge) {
 		this.markModified('classes');
 	}
 };
-// class challenges
 UserSchema.methods.classChallengeIndex = function(classname, username) {
 	var i = this.userClassIndex(classname);
 	if (i > -1) {
