@@ -365,7 +365,7 @@ exports.view.finalanswer = function(req, res) {
 exports.view.leaders = function(req, res) {
 	var username = req.session.username;
     var classname = req.params.classname;
-	var b_test = req.params.b == 'true';
+	var b_test = req.query.b == 'true';
 	if (!username) {
 		res.redirect('/login');
 		return;
