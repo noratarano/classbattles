@@ -146,7 +146,7 @@ UserClassSchema.methods.classChallengeIncrPoints = function(question, username) 
 	}
 };
 UserClassSchema.methods.classChallengeRandomPoints = function(question, username) {
-	if (question && Math.random() < 0.25) {
+	if (question && Math.random() < 0.5) {
 		this.classChallengeIncrPoints(question, username);
 		return true;
 	}
@@ -187,6 +187,13 @@ UserClassSchema.methods.classChallengeCommit = function(username) {
 		}
 		
 		this.records[i].active = false;
+		//this.records.splice(i,1);
+		this.markModified('records');
+	}
+};
+UserClassSchema.methods.classChallengeRemove = function(username) {
+	var i = this.classChallengeIndex(username);
+	if (i > -1) {
 		this.records.splice(i,1);
 		this.markModified('records');
 	}
@@ -321,6 +328,13 @@ UserSchema.methods.classChallengeCommit = function(classname, username) {
 	var i = this.userClassIndex(classname);
 	if (i > -1) {
 		this.classes[i].classChallengeCommit(username);
+		this.markModified('classes');
+	}
+};
+UserSchema.methods.classChallengeRemove = function(classname, username) {
+	var i = this.userClassIndex(classname);
+	if (i > -1) {
+		this.classes[i].classChallengeRemove(username);
 		this.markModified('classes');
 	}
 };
