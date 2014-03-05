@@ -2,21 +2,6 @@
 <html lang="en">
 
 	<head>
-		<!-- Google Analytics Content Experiment code -->
-		<script>function utmx_section(){}function utmx(){}(function(){var
-		k='82946696-1',d=document,l=d.location,c=d.cookie;
-		if(l.search.indexOf('utm_expid='+k)>0)return;
-		function f(n){if(c){var i=c.indexOf(n+'=');if(i>-1){var j=c.
-		indexOf(';',i);return escape(c.substring(i+n.length+1,j<0?c.
-		length:j))}}}var x=f('__utmx'),xx=f('__utmxx'),h=l.hash;d.write(
-		'<sc'+'ript src="'+'http'+(l.protocol=='https:'?'s://ssl':
-		'://www')+'.google-analytics.com/ga_exp.js?'+'utmxkey='+k+
-		'&utmx='+(x?x:'')+'&utmxx='+(xx?xx:'')+'&utmxtime='+new Date().
-		valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
-		'" type="text/javascript" charset="utf-8"><\/sc'+'ript>')})();
-		</script><script>utmx('url','A/B');</script>
-		<!-- End of Google Analytics Content Experiment code -->
-		
 		<title>ClassBattles</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -58,9 +43,7 @@
 							<th class="leader-td leader-place"><small></small></th>
 							<th class="leader-td leader-name"><small>Name</small></th>
 							<th class="leader-td leader-points"><small>Points</small></th>
-							{{#if b_test}}
-							<th class="leader-td leader-btns"><small>Options</small></th>
-							{{/if}}
+							<th class="leader-td leader-status"><small>Status</small></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -73,21 +56,17 @@
 							<td class="leader-td leader-place"><small>{{place @index}}</small></td>
 							<td class="leader-td leader-name"><small>{{leader.username}}</small></td>
 							<td class="leader-td leader-points"><small>{{totalPoints leader}}</small></td>
-							{{#if ../b_test}}
-							<td class="leader-td leader-btns">
+							<td class="leader-td leader-status">
 								{{#if leader.highlight}}
 								<small style="font-size: 12px; color: #888"><i>you</i></small>
 								{{else}}
 								{{#if leader.online}}
-								<small>
-									<a class="btn btn-xs btn-danger leader-challenge-btn" href="/{{leader.username}}/class/{{../../../../classname}}/challenge">challenge</a>
-								</small>
+								<small class="fui-user online"></small>
 								{{else}}
-								<small style="font-size: 12px; color: #888"><i>offline</i></small>
+								<small class="fui-user offline"></small>
 								{{/if}}
 								{{/if}}
 							</td>
-							{{/if}}
 						</tr>
 						{{/each}}
 					</tbody>
@@ -103,7 +82,6 @@
 		<div class="menu-guide hidden">
 			<div class="btn-group-vertical">
 				<a href="/{{username}}/home" class="btn btn-sm btn-inverse btn-wide menu-home-btn">Home</a>
-				<a href="/{{username}}/class/{{classname}}/challenge" class="btn btn-sm btn-inverse btn-wide menu-challenge-btn">Challenge</a>
 				<a href="/{{username}}/class/{{classname}}/profile" class="btn btn-sm btn-inverse btn-wide menu-profile-btn">Profile</a>
 		        <a href="/logout" class="btn btn-sm btn-inverse btn-wide menu-logout-btn">Log out</a>
 		        <a href="/about" class="btn btn-sm btn-inverse btn-wide menu-about-btn">About</a>
@@ -137,11 +115,6 @@
 						}
 					);
 				}, 0);
-				
-				$('.leader-challenge-btn').click(function(e) {
-					console.log('Clicked challenge!');
-					ga('send', 'event', 'challenge', 'click');
-				});
 			});
 		</script>
 		<script>
