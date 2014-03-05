@@ -3,6 +3,7 @@
 @import "flat-ui/mixins";
 
 @class-bg-color: mix(@brand-primary, @inverse, 9%);
+@icon-sep: 20px;
 
 canvas {
     margin-top: -20px;
@@ -24,6 +25,10 @@ td {
 
 .fui-mail, .fui-chat {
     color: @wet-asphalt;
+}
+
+.fui-mail, .fui-user {
+    padding-right: @icon-sep;
 }
 
 .profile-info-cont {

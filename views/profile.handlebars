@@ -73,7 +73,7 @@
 				<h4>{{profile.username}}'s Profile</h4>
 				<form>
 					<!-- .profile-info -->
-					<div class="row profile-info-cont">
+					<!--<div class="row profile-info-cont">
 						<div class="col-xs-1"><small class="fui-mail"></small></div>
 						<div class="col-xs-10"><small><a href="mailto:{{profile.email}}" class="mail-link">{{profile.email}}</a></small></div>
 					</div>
@@ -88,9 +88,33 @@
 					</div>
 					{{#if b_test}}
 					<div class="row profile-info-cont">
-						<a href="/{{../profile.username}}/class/{{../classname}}/challenge" class="btn btn-danger challenge-btn">challenge</a>
+						<a href="/{{../profile.username}}/class/{{../classname}}/challenge" class="btn btn-danger btn-sm challenge-btn">challenge</a>
 					</div>
-					{{/if}}
+					{{/if}}-->
+					<div class="row" style="width: 100%; display: block">
+						<div class="col-xs-8">
+							<div class="row profile-info-cont">
+								<small class="fui-mail"></small><small><a href="mailto:{{profile.email}}" class="mail-link">{{profile.email}}</a></small>
+							</div>
+							<div class="row profile-info-cont">
+								{{#if profile.online}}
+								<small class="fui-user online"></small><small>online</small>
+								{{else}}
+								<small class="fui-user offline"></small><small>offline</small>
+								{{/if}}
+							</div>
+						</div>
+						<div class="col-xs-4">
+							{{#if profile.online}}
+							{{#if ../b_test}}
+							<div class="row profile-info-cont">
+								<a href="/{{../../profile.username}}/class/{{../../classname}}/challenge" class="btn btn-danger btn-sm challenge-btn">challenge</a>
+							</div>
+							{{/if}}
+							{{/if}}
+						</div>
+					</div>
+					
 					<!-- /.profile-info -->
 					<!-- .profile-classes -->
 					<div class="row profile-classes">

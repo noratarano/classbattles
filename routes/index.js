@@ -396,17 +396,18 @@ exports.view.classprofile = function(req, res) {
 		res.redirect('/login');
 		return;
 	}
-	var b_test = req.query.b == 'true';
 	models.User.findOne({ username: req.session.username }).lean().exec(function(err, userObject) {
 		if (err) console.log(err);
 		models.User.findOne({ username: req.params.username }).lean().exec(function(err, profileObject) {
 			if (err) console.log(err);
 			var classname = req.params.classname;
+			var self = userObject.username == profileObject.username;
+			var b_test = req.query.b == 'true';
 	        if (userObject && profileObject) {
 	            var data = { 
 	                user: userObject, 
 	                profile: profileObject,
-	                self: userObject.username == profileObject.username,
+	                self: self,
 					classname: classname,
 					b_test: b_test && !self,
 					a_test: !b_test && !self,
