@@ -383,7 +383,7 @@ exports.view.leaders = function(req, res) {
 		        classname: classname,
 		        username: username,
 		        leaderboard: leaderboard,
-				b_test: user.b_test,
+				b_test: b_test,
 		        helpers: { place: leaderPlace, totalPoints: totalPoints }
 		    }
 		    res.render('leaders', data);
