@@ -377,7 +377,7 @@ exports.view.leaders = function(req, res) {
 		if (err) console.log(err);
 		models.User.find({ "classes.name": classname }).exec(function(err, users) {
 			if (err) console.log(err);
-			var leaderboard = Leaderboard(classname, 10, username, users);
+			var leaderboard = Leaderboard(classname, null, username, users);
 		    var data = {
 		        classname: classname,
 		        username: username,
