@@ -47,7 +47,13 @@ if ('development' == app.get('env')) {
 var models = require('./models');
 app.get('/users', function(req, res) {
 	models.User.find().lean().exec(function(err, users) {
-		res.send(users);
+		var b_testers = [];
+		var a_testers = [];
+		for (u in users) {
+			if (users[u].b_test) b_testers.push(users.username);
+			else a_testers.push(users.username);
+		}
+		res.send({ a: a_testers, b: b_testers });
 	});
 });
 
