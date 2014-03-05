@@ -79,7 +79,7 @@
 							<th class="leader-td leader-btns">
 								{{#if leader.highlight}}
 								{{else}}
-								<small><a class="" href="/{{leader.username}}/class/{{../../../classname}}/challenge">challenge</a></small>
+								<small><a class="leader-challenge-btn" href="/{{leader.username}}/class/{{../../../classname}}/challenge">challenge</a></small>
 								{{/if}}
 							</th>
 							{{/if}}
@@ -134,7 +134,7 @@
 					);
 				}, 0);
 				
-				$('.leader-btns > a').click(function(e) {
+				$('.leader-challenge-btn').click(function(e) {
 					console.log('Clicked challenge!');
 					ga('send', 'event', 'challenge', 'click');
 				});
