@@ -365,7 +365,6 @@ exports.view.finalanswer = function(req, res) {
 exports.view.leaders = function(req, res) {
 	var username = req.session.username;
     var classname = req.params.classname;
-	var b_test = req.query.b == 'true';
 	if (!username) {
 		res.redirect('/login');
 		return;
@@ -383,7 +382,6 @@ exports.view.leaders = function(req, res) {
 		        classname: classname,
 		        username: username,
 		        leaderboard: leaderboard,
-				b_test: b_test,
 		        helpers: { place: leaderPlace, totalPoints: totalPoints }
 		    }
 		    res.render('leaders', data);
@@ -692,7 +690,7 @@ function Leaderboard(classname, size, username, users) {
     function sortDescending(a,b) {
         return totalPoints(b.leader)-totalPoints(a.leader);
     }
-    
+    console.log(size);
     var students = [];
     for (u in users) {
         var user = users[u];
@@ -711,7 +709,7 @@ function Leaderboard(classname, size, username, users) {
     
     students.sort(sortDescending);
 
-    return students.slice(0, size);
+    return size == null ? students : students.slice(0, size);
 }
 
 function UserClassData(classObject) {
