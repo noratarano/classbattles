@@ -695,6 +695,7 @@ function Leaderboard(classname, size, username, users) {
         var leader = user.userClass(classname);
         if (leader) {
             leader.username = user.username;
+			leader.online = user.online;
 			if (leader.username == username) {
                 leader.highlight = true;
             } else {

@@ -60,10 +60,10 @@
 						<tr>
 							<th class="leader-td leader-place"><small></small></th>
 							<th class="leader-td leader-name"><small>Name</small></th>
-							{{#if b_test}}
-							<th class="leader-td leader-btns"></th>
-							{{/if}}
 							<th class="leader-td leader-points"><small>Points</small></th>
+							{{#if b_test}}
+							<th class="leader-td leader-btns"><small>Options</small></th>
+							{{/if}}
 						</tr>
 					</thead>
 					<tbody>
@@ -75,15 +75,22 @@
 						{{/if}}
 							<td class="leader-td leader-place"><small>{{place @index}}</small></td>
 							<td class="leader-td leader-name"><small>{{leader.username}}</small></td>
-							{{#if ../b_test}}
-							<th class="leader-td leader-btns">
-								{{#if leader.highlight}}
-								{{else}}
-								<small><a class="leader-challenge-btn" href="/{{leader.username}}/class/{{../../../classname}}/challenge">challenge</a></small>
-								{{/if}}
-							</th>
-							{{/if}}
 							<td class="leader-td leader-points"><small>{{totalPoints leader}}</small></td>
+							{{#if ../b_test}}
+							<td class="leader-td leader-btns">
+								{{#if leader.highlight}}
+								<small style="font-size: 12px; color: #888"><i>you</i></small>
+								{{else}}
+								{{#if leader.online}}
+								<small>
+									<a class="btn btn-xs btn-danger leader-challenge-btn" href="/{{leader.username}}/class/{{../../../../classname}}/challenge">challenge</a>
+								</small>
+								{{else}}
+								<small style="font-size: 12px; color: #888"><i>offline</i></small>
+								{{/if}}
+								{{/if}}
+							</td>
+							{{/if}}
 						</tr>
 						{{/each}}
 					</tbody>
