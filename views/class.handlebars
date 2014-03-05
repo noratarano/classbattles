@@ -38,22 +38,20 @@
 			
 			<div class="row content">
 				<h4>{{class.name}} Dashboard</h4>
-				<h7>Tools:</h7>
 				<br />
 				<center>
-					<a href="/{{user.username}}/class/{{class.name}}/leaderboard" class="btn btn-block btn-primary">Leaderboard / Students</a>
-					<a href="/{{user.username}}/class/{{class.name}}/profile" class="btn btn-block btn-primary">Your Profile</a>
-				</center>
-				<br />
-				<h7>Challenges:</h7>
-				<center>
+					{{#if challenges}}
 					{{#foreach challenges}}
 					{{#if lecture}}
 					{{#if ../active}}
-					<a href="/{{../../../user.username}}/class/{{../../../class.name}}/challenge" class="btn btn-block btn-danger">Live Lecture</a>
+					<a href="/{{../../../../user.username}}/class/{{../../../../class.name}}/challenge" class="btn btn-block btn-danger">Live Lecture</a>
 					{{/if}}
 					{{/if}}
 					{{/foreach}}
+					<br/>
+					{{/if}}
+					<a href="/{{user.username}}/class/{{class.name}}/leaderboard" class="btn btn-block btn-primary">Leaderboard / Students</a>
+					<a href="/{{user.username}}/class/{{class.name}}/profile" class="btn btn-block btn-primary">Your Profile</a>
 				</center>
 			</div>
 			

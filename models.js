@@ -187,7 +187,7 @@ UserClassSchema.methods.classChallengeCommit = function(username) {
 		}
 		
 		this.records[i].active = false;
-		//this.records.splice(i,1);
+		this.records.splice(i,1);
 		this.markModified('records');
 	}
 };

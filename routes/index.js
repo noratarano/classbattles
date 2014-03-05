@@ -92,7 +92,7 @@ exports.view.class = function(req, res) {
 		        user: user,
 		        'class': userClassObject,
 				classes: [{class: userClassObject}],
-				challenges: userClassObject.records,
+				challenges: userClassObject.records.length > 0 ? userClassObject.records : null,
 				helpers: { foreach: foreach, ifChallengerIsNotMe: ifChallengerIsNotMe }
 		    }
 		    res.render('class', data);
