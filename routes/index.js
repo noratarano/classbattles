@@ -244,18 +244,23 @@ exports.view.finalanswer = function(req, res) {
 				students.forEach(function (student) {
 					// points
 					var correct = null;
-					var newhist = new models.History({
-						question: question.question, 
-						correct: correct 
-					});
-					student.addHistory(classname, newhist);
 					if (student.username == username) {
 						// user
 						correct = selected == question.answer;
+						var newhist = new models.History({
+							question: question.question, 
+							correct: correct 
+						});
+						student.addHistory(classname, newhist);
 						challenge.addHistory(newhist);
 					} else {
 						// challenger
 						correct = Math.random() < 0.5;
+						var newhist = new models.History({
+							question: question.question, 
+							correct: correct 
+						});
+						student.addHistory(classname, newhist);
 						challenge.addChallengerHistory(newhist);
 					}
 					
