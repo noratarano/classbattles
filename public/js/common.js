@@ -1,6 +1,6 @@
 $(function() {
     var username = null;
-    
+	
     // Content
     var nav_h = $('.nav').height();
     var window_h = $(window).height();
