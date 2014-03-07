@@ -110,6 +110,9 @@
 						Close.
 					</a>
 					{{else}}
+					<a class="btn btn-danger btn-lg btn abandon-btn" href="/{{user.username}}/class/{{classname}}">
+						Abandon
+					</a>
 					<a class="btn btn-primary btn-lg btn-wide" 
 					{{#if studentBattle}}
 						href="/{{challengers.0.username}}/class/{{classname}}/challenge/question">
@@ -117,9 +120,6 @@
 						href="/{{user.username}}/class/{{classname}}/challenge/question">
 					{{/if}}
 						Next question
-					</a>
-					<a class="btn btn-danger btn-lg btn abandon-btn" href="/{{user.username}}/class/{{classname}}">
-						Abandon
 					</a>
 					{{/if}}
 				</center>
