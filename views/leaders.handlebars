@@ -37,7 +37,7 @@
 			
 			<div class="row content">
 				<h4>{{classname}} Leaderboard</h4>
-				<p><small></small></p>
+				<center style="font-size: 16px; color: #888; margin: 10px 0;"><small>View your classmates' stats and challenge them!</small></center>
 				<table class="table leader-table">
 					<thead>
 						<tr>
@@ -104,7 +104,7 @@
 		<script src="/js/common.js"></script>
 		<script>
 			$(function() {
-				$('tr').click(function(e) {
+				$('.leader-tr').click(function(e) {
 					var username = $(this).find('.leader-name').text();
 					var classname = $($('.nav-left').find('span')[1]).text();
 					window.location = [window.location.origin, username, 'class', classname, 'profile'].join('/');
