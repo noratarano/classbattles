@@ -130,6 +130,27 @@ exports.view.start = function(req, res) {
 	});
 };
 
+exports.view.random = function(req, res) {
+	var username = req.session.username;
+	if (!username) {
+		res.redirect('/login');
+		return;
+	}
+	var classname = req.params.classname;
+	models.User.find({ online: true }).exec(function(err, users) {
+		if (err) console.log(err);
+		if (!users) {
+			res.redirect(['',username,'class',classname].join('/'));
+			return;
+		}
+		var shuffledUsers = shuffle(users);
+		var randomUsername = shuffledUsers[0].username;
+		if (randomUsername == username)
+			randomUsername = shuffledUsers[1 % shuffledUsers.length].username;
+		res.redirect(['',randomUsername,'class',classname,'challenge'].join('/'));
+	});
+};
+
 exports.view.challenge = function(req, res) {
 	var challenge_id = req.session.challenge_id;
 	var classname = req.params.classname;

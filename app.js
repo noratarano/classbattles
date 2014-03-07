@@ -83,6 +83,7 @@ app.get('/:username/profile', index.view.profile);
 app.get('/:username/profile/edit', index.view.editprofile);
 app.get('/:username/class/add', index.view.addclass);
 app.get('/:username/class/:classname/leaderboard', index.view.leaders);
+app.get('/:username/class/:classname/random', index.view.random);
 app.get('/:username/class/:classname/profile', index.view.classprofile);
 app.get('/:username/class/:classname/challenge', index.view.start);
 app.get('/:username/class/:classname/challenge/question', index.view.challenge);

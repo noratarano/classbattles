@@ -55,42 +55,13 @@
 						<span class="fui-new"></span>
 					</a>
 				{{else}}
-					{{#if ../profile.online}}
-						{{#if ../../a_test}}
-							<a href="/{{../../profile.username}}/class/{{../../classname}}/challenge" class="btn btn-danger nav-right challenge-btn">
-								<span>challenge</span>
-							</a>
-						{{else}}
-							<a href="" class="btn btn-danger nav-right invisible"></a>
-						{{/if}}
-					{{else}}
-						<a href="" class="btn btn-danger nav-right invisible"></a>
-					{{/if}}
+					<a href="" class="btn btn-danger nav-right invisible"></a>
 				{{/if}}
 			</div>
 			
 			<div class="row content">
 				<h4>{{profile.username}}'s Profile</h4>
 				<form>
-					<!-- .profile-info -->
-					<!--<div class="row profile-info-cont">
-						<div class="col-xs-1"><small class="fui-mail"></small></div>
-						<div class="col-xs-10"><small><a href="mailto:{{profile.email}}" class="mail-link">{{profile.email}}</a></small></div>
-					</div>
-					<div class="row profile-info-cont">
-						{{#if profile.online}}
-						<div class="col-xs-1"><small class="fui-user online"></small></div>
-						<div class="col-xs-10"><small>online</small></div>
-						{{else}}
-						<div class="col-xs-1"><small class="fui-user offline"></small></div>
-						<div class="col-xs-10"><small>offline</small></div>
-						{{/if}}
-					</div>
-					{{#if b_test}}
-					<div class="row profile-info-cont">
-						<a href="/{{../profile.username}}/class/{{../classname}}/challenge" class="btn btn-danger btn-sm challenge-btn">challenge</a>
-					</div>
-					{{/if}}-->
 					<div class="row" style="width: 100%; display: block">
 						<div class="col-xs-8">
 							<div class="row profile-info-cont">
@@ -105,8 +76,9 @@
 							</div>
 						</div>
 						<div class="col-xs-4">
-							{{#if profile.online}}
-							{{#if ../b_test}}
+							{{#if self}}
+							{{else}}
+							{{#if ../profile.online}}
 							<div class="row profile-info-cont">
 								<a href="/{{../../profile.username}}/class/{{../../classname}}/challenge" class="btn btn-danger btn-sm challenge-btn">challenge</a>
 							</div>
