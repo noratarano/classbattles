@@ -45,15 +45,15 @@ if ('development' == app.get('env')) {
 }
 
 var models = require('./models');
-app.get('/users', function(req, res) {
-	models.User.find().lean().exec(function(err, users) {
-		var b_testers = [];
-		var a_testers = [];
-		for (u in users) {
-			if (users[u].b_test) b_testers.push(users[u].username);
-			else a_testers.push(users[u].username);
-		}
-		res.send({ a: a_testers, b: b_testers });
+app.get('/challenges', function(req, res) {
+	models.Challenge.find().lean().exec(function(err, challenges) {
+		res.send(challenges);
+	});
+});
+
+app.get('/challenges/remove', function(req, res) {
+	models.Challenge.find().remove().exec(function(err, challenges) {
+		res.redirect('/challenges');
 	});
 });
 
@@ -73,6 +73,9 @@ app.get('/api/signup', index.api.signup);
 app.get('/api/:username/class/add', index.api.addclass);
 app.get('/api/:username/class/all', index.api.classes);
 app.get('/api/:username/profile/edit', index.api.editprofile);
+app.get('/api/:username/class/:classname/beginchallenge', index.api.beginchallenge);
+app.get('/api/:username/class/:classname/endchallenge', index.api.endchallenge);
+
 
 // user, class, challenge
 app.get('/:username/home', index.view.home);

@@ -38,11 +38,13 @@ var ChallengeSchema = new Mongoose.Schema({
 	lecture: 		Boolean,
 	active: 		{ type: Boolean, default: false },
 	classname: 		String,
+	username: 		String,
 	challenger: 	String, 
 	
 	tags: 			[TagSchema],
 	questions: 		[QuestionSchema],
 	history: 		[HistorySchema],
+	challengerHistory: [HistorySchema]
 });
 ChallengeSchema.methods.resetTags = function() {
 	for (t in this.tags) {
@@ -59,10 +61,24 @@ ChallengeSchema.methods.incr = function(name, points) {
 		}
 	}
 };
+ChallengeSchema.methods.incrPoints = function(question) {
+	if (question) {
+		for (t in question.tags) {
+			this.incr(question.tags[t].name, question.tags[t].points);
+		}
+		this.markModified('questions');
+	}
+};
 ChallengeSchema.methods.addHistory = function(history) {
 	if (history) {
 		this.history.push(history);
 		this.markModified('history');
+	}
+};
+ChallengeSchema.methods.addChallengerHistory = function(history) {
+	if (history) {
+		this.challengerHistory.push(history);
+		this.markModified('challengerHistory');
 	}
 };
 ChallengeSchema.methods.correct = function(question) {
@@ -75,13 +91,30 @@ ChallengeSchema.methods.correct = function(question) {
 	}
 	return false;
 };
+ChallengeSchema.methods.nextQuestion = function() {
+	var questions = this.questions;
+	for (q in questions) {
+		var question = questions[q];
+		var inhistory = false;
+		for (h in this.history) {
+			var history = this.history[h];
+			inhistory |= question.question == history.question;
+		}
+		if (inhistory) {
+			continue;
+		} else {
+			return question;
+		}
+	}
+	return null;
+};
 exports.Challenge = Mongoose.model('Challenge', ChallengeSchema);
+
+// User ///////////////////////////////
 
 exports.encodePassword = function(pass) {
 	return SHA2.b64_hmac(pass, salt);
 };
-
-// User ///////////////////////////////
 
 // only live within user
 var UserClassSchema = new Mongoose.Schema({
@@ -89,7 +122,6 @@ var UserClassSchema = new Mongoose.Schema({
 	classname: 		String,
 	
 	tags: 			[TagSchema],
-	records: 		[ChallengeSchema],	// multiple
 	history: 		[HistorySchema]		// multiple
 });
 UserClassSchema.methods.incr = function(name, points) {
@@ -108,130 +140,6 @@ UserClassSchema.virtual('tags.total').get(function() {
 	}
 	return total;
 });
-UserClassSchema.methods.addRecord = function(challenge) {
-	if (challenge) {
-		this.records.push(challenge);
-		this.markModified('records');
-	}
-}
-// class challenges
-UserClassSchema.methods.classChallengeIndex = function(username) {
-	if (username) {
-		for (var r = 0; r < this.records.length; r++) {
-			if (this.records[r].challenger == username) {
-				return r;
-			}
-		}
-	} else {
-		for (var r = 0; r < this.records.length; r++) {
-			if (this.records[r].lecture) {
-				return r;
-			}
-		}
-	}
-	return -1;
-};
-UserClassSchema.methods.classChallenge = function(username) {
-	console.log(username);
-	var i = this.classChallengeIndex(username);
-	return i > -1 ? this.records[i] : null;
-};
-UserClassSchema.methods.classChallengeIncrPoints = function(question, username) {
-	var i = this.classChallengeIndex(username);
-	if (question && i > -1) {
-		for (t in question.tags) {
-			this.records[i].incr(question.tags[t].name, question.tags[t].points);
-		}
-		this.markModified('records');
-	}
-};
-UserClassSchema.methods.classChallengeRandomPoints = function(question, username) {
-	if (question && Math.random() < 0.5) {
-		this.classChallengeIncrPoints(question, username);
-		return true;
-	}
-	return false;
-};
-UserClassSchema.methods.classChallengeDone = function(username) {
-	var i = this.classChallengeIndex(username);
-	if (i > -1) {
-		var questions = this.records[i].questions;
-		for (q in questions) {
-			var question = questions[q];
-			var inhistory = false;
-			for (h in this.records[i].history) {
-				var history = this.records[i].history[h];
-				inhistory |= question.question == history.question;
-			}
-			if (inhistory) {
-				continue;
-			} else {
-				return false;
-			}
-		}
-	}
-	return true;
-};
-UserClassSchema.methods.classChallengeCommit = function(username) {
-	var i = this.classChallengeIndex(username);
-	if (i > -1) {
-		for (t in this.records[i].tags) {
-			this.incr(this.records[i].tags[t].name, this.records[i].tags[t].points);
-		}
-		for (var h = 0; h < this.records[i].history.length; h++) {
-			this.history.push(new exports.History({
-				question: this.records[i].history[h].question,
-				correct: this.records[i].history[h].correct
-			}));
-			this.markModified('history');
-		}
-		
-		this.records[i].active = false;
-		//this.records.splice(i,1);
-		this.markModified('records');
-	}
-};
-UserClassSchema.methods.classChallengeRemove = function(username) {
-	var i = this.classChallengeIndex(username);
-	if (i > -1) {
-		this.records.splice(i,1);
-		this.markModified('records');
-	}
-};
-UserClassSchema.methods.classChallengeQuestion = function(username) {
-	var i = this.classChallengeIndex(username);
-	if (i > -1) {
-		var questions = this.records[i].questions;
-		for (q in questions) {
-			var question = questions[q];
-			var inhistory = false;
-			for (h in this.records[i].history) {
-				var history = this.records[i].history[h];
-				inhistory |= question.question == history.question;
-			}
-			if (inhistory) {
-				continue;
-			} else {
-				return question;
-			}
-		}
-	}
-	return null;
-};
-UserClassSchema.methods.classChallengeAddHistory = function(history, username) {
-	var i = this.classChallengeIndex(username);
-	if (i > -1 && history) {
-		this.records[i].addHistory(history);
-		this.markModified('records');
-	}
-};
-UserClassSchema.methods.classChallengeCorrect = function(question, username) {
-	var i = this.classChallengeIndex(username);
-	if (i > -1 && question) {
-		return this.records[i].correct(question);
-	}
-	return false;
-};
 exports.UserClass = Mongoose.model('UserClass', UserClassSchema);
 
 var UserSchema = new Mongoose.Schema({
@@ -266,98 +174,14 @@ UserSchema.methods.incrClass = function(classname, name, points) {
 		this.markModified('classes');
 	}
 };
-UserSchema.methods.addRecord = function(classname, challenge) {
+UserSchema.methods.incrClassQ = function(classname, question) {
 	var i = this.userClassIndex(classname);
-	if (i > -1 && challenge) {
-		this.classes[i].addRecord(challenge);
-		this.markModified('classes');
-	}
-};
-UserSchema.methods.classChallengeIndex = function(classname, username) {
-	var i = this.userClassIndex(classname);
-	if (i > -1) {
-		return this.classes[i].classChallengeIndex(username);
-	}
-	return -1;
-};
-UserSchema.methods.classChallenge = function(classname, username) {
-	var i = this.userClassIndex(classname);
-	if (i > -1) {
-		console.log(username);
-		return this.classes[i].classChallenge(username);
-	}
-	return null;
-};
-UserSchema.methods.classChallengeIncrPoints = function(classname, question, username) {
-	var i = this.userClassIndex(classname);
-	if (i > -1) {
-		this.classes[i].classChallengeIncrPoints(question, username);
-		this.markModified('classes');
-	}
-	/*var r = this.classChallengeIndex(classname);
-	if (i > -1 && r > -1) {
+	if (question && i > -1) {
 		for (t in question.tags) {
-			for (rt in this.classes[i].records[r].tags) {
-				if (this.classes[i].records[r].tags[rt].name == question.tags[t].name) {
-					this.classes[i].records[r].tags[rt].points += question.tags[t].points;
-					this.markModified('classes');
-					this.markModified('classes.records');
-					this.markModified('classes.records.tags');
-				}
-			}
+			this.classes[i].incr(question.tags[t].name, question.tags[t].points);
 		}
-	}*/
-};
-UserSchema.methods.classChallengeRandomPoints = function(classname, question, username) {
-	var i = this.userClassIndex(classname, username);
-	if (i > -1) {
-		var correct = this.classes[i].classChallengeRandomPoints(question, username);
-		this.markModified('classes');
-		return correct;
-	}
-	return false;
-};
-UserSchema.methods.classChallengeDone = function(classname, username) {
-	var i = this.userClassIndex(classname);
-	if (i > -1) {
-		return this.classes[i].classChallengeDone(username);
-	}
-	return true;
-};
-UserSchema.methods.classChallengeCommit = function(classname, username) {
-	var i = this.userClassIndex(classname);
-	if (i > -1) {
-		this.classes[i].classChallengeCommit(username);
 		this.markModified('classes');
 	}
-};
-UserSchema.methods.classChallengeRemove = function(classname, username) {
-	var i = this.userClassIndex(classname);
-	if (i > -1) {
-		this.classes[i].classChallengeRemove(username);
-		this.markModified('classes');
-	}
-};
-UserSchema.methods.classChallengeQuestion = function(classname, username) {
-	var i = this.userClassIndex(classname);
-	if (i > -1) {
-		return this.classes[i].classChallengeQuestion(username);
-	}
-	return null;
-};
-UserSchema.methods.classChallengeAddHistory = function(classname, history, username) {
-	var i = this.userClassIndex(classname);
-	if (i > -1) {
-		this.classes[i].classChallengeAddHistory(history, username);
-		this.markModified('classes');
-	}
-};
-UserSchema.methods.classChallengeCorrect = function(question, username) {
-	var i = this.userClassIndex(question.classname);
-	if (i > -1 && question) {
-		return this.classes[i].classChallengeCorrect(question, username);
-	}
-	return false;
 };
 exports.User = Mongoose.model('User', UserSchema);
 

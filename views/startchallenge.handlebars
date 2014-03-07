@@ -93,6 +93,21 @@
 						$('.loading-img').html('<h2 class="exclamation" style="padding: 0; margin: 0;">!</h2>');
 					}
 				}, 2000);
+				$('.btn-begin').click(function(e) {
+					e.preventDefault();
+					if ($(this).attr('disabled') != 'disabled') {
+						var href = $(this).attr('href');
+						var params = href.split('/');
+						var username = params[1];
+						var classname = params[3];
+						$.get(
+							[window.location.origin,'api',username,'class',classname,'beginchallenge'].join('/'),
+							function(data) {
+								window.location = window.location.origin + href;
+							}
+						);
+					}
+				});
 			});
 		</script>
 		<script>

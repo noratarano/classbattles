@@ -40,13 +40,7 @@
 				<h4>{{class.name}} Dashboard</h4>
 				<br />
 				<center>
-					{{#foreach challenges}}
-					{{#if lecture}}
-					{{#if ../active}}
-					<a href="/{{../../../user.username}}/class/{{../../../class.name}}/challenge" class="btn btn-block btn-danger">Live Lecture</a>
-					{{/if}}
-					{{/if}}
-					{{/foreach}}
+					<a href="/{{user.username}}/class/{{class.name}}/challenge" class="btn btn-block btn-danger">Individual Challenge</a>
 					<a href="/{{user.username}}/class/{{class.name}}/leaderboard" class="btn btn-block btn-primary">Leaderboard</a>
 					<a href="/{{user.username}}/class/{{class.name}}/profile" class="btn btn-block btn-primary">Your Profile</a>
 				</center>

@@ -92,7 +92,6 @@ exports.view.class = function(req, res) {
 		        user: user,
 		        'class': userClassObject,
 				classes: [{class: userClassObject}],
-				challenges: userClassObject.records,
 				helpers: { foreach: foreach, ifChallengerIsNotMe: ifChallengerIsNotMe }
 		    }
 		    res.render('class', data);
@@ -118,78 +117,21 @@ exports.view.start = function(req, res) {
 	var challengername = req.params.username;
 	models.User.findOne({ username: username }).exec(function(err, user) {
 		if (err) console.log(err);
-		if (studentBattle) {
-			models.User.findOne({ username: challengername }).exec(function(err, challenger) {
-				if (err) console.log(err);
-				models.Question.find({ lecture: false, classname: classname }).exec(function(err, questions) {
-					if (err) console.log(err);
-					var randomQuestions = shuffle(questions).slice(0,5);
-					user.addRecord(classname, new models.Challenge({
-						lecture: false,
-						active: true,
-						classname: classname,
-						challenger: challenger.username,
-						tags: make_tags(randomQuestions),
-						questions: randomQuestions,
-						history: []
-					}));
-					user.save(function(err) {
-						if (err) console.log(err);
-						challenger.addRecord(classname, new models.Challenge({
-							lecture: false,
-							active: true,
-							classname: classname,
-							challenger: challenger.username,
-							tags: make_tags(randomQuestions),
-							questions: randomQuestions,
-							history: []
-						}));
-						challenger.save(function(err) {
-							if (err) console.log(err);
-							res.render('startchallenge', {
-								'user': user,
-								'classname': classname,
-								'challenger': challenger,
-								'studentBattle': true,
-								helpers: { foreach: foreach }
-							});
-						});
-					});
-					function make_tags(questions) {
-						var tags = [];
-						for (var i = 0; i < questions.length; i++) {
-							for (var qt = 0; qt < questions[i].tags.length; qt++) {
-								var tagfound = false;
-								for (t in tags) {
-									if (questions[i].tags[qt].name == tags[t].name) {
-										tagfound = true;
-										break;
-									}
-								}
-								if (!tagfound) {
-									tags.push(new models.Tag({
-										name: questions[i].tags[qt].name
-									}));
-								}
-							}
-						}
-						return tags;
-					}
-				});
-			});
-		} else {
+		models.User.findOne({ username: challengername }).exec(function(err, challenger) {
+			if (err) console.log(err);
 			res.render('startchallenge', {
 				user: user,
 				classname: classname,
-				challenger: null,
+				challenger: studentBattle ? challenger : null,
 				studentBattle: studentBattle,
 				helpers: { foreach: foreach }
 			});
-		}
+		});
 	});
 };
 
 exports.view.challenge = function(req, res) {
+	var challenge_id = req.session.challenge_id;
 	var classname = req.params.classname;
 	var username = req.session.username;
 	var studentBattle = username != req.params.username;
@@ -198,69 +140,45 @@ exports.view.challenge = function(req, res) {
 		res.redirect('/login');
 		return;
 	}
-	models.Class.findOne({ name: classname }).exec(function(err, classObject) {
+	// get the user
+	models.User.findOne({ username: username }).exec(function(err, user) {
 		if (err) console.log(err);
-		models.User.findOne({ username: username }).exec(function(err, user) {
-			if (err) console.log(err);
-			if (!user) {
-				res.redirect('/login');
+		if (!user) {
+			res.redirect('/login');
+			return;
+		}
+		// get the challenge
+		models.Challenge.findById(challenge_id, function(err, challenge) {
+			if (!challenge) {
+				console.log('view.challenge: challenge not found '+ challenge_id);
+				res.redirect(['',username,'class',classname].join('/'));
+				return;
 			}
-			if (!studentBattle) {
-				// class battle mode
-				models.User.find({ "classes.name": classname }).exec(function(err, students) {
-					process_challenge(err, students);
-				});
-			} else {
-				// student battle mode
-				models.User.find({ "classes.name": classname, username: { $in: [username, challengername] } })
-				.exec(function(err, students) {
-					process_challenge(err, students, challengername);
-				});
-			}
-			
-			function process_challenge(err, students, challengername) {
-				if (err) console.log(err);
-				// get challengers
-				var challengers = [];
-				var user = null;
-				for (var s = 0; s < students.length; s++) {
-					var student = students[s];
-					if (student.username != username) {
-						var challenger = null;
-						if (studentBattle) {
-							challenger = student.classChallenge(classname, student.username);
-						} else {
-							challenger = student.classChallenge(classname);
-						}
-						challenger.username = student.username;
-						challengers.push(challenger);
-					} else {
-						user = student;
-					}
-				}
-				// get user
-				var userChallenge = user.classChallenge(classname, challengername);
-				userChallenge.username = user.username;
-				var question = Question(user.classChallengeQuestion(classname, challengername));
-		    	res.render('challenge', {
-					user: user,
-					userChallenger: userChallenge,
-					challengers: challengers, 
-					classname: classname,
-					question: question,
-					studentBattle: studentBattle,
-					helpers: {
-						pixels: pixels, 
-						pixelsTotalPoints: pixelsTotalPoints, 
-						totalPoints: totalPoints 
-					}
-				});
-			}
+			process_challenge(err, challenge);
 		});
+		function process_challenge(err, challenge) {
+			if (err) console.log(err);
+			// get user
+			var question = Question(challenge.nextQuestion());
+	    	res.render('challenge', {
+				user: user,
+				challenge: challenge,
+				classname: classname,
+				question: question,
+				studentBattle: studentBattle,
+				helpers: {
+					pixels: pixels, 
+					pixelsTotalPoints: pixelsTotalPoints, 
+					totalPoints: totalPoints,
+					percent: percent
+				}
+			});
+		}
 	});
 };
 
 exports.view.finalanswer = function(req, res) {
+	var challenge_id = req.session.challenge_id;
     var qid = req.query.qid;
     var timedOut = req.query.timedOut == 'true';
     var selected = req.query.selected;
@@ -281,79 +199,80 @@ exports.view.finalanswer = function(req, res) {
 		if (!user) res.redirect('/login');
 		models.Question.findOne({ _id: qid }).lean().exec(function(err, question) {
 			if (err) console.log(err);
-			if (!studentBattle) {
-				// class battle mode
-				models.User.find({ "classes.name": classname }).exec(function(err, students) {
-					processChallenge(err, students);
-				});
-			} else {
-				// student battle mode
-				var challenger = req.params.username;
-				models.User.find({ "classes.name": classname, username: { $in: [username, challenger] } })
-				.exec(function(err, students) {
-					processChallenge(err, students, challenger);
-				});
-			}
-			function processChallenge(err, students, challengername) {
+			models.Challenge.findById(challenge_id, function(err, challenge) {
+				if (!challenge) {
+					res.redirect(['',username,'class',classname].join('/'));
+					return;
+				}
+				if (!studentBattle) {
+					// individual battle mode
+					processChallenge(err, [user], challenge);
+				} else {
+					// student battle mode
+					models.User.find({ "classes.name": classname, username: { $in: [username, challenge.challenger] } })
+					.exec(function(err, students) {
+						processChallenge(err, students, challenge);
+					});
+				}
+			});
+			function processChallenge(err, students, challenge) {
 				if (err) console.log(err);
 				// grade responses
 				var numstudents = students.length;
-				var challengers = [];
-				var user = null;
+				
 				students.forEach(function (student) {
 					// points
 					var correct = null;
 					if (student.username == username) {
 						// user
 						correct = selected == question.answer;
-						if (correct) {
-							student.classChallengeIncrPoints(classname, question, challengername);
-						}
+						challenge.addHistory(new models.History({
+							question: question.question, 
+							correct: correct 
+						}));
 					} else {
 						// challenger
-						correct = student.classChallengeRandomPoints(classname, question, challengername);
+						correct = Math.random() < 0.5;
+						challenge.addChallengerHistory(new models.History({ 
+							question: question.question, 
+							correct: correct 
+						}));
 					}
-					// history
-					student.classChallengeAddHistory(classname, new models.History({ 
-						question: question.question, 
-						correct: correct 
-					}), challengername);
+					if (correct) {
+						student.incrClassQ(classname, question);
+						if (student.username == username) challenge.incrPoints(question);
+					}
 					// get next question
-					var done = student.classChallengeDone(classname, challengername);
+					var done = challenge.nextQuestion() == null;
 					if (done) {
-						student.classChallengeCommit(classname, challengername);
+						challenge.active = false;
 					}
 				    student.save(function(err) {
 				    	if (err) console.log(err);
-						if (student.username != username) {
-							var challenger = student.classChallenge(classname, challengername);
-							challenger.username = student.username;
-							challengers.push(challenger);
-						} else {
-							user = student;
-						}
 						numstudents--;
 						if (numstudents == 0) {
-							var userChallenge = user.classChallenge(classname, challengername);
-							var data = {
-						        correct: user.classChallengeCorrect(question, challengername),
-						        selected: selected,	// user
-						        timedOut: timedOut,	// user
-						        correctAnswer: question.answer,
-						        tags: question.tags,
-								classname: classname,
-								user: user,
-								userChallenger: userChallenge,
-								challengers: challengers,
-								done: !userChallenge.active,
-								studentBattle: studentBattle, // user
-								helpers: { 
-									pixels: pixels, 
-									pixelsTotalPoints: pixelsTotalPoints, 
-									totalPoints: totalPoints 
-								}
-						    };
-						    res.render('finalanswer', data);
+							challenge.save(function(err) {
+								if (err) console.log(err);
+								var data = {
+							        correct: correct,
+							        selected: selected,	// user
+							        timedOut: timedOut,	// user
+							        correctAnswer: question.answer,
+							        tags: question.tags,
+									classname: classname,
+									user: user,
+									challenge: challenge,
+									done: done,
+									studentBattle: studentBattle, // user
+									helpers: { 
+										pixels: pixels, 
+										pixelsTotalPoints: pixelsTotalPoints, 
+										totalPoints: totalPoints,
+										percent: percent
+									}
+							    };
+							    res.render('finalanswer', data);
+							});
 						}
 				    });
 				});
@@ -387,7 +306,7 @@ exports.view.leaders = function(req, res) {
 		    res.render('leaders', data);
 		});
 	});
-}
+};
 
 exports.view.classprofile = function(req, res) {
 	if (!req.session.username) {
@@ -683,6 +602,84 @@ exports.api.editprofile = function(req, res) {
 	});
 };
 
+exports.api.beginchallenge = function(req, res) {
+	var username = req.session.username;
+	if (!username) {
+		res.redirect('/login');
+		return;
+	}
+	var classname = req.params.classname;
+	var studentBattle = (username != req.params.username);
+	var challengername = req.params.username;
+	models.User.findOne({ username: username }).exec(function(err, user) {
+		if (err) console.log(err);
+		models.User.findOne({ username: challengername }).exec(function(err, challenger) {
+			if (err) console.log(err);
+			models.Question.find({ classname: classname }).exec(function(err, questions) {
+				if (err) console.log(err);
+				models.Challenge.find({ classname: classname, username: username })
+				.remove().exec(function(err) {
+					if (err) console.log(err);
+					var randomQuestions = shuffle(questions).slice(0,5);
+					var newChallenge = new models.Challenge({
+						lecture: !studentBattle,
+						active: true,
+						classname: classname,
+						username: user.username,
+						challenger: challenger.username,
+						tags: make_tags(randomQuestions),
+						questions: randomQuestions,
+						history: [],
+						challengerHistory: []
+					});
+					newChallenge._id = require('mongodb').BSONPure.ObjectID();
+					console.log(newChallenge);
+					newChallenge.save(function(err) {
+						if (err) console.log(err);
+						req.session.challenge_id = newChallenge._id;
+						res.send(200);
+						console.log('api.beginchallenge: began a new challenge ' + req.session.challenge_id);
+					});
+					function make_tags(questions) {
+						var tags = [];
+						for (var i = 0; i < questions.length; i++) {
+							for (var qt = 0; qt < questions[i].tags.length; qt++) {
+								var tagfound = false;
+								for (t in tags) {
+									if (questions[i].tags[qt].name == tags[t].name) {
+										tagfound = true;
+										break;
+									}
+								}
+								if (!tagfound) {
+									tags.push(new models.Tag({
+										name: questions[i].tags[qt].name
+									}));
+								}
+							}
+						}
+						return tags;
+					}
+				});
+			});
+		});
+	});
+};
+
+exports.api.endchallenge = function(req, res) {
+	var username = req.session.username;
+	if (!username) {
+		res.redirect('/login');
+		return;
+	}
+	var classname = req.params.classname;
+	var studentBattle = (username != req.params.username);
+	var challengername = req.params.username;
+	models.Challenge.findById(req.session.challenge_id).remove().exec(function(err) {
+		if (err) console.log(err);
+		res.send(200);
+	});
+};
 
 // Controller Helpers /////////////////////////////////////////////////////////
 
@@ -718,26 +715,8 @@ function UserClassData(classObject) {
         name: classObject.name,
         classname: classObject.name,
         tags: [],
-        history: [],
-		records: []
-    };
-	for (c in classObject.challenges) {
-		var classChallenge = classObject.challenges[c];
-		var challenge = new models.Challenge({
-			lecture: classChallenge.lecture,
-			active: classChallenge.active,
-			classname: classChallenge.classname,
-			tags: [],
-			questions: classChallenge.questions,
-			history: []
-		});
-		for (t in classChallenge.tags) {
-			challenge.tags.push(new models.Tag({
-				name: classChallenge.tags[t].name
-			}));
-		}
-		userClassData.records.push(challenge);
-	}
+        history: []
+	};
     for (t in classObject.tags) {
         userClassData.tags.push(new models.Tag({
         	name: classObject.tags[t].name
@@ -812,7 +791,13 @@ function pixelsTotalPoints(leader) {
     return pixels(totalPoints(leader)+'');
 }
 
-
+function percent(questions) {
+	if (questions) {
+		return Math.floor(100.0/questions.length) + "%";
+	} else {
+		return "0%"
+	}
+}
 
 
 

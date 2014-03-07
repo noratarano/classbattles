@@ -55,22 +55,21 @@
 					<span class="fui-cross" style="color: #E74C3C"></span>
 					{{/if}}
 				</h4>
-				<!-- .race -->
-				<div class="race">
-					<div class="race-me" style="margin-left:{{pixelsTotalPoints userChallenger}}px">
-						<span class="fui-radio-checked"></span>
+				
+				<div class="progress-bars" style="font-size: 16px; color: #888">	
+					{{challenge.username}}: <div class="progress">
+						{{#each challenge.history}}
+						<div class="progress-bar progress-bar-{{#if correct}}success{{else}}danger{{/if}}" style="width: {{percent ../challenge.questions}};"></div>
+						{{/each}}
 					</div>
-					{{#each challengers}}
-					<div class="race-other" style="margin-left:{{pixelsTotalPoints this}}px">
-						<span class="fui-radio-unchecked"></span>
+					{{#if studentBattle}}
+					{{challenge.challenger}}: <div class="progress progress-other">
+						{{#each challenge.challengerHistory}}
+						<div class="progress-bar progress-bar-{{#if correct}}success{{else}}danger{{/if}}" style="width: {{percent ../../challenge.questions}};"></div>
+						{{/each}}
 					</div>
-					{{/each}}
+					{{/if}}
 				</div>
-				<div class="race-pts">
-					<div class="race-pts-left"><small>0%</small></div>
-					<div class="race-pts-right"><small>100%</small></div>
-				</div>
-				<!-- /.race -->
 
 				{{#if correct}}
 				<p>You responded:</p>
@@ -103,22 +102,17 @@
               	<center>
 					{{#if done}}
 					<p>
-						You're done! You won <b>{{totalPoints userChallenger}}</b> points
+						You're done! You won <b>{{totalPoints challenge}}</b> points
 						<br />in this challenge.
 					</p>
-					<a class="btn btn-danger btn-block btn-lg btn-wide" href="/{{user.username}}/class/{{classname}}">
+					<a class="btn btn-danger btn-block btn-lg btn-wide btn-close" href="/{{user.username}}/class/{{classname}}">
 						Close.
 					</a>
 					{{else}}
-					<a class="btn btn-danger btn-lg btn abandon-btn" href="/{{user.username}}/class/{{classname}}">
+					<a class="btn btn-danger btn-lg btn abandon-btn" href="/{{../user.username}}/class/{{classname}}">
 						Abandon
 					</a>
-					<a class="btn btn-primary btn-lg btn-wide" 
-					{{#if studentBattle}}
-						href="/{{challengers.0.username}}/class/{{classname}}/challenge/question">
-					{{else}}
-						href="/{{user.username}}/class/{{classname}}/challenge/question">
-					{{/if}}
+					<a class="btn btn-primary btn-lg btn-wide" href="/{{challenge.challenger}}/class/{{classname}}/challenge/question">
 						Next question
 					</a>
 					{{/if}}
@@ -141,6 +135,23 @@
 		
 		<script src="/js/common.js"></script>
 		<script src="/js/challenge.js"></script>
+		<script>
+			$('.btn-close, .abandon-btn').click(function(e) {
+				e.preventDefault();
+				if ($(this).attr('disabled') != 'disabled') {
+					var href = $(this).attr('href');
+					var params = href.split('/');
+					var username = params[1];
+					var classname = params[3];
+					$.get(
+						[window.location.origin,'api',username,'class',classname,'endchallenge'].join('/'),
+						function(data) {
+							window.location = window.location.origin + href;
+						}
+					);
+				}
+			});
+		</script>
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

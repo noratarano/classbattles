@@ -44,38 +44,35 @@
 			</div>
 			
 			<div class="row content">
-				<h4>{{#if studentBattle}}Challenge{{else}}Live Lecture{{/if}}</h4>
-			
-				<!-- .race -->
-				<div class="race">
-					<div class="race-me" style="margin-left:{{pixelsTotalPoints userChallenger}}px">
-						<span class="fui-radio-checked"></span>
-					</div>
-					{{#each challengers}}
-					<div class="race-other" style="margin-left:{{pixelsTotalPoints this}}px">
-						<span class="fui-radio-unchecked"></span>
-					</div>
-					{{/each}}
-				</div>
-				<div class="race-pts">
-					<div class="race-pts-left"><small>0%</small></div>
-					<div class="race-pts-right"><small>100%</small></div>
-				</div>
-				<!-- /.race -->
+				<h4>{{#if studentBattle}}Student Challenge{{else}}Individual Challenge{{/if}}</h4>
 				
-				<br>
+				<div class="progress-bars">	
+					{{challenge.username}}: <div class="progress">
+						{{#each challenge.history}}
+						<div class="progress-bar progress-bar-{{#if correct}}success{{else}}danger{{/if}}" style="width: {{percent ../challenge.questions}};"></div>
+						{{/each}}
+					</div>
+					{{#if studentBattle}}
+					{{challenge.challenger}}: <div class="progress progress-other">
+						{{#each challenge.challengerHistory}}
+						<div class="progress-bar progress-bar-{{#if correct}}success{{else}}danger{{/if}}" style="width: {{percent ../../challenge.questions}};"></div>
+						{{/each}}
+					</div>
+					{{/if}}
+				</div>
+				
 				<p>{{question.question}}</p>
 				<div><small style="font-size: 14px; margin-right: 10px">points: </small>
 					{{#each question.tags}}
 					<span class="btn btn-xs btn-info">{{name}}<span class="btn-tip">{{points}}</span></span>
 					{{/each}}
 				</div>
-				<form class="form" role="form" method="get"
-				{{#if studentBattle}}
-					action="/{{challengers.0.username}}/class/{{classname}}/challenge/answer">
-				{{else}}
-					action="/{{user.username}}/class/{{classname}}/challenge/answer">
-				{{/if}}
+				<form class="form" role="form" method="get" 
+					{{#if studentBattle}}
+						action="/{{challenge.challenger}}/class/{{classname}}/challenge/answer">
+					{{else}}
+						action="/{{user.username}}/class/{{classname}}/challenge/answer">
+					{{/if}}
 					<label class="radio">
 					  <input type="radio" name="selected" value="{{question.optionA}}" data-toggle="radio">
 					  {{question.optionA}}

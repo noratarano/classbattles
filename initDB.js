@@ -27,6 +27,7 @@ models.User.find().remove().exec(function(err) {
 models.Class.find().remove().exec(function(err) {
 models.Tag.find().remove().exec(function(err) {
 models.Question.find().remove().exec(function(err) {
+models.Challenge.find().remove().exec(function(err) {
 		
 	// Setup Classes ///////////////////////////////////////////////////////////
 
@@ -79,7 +80,6 @@ models.Question.find().remove().exec(function(err) {
 
 	function setup_class(classname) {
 		var ClassModel = get_class(classname);
-		var challenge = null;
 		for (i in questions_json) {
 			// get json doc
 			var json = questions_json[i];
@@ -93,16 +93,6 @@ models.Question.find().remove().exec(function(err) {
 				classname: json.classs,
 				tags: []
 			});
-			if (json.lecture && !challenge) {
-				challenge = new models.Challenge({
-					lecture: true,
-					active: true,
-					classname: ClassModel.name,
-					tags: [],
-					questions: [],
-					history: []
-				});
-			}
 			// add tags to question object
 			for (t in json.tags) {
 				// create the tag object
@@ -124,23 +114,14 @@ models.Question.find().remove().exec(function(err) {
 					ClassModel.tags.push(new models.Tag({ name: tag.name, points: tag.points }));
 				}
 			}
-			if (json.lecture) {
-				if (challenge.tags.length == 0) {
-					challenge.tags.push(new models.Tag({ name: question.tags[0].name }));
-				}
-				challenge.tags[0].points += question.tags[0].points;
-				challenge.questions.push(question);
-			}
 			question.save();
-		}
-		if (challenge) {
-			ClassModel.challenges.push(challenge);
 		}
 		ClassModel.save(function(err) {
 			num_classes--;
 			all_done(err);
 		});
 	}
+});
 });
 });
 });
