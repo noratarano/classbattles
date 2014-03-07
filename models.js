@@ -140,6 +140,12 @@ UserClassSchema.virtual('tags.total').get(function() {
 	}
 	return total;
 });
+UserClassSchema.methods.addHistory = function(history) {
+	if (history) {
+		this.history.push(history);
+		this.markModified('history');
+	}
+};
 exports.UserClass = Mongoose.model('UserClass', UserClassSchema);
 
 var UserSchema = new Mongoose.Schema({
@@ -180,6 +186,13 @@ UserSchema.methods.incrClassQ = function(classname, question) {
 		for (t in question.tags) {
 			this.classes[i].incr(question.tags[t].name, question.tags[t].points);
 		}
+		this.markModified('classes');
+	}
+};
+UserSchema.methods.addHistory = function(classname, history) {
+	var i = this.userClassIndex(classname);
+	if (history && i > -1) {
+		this.classes[i].addHistory(history);
 		this.markModified('classes');
 	}
 };
